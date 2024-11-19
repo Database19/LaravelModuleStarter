@@ -3,6 +3,8 @@
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,13 +29,13 @@ Route::get('/assign-role', function() {
     //     'password' => Hash::make('kodok123')
     // ]);
 
-    $userMaintenance = User::create([
-        'name' => 'Manager Maintenance',
-        'email' => 'maintenance@crm.com',
-        'password' => Hash::make('kodok123')
-    ]);
+    // $userMaintenance = User::create([
+    //     'name' => 'Manager Maintenance',
+    //     'email' => 'maintenance@crm.com',
+    //     'password' => Hash::make('kodok123')
+    // ]);
 
-    $err = 0;
+    // $err = 0;
     // if(!$userSales->assignRole('Sales Manager')){
     //     $err = 1;
     // }
@@ -43,15 +45,15 @@ Route::get('/assign-role', function() {
     // if(!$userInventory->assignRole('Inventory Clerk')){
     //     $err = 1;
     // }
-    if(!$userMaintenance->assignRole('Maintenance')){
-        $err = 1;
-    }
+    // if(!$userMaintenance->assignRole('Maintenance')){
+    //     $err = 1;
+    // }
 
-    if($err === 1){
-        return "fail";
-    }
+    // if($err === 1){
+    //     return "fail";
+    // }
 
-    return "sukses";
+    // return "sukses";
 });
 
 Auth::routes();

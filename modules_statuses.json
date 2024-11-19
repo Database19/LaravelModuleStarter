@@ -2,5 +2,9 @@
     "Inventory": true,
     "Sales": true,
     "Accounting": true,
-    "Maintenance": true
+    "Maintenance": true,
+    "Purchase": true,
+    "Transaction": true,
+    "Report": true,
+    "Master": true
 }
