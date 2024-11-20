@@ -31,79 +31,17 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         @auth
-                            {{-- Sales Dropdown --}}
-                            @can('manage-sales')
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="salesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Sales
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="salesDropdown">
-                                    <li><a class="dropdown-item" href="#">Leads Management</a></li>
-                                    <li><a class="dropdown-item" href="#">Quotation</a></li>
-                                    <li><a class="dropdown-item" href="#">Order Management</a></li>
-                                    <li><a class="dropdown-item" href="#">Invoice Management</a></li>
-                                    <li><a class="dropdown-item" href="#">Customer Management</a></li>
-                                </ul>
-                            </li>
-                            @endcan
-                    
-                            {{-- Accounting Dropdown --}}
-                            @can('manage-accounting')
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="accountingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Accounting
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="accountingDropdown">
-                                    <li><a class="dropdown-item" href="#">Accounts Payable</a></li>
-                                    <li><a class="dropdown-item" href="#">Accounts Receivable</a></li>
-                                    <li><a class="dropdown-item" href="#">General Ledger</a></li>
-                                    <li><a class="dropdown-item" href="#">Budgeting</a></li>
-                                    <li><a class="dropdown-item" href="#">Tax Management</a></li>
-                                    <li><a class="dropdown-item" href="#">Financial Reporting</a></li>
-                                </ul>
-                            </li>
-                            @endcan
-                    
-                            {{-- Inventory Dropdown --}}
-                            @can('manage-inventory')
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="inventoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Inventory
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="inventoryDropdown">
-                                    <li><a class="dropdown-item" href="#">Stock Management</a></li>
-                                    <li><a class="dropdown-item" href="#">Warehouse Management</a></li>
-                                    <li><a class="dropdown-item" href="#">Stock Movement</a></li>
-                                    <li><a class="dropdown-item" href="#">Reorder Level Monitoring</a></li>
-                                    <li><a class="dropdown-item" href="#">Batch/Serial Tracking</a></li>
-                                </ul>
-                            </li>
-                            @endcan
-                    
-                            {{-- Maintenance Dropdown --}}
-                            @can('manage-maintenance')
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="maintenanceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Maintenance
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="maintenanceDropdown">
-                                    <li><a class="dropdown-item" href="#">Scheduled Maintenance</a></li>
-                                    <li><a class="dropdown-item" href="#">Preventive Maintenance</a></li>
-                                    <li><a class="dropdown-item" href="#">Corrective Maintenance</a></li>
-                                    <li><a class="dropdown-item" href="#">Asset Management</a></li>
-                                    <li><a class="dropdown-item" href="#">Technician Scheduling</a></li>
-                                </ul>
-                            </li>
-                            @endcan
-                    
-                            {{-- Configuration --}}
-                            @can('manage-maintenance')
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('configuration.index') }}">Configuration</a>
-                                </li>
-                            @endcan
+                            @foreach($menu as $menu)
+                                @can($menu->permission)
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route($menu->route) }}">
+                                            {{ $menu->name }}
+                                        </a>
+                                    </li>
+                                @endcan
+                            @endforeach
                         @endauth
-                    </ul>                    
+                    </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">

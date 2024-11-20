@@ -1,0 +1,31 @@
+/* Menambahkan animasi fade-in pada card-content */
+.card-content {
+    opacity: 0; /* Set awal opacity ke 0 */
+    transform: translateY(20px); /* Posisikan card sedikit lebih rendah saat pertama muncul */
+    transition: all 0.3s ease-in-out;
+    background-color: #93c5fd;
+    animation: fadeInUp 0.5s forwards; /* Menambahkan animasi saat card muncul */
+}
+
+/* Animasi fade-in dan naik (Translate Y) */
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card-content:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #007bff;
+}
