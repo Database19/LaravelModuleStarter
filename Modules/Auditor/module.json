@@ -1,0 +1,11 @@
+{
+    "name": "Auditor",
+    "alias": "auditor",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Auditor\\Providers\\AuditorServiceProvider"
+    ],
+    "files": []
+}

@@ -1,0 +1,11 @@
+{
+    "name": "Production",
+    "alias": "production",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Production\\Providers\\ProductionServiceProvider"
+    ],
+    "files": []
+}

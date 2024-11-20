@@ -19,7 +19,13 @@ class RolePermissionSeeder extends Seeder
             'manage-sales',
             'manage-accounting',
             'manage-inventory',
-            'manage-maintenance'
+            'manage-maintenance',
+            'manage-production',
+            'manage-hr',
+            'manage-procurement',
+            'manage-qr',
+            'manage-audit',
+            'manage-user'
         ];
 
         foreach ($permissions as $p) {
@@ -32,6 +38,12 @@ class RolePermissionSeeder extends Seeder
         $accountant = Role::firstOrCreate(['name' => 'Accountant']);
         $inventoryClerk = Role::firstOrCreate(['name' => 'Inventory Clerk']);
         $maintenance = Role::firstOrCreate(['name' => 'Maintenance']);
+        $production = Role::firstOrCreate(['name' => 'Production']);
+        $hr = Role::firstOrCreate(['name' => 'Human Resources']);
+        $qc = Role::firstOrCreate(['name' => 'Quality Control']);
+        $procurement = Role::firstOrCreate(['name' => 'Procurement']);
+        $audit = Role::firstOrCreate(['name' => 'Audit']);
+        $user = Role::firstOrCreate(['name' => 'User']);
 
         // $admin = User::find(1);
         // assign
@@ -42,5 +54,11 @@ class RolePermissionSeeder extends Seeder
         $accountant->givePermissionTo('manage-accounting');
         $inventoryClerk->givePermissionTo('manage-inventory');
         $maintenance->givePermissionTo('manage-maintenance');
+        $production->givePermissionTo('manage-production');
+        $hr->givePermissionTo('manage-hr');
+        $qc->givePermissionTo('manage-qc');
+        $procurement->givePermissionTo('manage-procurement');
+        $audit->givePermissionTo('manage-audit');
+        $user->givePermissionTo('manage-user');
     }
 }

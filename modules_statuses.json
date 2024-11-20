@@ -6,5 +6,12 @@
     "Purchase": true,
     "Transaction": true,
     "Report": true,
-    "Master": true
+    "Master": true,
+    "Configuration": true,
+    "Production": true,
+    "HumanResource": true,
+    "Procurement": true,
+    "QualityControl": true,
+    "Auditor": true,
+    "User": true
 }
