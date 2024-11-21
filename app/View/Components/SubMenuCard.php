@@ -16,10 +16,11 @@ class SubMenuCard extends Component
     public function __construct($moduleName = null)
     {
         $url = last(explode('/', url()->current()));
+        // dd($url);
         $this->menu = Menu::with(['SubMenus' => function ($query) {
             $query->where('is_active', 1);
         }])
-        ->where('name', $url)
+        ->where('route', $url.'.index')
         ->first();
     }
 

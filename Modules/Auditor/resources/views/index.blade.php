@@ -1,7 +1,11 @@
-@extends('auditor::layouts.master')
+@extends('layouts.app')
 
 @section('content')
-    <h1>Hello World</h1>
-
-    <p>Module: {!! config('auditor.name') !!}</p>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <x-sub-menu-card />
+            </div>
+        </div>
+    </div>
 @endsection

@@ -14,6 +14,6 @@ use Modules\HumanResource\Http\Controllers\HumanResourceController;
 |
 */
 
-Route::group([], function () {
+Route::middleware(['auth', 'role:Admin|Human Resources'])->group(function () {
     Route::resource('humanresource', HumanResourceController::class)->names('humanresource');
 });

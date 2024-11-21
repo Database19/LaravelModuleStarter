@@ -14,6 +14,6 @@ use Modules\Purchase\Http\Controllers\PurchaseController;
 |
 */
 
-Route::group([], function () {
+Route::middleware(['auth', 'role:Admin|User'])->group(function () {
     Route::resource('purchase', PurchaseController::class)->names('purchase');
 });

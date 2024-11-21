@@ -14,6 +14,6 @@ use Modules\Procurement\Http\Controllers\ProcurementController;
 |
 */
 
-Route::group([], function () {
+Route::middleware(['auth', 'role:Admin|Procurement'])->group(function () {
     Route::resource('procurement', ProcurementController::class)->names('procurement');
 });

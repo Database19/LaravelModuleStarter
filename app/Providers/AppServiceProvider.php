@@ -24,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
         View::composer('layouts.app', function ($view) {
             $menu = Menu::with('SubMenus')->get();
 
+            // dd($menu);
+
             $view->with('menu', $menu);
         });
     }

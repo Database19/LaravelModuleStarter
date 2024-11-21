@@ -14,6 +14,6 @@ use Modules\Production\Http\Controllers\ProductionController;
 |
 */
 
-Route::group([], function () {
+Route::middleware(['auth', 'role:Admin|Production'])->group(function () {
     Route::resource('production', ProductionController::class)->names('production');
 });

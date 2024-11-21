@@ -14,6 +14,6 @@ use Modules\Master\Http\Controllers\MasterController;
 |
 */
 
-Route::group([], function () {
+Route::middleware(['auth', 'role:Admin|Maintenance'])->group(function () {
     Route::resource('master', MasterController::class)->names('master');
 });

@@ -4,20 +4,15 @@ namespace Modules\Configuration\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Modules\Configuration\Http\Controllers\ModuleSettingController;
-use Modules\Configuration\Http\Controllers\RolesController;
-use Modules\Configuration\Http\Controllers\PermissionController;
-use Modules\Configuration\Http\Controllers\UserManagementController;
-use Modules\Configuration\Http\Controllers\SystemSettingController;
 
-class ConfigurationController extends Controller
+class ModuleSettingController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('configuration::index');
+        return view('configuration::module-setting.index');
     }
 
     /**
@@ -41,20 +36,7 @@ class ConfigurationController extends Controller
      */
     public function show($id)
     {
-        if($id == 'module-setting'){
-            $view = app(ModuleSettingController::class);
-        }elseif ($id == 'system-setting') {
-            $view = app(SystemSettingController::class);
-        }elseif ($id == 'user-management') {
-            $view = app(UserManagementController::class);
-        }elseif ($id == 'roles') {
-            $view = app(RolesController::class);
-        }elseif ($id == 'permission') {
-            $view = app(PermissionController::class);
-        }else{
-            return view('configuration::index');
-        }
-        return $view->index();
+        return view('configuration::show');
     }
 
     /**

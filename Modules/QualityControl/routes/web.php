@@ -14,6 +14,6 @@ use Modules\QualityControl\Http\Controllers\QualityControlController;
 |
 */
 
-Route::group([], function () {
+Route::middleware(['auth', 'role:Admin|Quality Control'])->group(function () {
     Route::resource('qualitycontrol', QualityControlController::class)->names('qualitycontrol');
 });

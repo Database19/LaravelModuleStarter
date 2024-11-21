@@ -21,7 +21,7 @@ class RolePermissionSeeder extends Seeder
             'manage-production',
             'manage-hr',
             'manage-procurement',
-            'manage-qr',
+            'manage-qc',
             'manage-audit',
             'manage-user'
         ];

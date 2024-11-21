@@ -14,6 +14,6 @@ use Modules\Report\Http\Controllers\ReportController;
 |
 */
 
-Route::group([], function () {
+Route::middleware(['auth', 'role:Admin|Audit'])->group(function () {
     Route::resource('report', ReportController::class)->names('report');
 });
