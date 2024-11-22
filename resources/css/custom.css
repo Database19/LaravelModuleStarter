@@ -1,37 +1,53 @@
-/* Animasi muncul pertama kali */
+/* Awalnya tidak terlihat */
 .card-content {
-    opacity: 0; /* Awalnya tidak terlihat */
-    transform: translateY(20px); /* Posisi lebih rendah saat pertama kali muncul */
-    transition: all 0.3s ease-in-out; /* Transisi untuk perubahan properti */
+    opacity: 0;
+    transform: translateY(20px) scale(0.95); /* Posisi lebih rendah dan sedikit lebih kecil */
+    transition: all 0.3s ease-in-out;
     background-color: #93c5fd; /* Warna latar belakang */
-    animation: fadeInUp 0.5s forwards; /* Animasi muncul */
-    transform-origin: center; /* Skala akan fokus di tengah */
+    animation: fadeInUp 0.6s cubic-bezier(0.42, 0, 0.58, 1) forwards; /* Animasi smooth muncul */
+    transform-origin: center;
+    border-radius: 12px; /* Tambahkan radius */
 }
 
+/* Keyframes untuk kemunculan */
 @keyframes fadeInUp {
-    to {
+    0% {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    100% {
         opacity: 1;
-        transform: translateY(0); /* Posisi kembali normal */
+        transform: translateY(0) scale(1);
     }
 }
 
 /* Efek hover */
 .card-content:hover {
-    transform: scale(1.08); /* Perbesar sedikit */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Tambahkan bayangan lebih tegas */
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Efek transisi smooth */
+    transform: scale(1.1); /* Perbesar lebih halus */
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Bayangan lebih tegas */
+    transition: transform 0.4s cubic-bezier(0.42, 0, 0.58, 1), box-shadow 0.4s cubic-bezier(0.42, 0, 0.58, 1);
+    background-color: #60a5fa; /* Sedikit lebih gelap saat hover */
 }
 
 /* Link dalam card tetap tanpa dekorasi */
 a {
-    color: inherit; /* Pewarnaan mengikuti elemen induk */
-    text-decoration: none; /* Hapus dekorasi */
+    color: inherit;
+    text-decoration: none;
 }
 
 a:hover {
-    text-decoration: none; /* Tetap tanpa dekorasi */
-    color: #007bff; /* Warna teks berubah menjadi biru */
+    text-decoration: none;
+    color: #0056b3; /* Warna teks lebih gelap saat hover */
 }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card-content:hover {
+        transform: scale(1.05); /* Efek lebih kecil untuk layar kecil */
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+}
+
 
 /* Gaya umum untuk navigasi */
 .navbar-nav .nav-item {

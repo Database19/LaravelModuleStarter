@@ -10,18 +10,21 @@ use App\Models\Menu;
 class SubMenuCard extends Component
 {
     public $menu;
+
     /**
      * Create a new component instance.
      */
     public function __construct($moduleName = null)
     {
         $url = last(explode('/', url()->current()));
-        // dd($url);
-        $this->menu = Menu::with(['SubMenus' => function ($query) {
-            $query->where('is_active', 1);
-        }])
-        ->where('route', $url.'.index')
-        ->first();
+
+        $this->menu = Menu::where('route', $url.'.index')->first();
+
+        if ($this->menu) {
+            $this->menu->load(['SubMenus' => function ($query) {
+                $query->where('is_active', 1);
+            }]);
+        }
     }
 
     /**
@@ -29,9 +32,7 @@ class SubMenuCard extends Component
      */
     public function render(): View|Closure|string
     {
-
         // dd($this->menu);
-
         return view('components.sub-menu-card', [
             'menu' => $this->menu
         ]);

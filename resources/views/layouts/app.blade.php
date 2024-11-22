@@ -125,5 +125,8 @@
 
     <!-- Scripts -->
     @vite(['resources/js/app.js'])
+    {{-- Custom Script --}}
+    @yield('scripts')
+    @include('sweetalert::alert')
 </body>
 </html>

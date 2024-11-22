@@ -19,7 +19,7 @@
                                     <i class="{{ $subMenu->icons }}"></i>
                                     <a href="{{ route($subMenu->route) }}" class="d-flex flex-column justify-content-between align-items-center p-3 text-decoration-none" style="height: 100%;">
                                         <span class="fs-3 fw-bold text-center text-dark">{{ $subMenu->name }}</span>
-                                        <span class="text-center text-dark">{{ $subMenu->description }}</span>
+                                        {{-- <span class="text-center text-dark">{{ $subMenu->description }}</span> --}}
                                     </a>
                                 </div>
                             </div>

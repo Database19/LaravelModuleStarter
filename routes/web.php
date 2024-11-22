@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 
 Route::get('/', function () {
@@ -162,14 +163,14 @@ Route::get('/create-module', function() {
     ];
 
     // foreach ($menus as $menuData) {
-    //     $menu = Menu::create([
-    //         'name' => $menuData['name'],
-    //         'description' => $menuData['description'],
-    //         'icons' => $menuData['icons'],
-    //         'route' => $menuData['route'],
-    //         'permission' => $menuData['permission'],
-    //         'is_active' => $menuData['is_active']
-    //     ]);
+        // $menu = Menu::create([
+        //     'name' => $menuData['name'],
+        //     'description' => $menuData['description'],
+        //     'icons' => $menuData['icons'],
+        //     'route' => $menuData['route'],
+        //     'permission' => $menuData['permission'],
+        //     'is_active' => $menuData['is_active']
+        // ]);
 
     //     foreach ($menuData['sub_menus'] as $subMenuData) {
     //         SubMenu::create([
@@ -230,6 +231,21 @@ Route::get('/assign-role', function() {
     // }
 
     // return "sukses";
+});
+
+Route::get('/module-delete', function() {
+    $menu = Menu::with('SubMenus')->find(33);
+
+    if ($menu) {
+        $menu->SubMenus()->delete();
+        $menu->delete();
+
+        Alert::success('Sukses', 'Module berhasil terhapus');
+        return redirect()->route('home');
+    }
+
+    Alert::info('Not Found', 'Module Tidak Ditemukan !');
+    return redirect()->route('home');
 });
 
 Auth::routes();
