@@ -5,14 +5,14 @@ namespace Modules\Master\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class MasterController extends Controller
+class MachineController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('master::index');
+        return view('master::machine.index');
     }
 
     /**
@@ -36,26 +36,7 @@ class MasterController extends Controller
      */
     public function show($id)
     {
-        if($id == 'material'){
-            $view = app(MaterialController::class);
-        }elseif ($id == 'product') {
-            $view = app(ProductController::class);
-        }elseif ($id == 'warehouse') {
-            $view = app(WarehouseController::class);
-        }elseif ($id == 'supplier') {
-            $view = app(SupplierController::class);
-        }elseif ($id == 'workcenter') {
-            $view = app(WorkCenterController::class);
-        }elseif ($id == 'customer') {
-            $view = app(CustomerController::class);
-        }elseif ($id == 'machine') {
-            $view = app(MachineController::class);
-        }elseif ($id == 'bom') {
-            $view = app(BomController::class);
-        }else{
-            return view('master::index');
-        }
-        return $view->index();
+        return view('master::show');
     }
 
     /**

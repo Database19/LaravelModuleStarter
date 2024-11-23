@@ -233,20 +233,28 @@ Route::get('/assign-role', function() {
     // return "sukses";
 });
 
-Route::get('/module-delete', function() {
-    $menu = Menu::with('SubMenus')->find(33);
+Route::get('/get-module', function () {
+    $data = Menu::with('subMenus:name,parent_id')
+                ->select(['id', 'name'])
+                ->get();
 
-    if ($menu) {
-        $menu->SubMenus()->delete();
-        $menu->delete();
-
-        Alert::success('Sukses', 'Module berhasil terhapus');
-        return redirect()->route('home');
-    }
-
-    Alert::info('Not Found', 'Module Tidak Ditemukan !');
-    return redirect()->route('home');
+    return $data;
 });
+
+// Route::get('/module-delete', function() {
+//     $menu = Menu::with('SubMenus')->find(33);
+
+//     if ($menu) {
+//         $menu->SubMenus()->delete();
+//         $menu->delete();
+
+//         Alert::success('Sukses', 'Module berhasil terhapus');
+//         return redirect()->route('home');
+//     }
+
+//     Alert::info('Not Found', 'Module Tidak Ditemukan !');
+//     return redirect()->route('home');
+// });
 
 Auth::routes();
 

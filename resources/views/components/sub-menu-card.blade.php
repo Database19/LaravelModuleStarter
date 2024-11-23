@@ -15,10 +15,10 @@
                     @foreach($menu->subMenus as $subMenu)
                         @if($subMenu->is_active)
                             <div class="col-md-4">
-                                <div class="card-content h-100 shadow-sm" style="border-radius: 0;">
+                                <div class="card-content shadow-sm" style="border-radius: 0; height: 100px;">
                                     <i class="{{ $subMenu->icons }}"></i>
                                     <a href="{{ route($subMenu->route) }}" class="d-flex flex-column justify-content-between align-items-center p-3 text-decoration-none" style="height: 100%;">
-                                        <span class="fs-3 fw-bold text-center text-dark">{{ $subMenu->name }}</span>
+                                        <span class="fs-4 fw-bold text-center text-dark">{{ $subMenu->name }}</span>
                                         {{-- <span class="text-center text-dark">{{ $subMenu->description }}</span> --}}
                                     </a>
                                 </div>
