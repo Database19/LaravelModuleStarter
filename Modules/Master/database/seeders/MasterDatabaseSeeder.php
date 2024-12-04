@@ -11,6 +11,6 @@ class MasterDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call(MasterDataSeeder::class);
     }
 }

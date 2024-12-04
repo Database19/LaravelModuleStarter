@@ -163,14 +163,14 @@ Route::get('/create-module', function() {
     ];
 
     // foreach ($menus as $menuData) {
-        // $menu = Menu::create([
-        //     'name' => $menuData['name'],
-        //     'description' => $menuData['description'],
-        //     'icons' => $menuData['icons'],
-        //     'route' => $menuData['route'],
-        //     'permission' => $menuData['permission'],
-        //     'is_active' => $menuData['is_active']
-        // ]);
+    //     $menu = Menu::create([
+    //         'name' => $menuData['name'],
+    //         'description' => $menuData['description'],
+    //         'icons' => $menuData['icons'],
+    //         'route' => $menuData['route'],
+    //         'permission' => $menuData['permission'],
+    //         'is_active' => $menuData['is_active']
+    //     ]);
 
     //     foreach ($menuData['sub_menus'] as $subMenuData) {
     //         SubMenu::create([
@@ -188,6 +188,12 @@ Route::get('/create-module', function() {
 });
 
 Route::get('/assign-role', function() {
+    // $administrator = User::create([
+    //     'name' => 'Administrator',
+    //     'email' => 'administrator@crm.com',
+    //     'password' => Hash::make('kodok123')
+    // ]);
+
     // $userSales = User::create([
     //     'name' => 'Manager Sales',
     //     'email' => 'sales@crm.com',
@@ -212,25 +218,34 @@ Route::get('/assign-role', function() {
     //     'password' => Hash::make('kodok123')
     // ]);
 
-    // $err = 0;
-    // if(!$userSales->assignRole('Sales Manager')){
-    //     $err = 1;
-    // }
-    // if(!$userAkuntan->assignRole('Accountant')){
-    //     $err = 1;
-    // }
-    // if(!$userInventory->assignRole('Inventory Clerk')){
-    //     $err = 1;
-    // }
-    // if(!$userMaintenance->assignRole('Maintenance')){
-    //     $err = 1;
-    // }
+    $administrator = User::find(1);
+    $userSales = User::find(2);
+    $userAkuntan = User::find(3);
+    $userInventory = User::find(4);
+    $userMaintenance = User::find(5);
 
-    // if($err === 1){
-    //     return "fail";
-    // }
+    $err = 0;
+    if(!$administrator->assignRole('Admin')){
+        $err = 1;
+    }
+    if(!$userSales->assignRole('Sales Manager')){
+        $err = 1;
+    }
+    if(!$userAkuntan->assignRole('Accountant')){
+        $err = 1;
+    }
+    if(!$userInventory->assignRole('Inventory Clerk')){
+        $err = 1;
+    }
+    if(!$userMaintenance->assignRole('Maintenance')){
+        $err = 1;
+    }
 
-    // return "sukses";
+    if($err === 1){
+        return "fail";
+    }
+
+    return "sukses";
 });
 
 Route::get('/get-module', function () {

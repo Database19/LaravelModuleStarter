@@ -31,7 +31,7 @@ Route::middleware(['auth', 'role:Admin|Maintenance'])->group(function () {
         Route::resource('supplier', SupplierController::class)->names('masterdata.supplier');
         Route::resource('customer', CustomerController::class)->names('masterdata.customer');
         Route::resource('warehouse', WarehouseController::class)->names('masterdata.warehouse');
-        Route::resource('workcenter', WorkCenterController::class)->names('masterdata.workcenter');
+        Route::resource('workcenter', WorkCenterController::class)->names('masterdata.work-center');
         Route::resource('machine', MachineController::class)->names('masterdata.machine');
         Route::resource('bom', BomController::class)->names('masterdata.bom');
     });
