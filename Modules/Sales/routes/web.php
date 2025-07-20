@@ -1,19 +1,27 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Sales\Http\Controllers\SalesController;
+use Modules\Sales\Http\Controllers\SalesOrderController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::middleware(['auth', 'role:Admin|Sales Executive'])
+    ->prefix('sales')
+    ->name('sales.')
+    ->group(function () {
 
-Route::middleware(['auth', 'role:Admin|Sales Manager'])->group(function () {
-    Route::resource('sales', SalesController::class)->names('sales');
+    // Rute untuk CRUD dasar
+    Route::get('orders', [SalesOrderController::class, 'index'])->name('orders.index');
+    Route::get('orders/create', [SalesOrderController::class, 'create'])->name('orders.create');
+    Route::post('orders', [SalesOrderController::class, 'store'])->name('orders.store');
+
+    // Rute yang menggunakan Route-Model Binding.
+    // Pastikan nama parameter {salesOrder} sama dengan variabel $salesOrder di controller.
+    Route::get('orders/{salesOrder}', [SalesOrderController::class, 'show'])->name('orders.show');
+    Route::get('orders/{salesOrder}/edit', [SalesOrderController::class, 'edit'])->name('orders.edit');
+    Route::put('orders/{salesOrder}', [SalesOrderController::class, 'update'])->name('orders.update');
+    Route::delete('orders/{salesOrder}', [SalesOrderController::class, 'destroy'])->name('orders.destroy');
+
+    // Rute untuk Aksi Alur Kerja (Workflow)
+    Route::post('orders/{salesOrder}/confirm', [SalesOrderController::class, 'confirm'])->name('orders.confirm');
+    Route::post('orders/{salesOrder}/ship', [SalesOrderController::class, 'createShipment'])->name('orders.ship');
+    Route::post('orders/{salesOrder}/invoice', [SalesOrderController::class, 'createInvoice'])->name('orders.invoice');
 });

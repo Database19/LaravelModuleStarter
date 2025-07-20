@@ -14,6 +14,6 @@ use Modules\Maintenance\Http\Controllers\MaintenanceController;
 |
 */
 
-Route::middleware(['auth', 'role:Admin|Maintenance'])->group(function () {
+Route::middleware(['auth', 'role:Admin|Maintenance Staff'])->group(function () {
     Route::resource('maintenance', MaintenanceController::class)->names('maintenance');
 });

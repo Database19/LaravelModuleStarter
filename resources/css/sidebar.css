@@ -1,0 +1,77 @@
+.custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #4B5563 #374151;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #374151;
+    border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #6B7280;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #9CA3AF;
+}
+
+/* Hover effect for scrollbar container */
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+    background: #9CA3AF;
+}
+
+/* Mobile responsive scrollbar */
+@media (max-width: 768px) {
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+    }
+}
+
+/* Smooth scrolling */
+.custom-scrollbar {
+    scroll-behavior: smooth;
+}
+
+/* Alternative scrollbar style for main content */
+.main-content-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #D1D5DB #F3F4F6;
+}
+
+.main-content-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.main-content-scrollbar::-webkit-scrollbar-track {
+    background: #F3F4F6;
+    border-radius: 10px;
+}
+
+.main-content-scrollbar::-webkit-scrollbar-thumb {
+    background: #D1D5DB;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+.main-content-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #9CA3AF;
+}
+
+/* Hide scrollbar on mobile for cleaner look */
+@media (max-width: 640px) {
+    .hide-scrollbar-mobile {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .hide-scrollbar-mobile::-webkit-scrollbar {
+        display: none;
+    }
+}

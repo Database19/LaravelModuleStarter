@@ -1,0 +1,11 @@
+{
+    "name": "Purchasing",
+    "alias": "purchasing",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Purchasing\\Providers\\PurchasingServiceProvider"
+    ],
+    "files": []
+}

@@ -1,0 +1,11 @@
+{
+    "name": "DocumentManagement",
+    "alias": "documentmanagement",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\DocumentManagement\\Providers\\DocumentManagementServiceProvider"
+    ],
+    "files": []
+}

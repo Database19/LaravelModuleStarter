@@ -2,5 +2,18 @@
     "Inventory": true,
     "Sales": true,
     "Accounting": true,
-    "Maintenance": true
+    "Maintenance": true,
+    "Purchasing": true,
+    "HumanResource": true,
+    "CRM": true,
+    "Manufacturing": true,
+    "ProjectManagement": true,
+    "QualityControl": true,
+    "Warehouse": true,
+    "PointOfSales": true,
+    "DocumentManagement": true,
+    "Helpdesk": true,
+    "Shared": true,
+    "MasterData": true,
+    "CustomerController": false
 }

@@ -16,5 +16,32 @@
         "sass": "^1.56.1",
         "tailwindcss": "^3.4.13",
         "vite": "^5.0"
+    },
+    "dependencies": {
+        "@alpinejs/mask": "^3.14.9",
+        "@fortawesome/fontawesome-free": "^6.7.2",
+        "alpinejs": "^3.14.9",
+        "datatables.net": "^2.3.2",
+        "datatables.net-autofill-dt": "^2.7.0",
+        "datatables.net-buttons-dt": "^3.2.4",
+        "datatables.net-colreorder-dt": "^2.1.1",
+        "datatables.net-columncontrol-dt": "^1.0.6",
+        "datatables.net-datetime": "^1.5.6",
+        "datatables.net-dt": "^2.3.2",
+        "datatables.net-fixedcolumns-dt": "^5.0.4",
+        "datatables.net-fixedheader-dt": "^4.0.3",
+        "datatables.net-keytable-dt": "^2.12.1",
+        "datatables.net-responsive-dt": "^3.0.5",
+        "datatables.net-rowgroup-dt": "^1.5.2",
+        "datatables.net-rowreorder-dt": "^1.5.0",
+        "datatables.net-scroller-dt": "^2.4.3",
+        "datatables.net-searchbuilder-dt": "^1.8.3",
+        "datatables.net-searchpanes-dt": "^2.3.3",
+        "datatables.net-select-dt": "^3.0.1",
+        "datatables.net-staterestore-dt": "^1.4.1",
+        "jquery": "^3.7.1",
+        "jszip": "^3.10.1",
+        "pdfmake": "^0.2.20",
+        "sweetalert2": "^11.22.2"
     }
 }

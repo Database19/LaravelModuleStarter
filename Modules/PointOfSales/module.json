@@ -1,0 +1,11 @@
+{
+    "name": "PointOfSales",
+    "alias": "pointofsales",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\PointOfSales\\Providers\\PointOfSalesServiceProvider"
+    ],
+    "files": []
+}

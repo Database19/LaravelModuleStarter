@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/pointofsales",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\PointOfSales\\": "app/",
+            "Modules\\PointOfSales\\Database\\Factories\\": "database/factories/",
+            "Modules\\PointOfSales\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\PointOfSales\\Tests\\": "tests/"
+        }
+    }
+}

@@ -1,3 +1,30 @@
+/* Custom Style CSS */
+@import url('./sidebar.css');
+@import url('./font.css');
+@import url('./custom_datatables.css');
+@import url('./loading.css');
+@import url('./input.css');
+
+@import "@fortawesome/fontawesome-free/css/all.css";
+@import url('datatables.net-dt');
+@import url('datatables.net-autofill-dt');
+@import url('datatables.net-buttons-dt');
+@import url('datatables.net-colreorder-dt');
+@import url('datatables.net-columncontrol-dt');
+@import url('datatables.net-fixedcolumns-dt');
+@import url('datatables.net-fixedheader-dt');
+@import url('datatables.net-keytable-dt');
+@import url('datatables.net-responsive-dt');
+@import url('datatables.net-rowgroup-dt');
+@import url('datatables.net-rowreorder-dt');
+@import url('datatables.net-scroller-dt');
+@import url('datatables.net-searchbuilder-dt');
+@import url('datatables.net-searchpanes-dt');
+@import url('datatables.net-select-dt');
+@import url('datatables.net-staterestore-dt');
+
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
