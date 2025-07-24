@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Traits\Alertable;
+use App\Traits\BelongsToTenant;
+use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Employee extends Model
 {
-    use HasFactory;
+    use HasFactory, Alertable, Userstamps, BelongsToTenant;
 
     protected $fillable = [
         'user_id', 'employee_id_number', 'job_title', 'department_id',
@@ -17,7 +20,7 @@ class Employee extends Model
         'termination_date', 'basic_salary', 'bank_name',
         'bank_account_number', 'bank_account_holder', 'place_of_birth',
         'date_of_birth', 'gender', 'marital_status', 'address_ktp',
-        'address_domicile', 'created_by', 'updated_by'
+        'address_domicile'
     ];
 
     protected $casts = [

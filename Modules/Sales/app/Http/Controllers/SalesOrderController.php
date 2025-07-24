@@ -14,6 +14,8 @@ use App\Models\Product;
 use App\Models\Warehouse;
 use App\Models\Account;
 use App\Models\JournalEntry;
+use App\Models\WarehouseStock;
+
 // ==========================================
 
 class SalesOrderController extends Controller
@@ -210,19 +212,18 @@ class SalesOrderController extends Controller
 
         DB::beginTransaction();
         try {
-            // 1. Ubah status order
             $salesOrder->update(['status' => 'shipped']);
 
-            // 2. Logika pengurangan stok langsung
             foreach ($salesOrder->items as $item) {
-                $product = Product::find($item->product_id);
-                if ($product) {
-                    // Cek stok jika perlu
-                    if($product->quantity < $item->quantity) {
-                         throw new \Exception("Stok untuk produk " . $product->name . " tidak mencukupi.");
-                    }
-                    $product->decrement('quantity', $item->quantity);
+                $stock = WarehouseStock::where('warehouse_id', $salesOrder->warehouse_id)
+                                    ->where('product_id', $item->product_id)
+                                    ->first();
+
+                if (!$stock || $stock->quantity < $item->quantity) {
+                    throw new \Exception("Stok untuk produk {$item->product->name} tidak mencukupi di gudang yang dipilih.");
                 }
+
+                $stock->decrement('quantity', $item->quantity);
             }
 
             DB::commit();

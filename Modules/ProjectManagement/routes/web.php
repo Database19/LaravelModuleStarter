@@ -3,20 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\ProjectManagement\Http\Controllers\ProjectManagementController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-Route::middleware(['auth', 'role:Admin|Project Manager'])->group(function () {
-    Route::resource('projectmanagement', ProjectManagementController::class)->names('projectmanagement');
-});
 
-// Route::group([], function () {
-//     Route::resource('projectmanagement', ProjectManagementController::class)->names('projectmanagement');
-// });
+Route::middleware(['auth', 'role:Admin|Project Manager'])->prefix('project')->name('project.')->group(function () {
+    Route::resource('management', ProjectManagementController::class);
+});

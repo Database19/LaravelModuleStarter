@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Manufacturing\Http\Controllers\BomController;
 use Modules\Manufacturing\Http\Controllers\ManufacturingController;
 
 /*
@@ -13,8 +14,8 @@ use Modules\Manufacturing\Http\Controllers\ManufacturingController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::middleware(['auth', 'role:Admin|Production Manager'])->group(function () {
-    Route::resource('manufacturing', ManufacturingController::class)->names('manufacturing');
+Route::middleware(['auth', 'role:Admin|Production Manager'])->prefix('manufacturing')->name('manufacturing.')->group(function () {
+    Route::resource('boms', BomController::class);
 });
 // Route::group([], function () {
 //     Route::resource('manufacturing', ManufacturingController::class)->names('manufacturing');

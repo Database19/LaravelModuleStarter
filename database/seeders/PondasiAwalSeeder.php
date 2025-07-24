@@ -20,16 +20,16 @@ class PondasiAwalSeeder extends Seeder
     public function run(): void
     {
         $users = [
-            'super_admin' => User::where('email', 'admin@erp.test')->first(),
-            'sales' => User::where('email', 'sales.manager@erp.test')->first(),
-            'accountant' => User::where('email', 'accounting.manager@erp.test')->first(),
-            'hr' => User::where('email', 'hr.manager@erp.test')->first(),
-            'inventory' => User::where('email', 'warehouse.manager@erp.test')->first(),
-            'maintenance' => User::where('email', 'maintenance.staff@erp.test')->first(),
-            'production' => User::where('email', 'production.manager@erp.test')->first(),
-            'pos' => User::where('email', 'pos.cashier@erp.test')->first(),
-            'project' => User::where('email', 'project.manager@erp.test')->first(),
-            'helpdesk' => User::where('email', 'helpdesk.agent@erp.test')->first(),
+            // 'super_admin' => User::where('email', 'admin@erp.test')->first(),
+            // 'sales' => User::where('email', 'sales.manager@erp.test')->first(),
+            // 'accountant' => User::where('email', 'accounting.manager@erp.test')->first(),
+            // 'hr' => User::where('email', 'hr.manager@erp.test')->first(),
+            // 'inventory' => User::where('email', 'warehouse.manager@erp.test')->first(),
+            // 'maintenance' => User::where('email', 'maintenance.staff@erp.test')->first(),
+            // 'production' => User::where('email', 'production.manager@erp.test')->first(),
+            // 'pos' => User::where('email', 'pos.cashier@erp.test')->first(),
+            // 'project' => User::where('email', 'project.manager@erp.test')->first(),
+            // 'helpdesk' => User::where('email', 'helpdesk.agent@erp.test')->first(),
         ];
 
         $now = now();
@@ -42,8 +42,9 @@ class PondasiAwalSeeder extends Seeder
             ['account_code' => '112-01-002', 'name' => 'Bank Mandiri', 'type' => 'asset'],
             ['account_code' => '113-01-001', 'name' => 'Piutang Usaha', 'type' => 'asset'],
             ['account_code' => '113-02-001', 'name' => 'Penyisihan Piutang Tak Tertagih', 'type' => 'asset'], // Akun Kontra Aset
-            ['account_code' => '114-01-001', 'name' => 'Persediaan Barang Jadi', 'type' => 'asset'],
-            ['account_code' => '114-01-002', 'name' => 'Persediaan Bahan Baku', 'type' => 'asset'],
+            ['account_code' => '114-01-001', 'name' => 'Persediaan Bahan Baku', 'type' => 'asset'],
+            ['account_code' => '114-01-002', 'name' => 'Persediaan Barang Dalam Proses (WIP)', 'type' => 'asset'], // BARU: Untuk modul Manufacturing
+            ['account_code' => '114-01-003', 'name' => 'Persediaan Barang Jadi', 'type' => 'asset'],
             ['account_code' => '115-01-001', 'name' => 'Sewa Dibayar di Muka', 'type' => 'asset'],
             ['account_code' => '115-01-002', 'name' => 'Asuransi Dibayar di Muka', 'type' => 'asset'],
             ['account_code' => '116-01-001', 'name' => 'Perlengkapan Kantor', 'type' => 'asset'],
@@ -69,6 +70,8 @@ class PondasiAwalSeeder extends Seeder
             // --- 210-00-000: LIABILITAS JANGKA PENDEK ---
             ['account_code' => '211-01-001', 'name' => 'Utang Usaha', 'type' => 'liability'],
             ['account_code' => '212-01-001', 'name' => 'Utang Gaji', 'type' => 'liability'],
+            ['account_code' => '212-01-002', 'name' => 'Utang BPJS Ketenagakerjaan', 'type' => 'liability'], // BARU: Untuk modul Payroll
+            ['account_code' => '212-01-003', 'name' => 'Utang BPJS Kesehatan', 'type' => 'liability'], // BARU: Untuk modul Payroll
             ['account_code' => '213-01-001', 'name' => 'Utang Pajak (PPh 21, 23, 25)', 'type' => 'liability'],
             ['account_code' => '213-01-002', 'name' => 'PPN Keluaran', 'type' => 'liability'],
             ['account_code' => '214-01-001', 'name' => 'Beban yang Masih Harus Dibayar', 'type' => 'liability'],
@@ -92,19 +95,26 @@ class PondasiAwalSeeder extends Seeder
             ['account_code' => '412-01-001', 'name' => 'Pendapatan Jasa', 'type' => 'revenue'],
             ['account_code' => '413-01-001', 'name' => 'Retur Penjualan dan Pengurangan Harga', 'type' => 'revenue'], // Akun Kontra Pendapatan
             ['account_code' => '414-01-001', 'name' => 'Diskon Penjualan', 'type' => 'revenue'], // Akun Kontra Pendapatan
+            ['account_code' => '415-01-001', 'name' => 'Pendapatan Pengiriman', 'type' => 'revenue'], // BARU: Jika ongkir dibebankan ke pelanggan
 
             // --- 420-00-000: PENDAPATAN DI LUAR USAHA ---
             ['account_code' => '421-01-001', 'name' => 'Pendapatan Bunga', 'type' => 'revenue'],
             ['account_code' => '422-01-001', 'name' => 'Pendapatan Sewa', 'type' => 'revenue'],
             ['account_code' => '423-01-001', 'name' => 'Keuntungan Penjualan Aset', 'type' => 'revenue'],
+            ['account_code' => '424-01-001', 'name' => 'Pendapatan Lain-lain', 'type' => 'revenue'], // BARU: Akun penampung
 
-            // 500-00-000: HARGA POKOK PENJUALAN (HPP)
-            ['account_code' => '511-01-001', 'name' => 'Harga Pokok Penjualan', 'type' => 'expense'],
+            // 500-00-000: HARGA POKOK PENJUALAN (HPP) & BIAYA PRODUKSI
+            ['account_code' => '511-01-001', 'name' => 'Harga Pokok Penjualan (COGS)', 'type' => 'expense'],
             ['account_code' => '512-01-001', 'name' => 'Biaya Angkut Pembelian', 'type' => 'expense'],
+            ['account_code' => '513-01-001', 'name' => 'Diskon Pembelian', 'type' => 'expense'], // BARU: Sebagai kontra-akun HPP
+            ['account_code' => '521-01-001', 'name' => 'Biaya Tenaga Kerja Langsung', 'type' => 'expense'], // BARU: Untuk modul Manufacturing
+            ['account_code' => '522-01-001', 'name' => 'Biaya Overhead Pabrik (FOH)', 'type' => 'expense'], // BARU: Untuk modul Manufacturing
+            ['account_code' => '531-01-001', 'name' => 'Penyesuaian Persediaan', 'type' => 'expense'], // BARU: Untuk selisih Stock Opname
 
             // 600-00-000: BEBAN OPERASIONAL
             // --- 610-00-000: BEBAN UMUM & ADMINISTRASI ---
-            ['account_code' => '611-01-001', 'name' => 'Beban Gaji dan Upah', 'type' => 'expense'],
+            ['account_code' => '611-01-001', 'name' => 'Beban Gaji dan Upah (Kantor)', 'type' => 'expense'],
+            ['account_code' => '611-01-002', 'name' => 'Beban Tunjangan (Kantor)', 'type' => 'expense'], // BARU: Untuk Payroll
             ['account_code' => '612-01-001', 'name' => 'Beban Listrik, Air, dan Internet', 'type' => 'expense'],
             ['account_code' => '613-01-001', 'name' => 'Beban Sewa Kantor', 'type' => 'expense'],
             ['account_code' => '614-01-001', 'name' => 'Beban Asuransi', 'type' => 'expense'],
@@ -123,6 +133,7 @@ class PondasiAwalSeeder extends Seeder
             ['account_code' => '711-01-001', 'name' => 'Beban Bunga', 'type' => 'expense'],
             ['account_code' => '712-01-001', 'name' => 'Beban Administrasi Bank', 'type' => 'expense'],
             ['account_code' => '713-01-001', 'name' => 'Kerugian Penjualan Aset', 'type' => 'expense'],
+            ['account_code' => '714-01-001', 'name' => 'Beban Lain-lain', 'type' => 'expense'], // BARU: Akun penampung
 
             // 800-00-000: PAJAK
             ['account_code' => '811-01-001', 'name' => 'Beban Pajak Penghasilan', 'type' => 'expense'],
@@ -135,8 +146,9 @@ class PondasiAwalSeeder extends Seeder
                 'name' => $account['name'],
                 'type' => $account['type'],
                 'is_active' => true,
-                'created_by' => $users['accountant']->id,
-                'updated_by' => $users['accountant']->id,
+                'created_by' => 1,
+                'updated_by' => 1,
+                'company_id' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);
@@ -158,115 +170,114 @@ class PondasiAwalSeeder extends Seeder
         // ]);
 
         // Kategori produk dibuat oleh Inventory
-        DB::table('product_categories')->insertOrIgnore([
-            // Kategori Barang Jadi (Finished Goods)
-            [
-                'name' => 'Elektronik',
-                'description' => 'Perangkat elektronik konsumen dan komponennya.',
-                'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
-            ],
-            [
-                'name' => 'Pakaian dan Aksesoris',
-                'description' => 'Produk garmen, alas kaki, dan aksesoris fashion.',
-                'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
-            ],
-            [
-                'name' => 'Makanan dan Minuman',
-                'description' => 'Produk makanan kemasan dan minuman.',
-                'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
-            ],
-            [
-                'name' => 'Alat Tulis Kantor (ATK)',
-                'description' => 'Perlengkapan untuk kebutuhan operasional kantor.',
-                'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
-            ],
-            [
-                'name' => 'Mebel dan Furnitur',
-                'description' => 'Produk perabotan rumah tangga dan kantor.',
-                'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
-            ],
-            [
-                'name' => 'Kesehatan dan Kecantikan',
-                'description' => 'Produk obat-obatan, suplemen, dan kosmetik.',
-                'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
-            ],
-            [
-                'name' => 'Suku Cadang Otomotif',
-                'description' => 'Komponen dan suku cadang untuk kendaraan bermotor.',
-                'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
-            ],
+        // DB::table('product_categories')->insertOrIgnore([
+        //     [
+        //         'name' => 'Elektronik',
+        //         'description' => 'Perangkat elektronik konsumen dan komponennya.',
+        //         'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
+        //     ],
+        //     [
+        //         'name' => 'Pakaian dan Aksesoris',
+        //         'description' => 'Produk garmen, alas kaki, dan aksesoris fashion.',
+        //         'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
+        //     ],
+        //     [
+        //         'name' => 'Makanan dan Minuman',
+        //         'description' => 'Produk makanan kemasan dan minuman.',
+        //         'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
+        //     ],
+        //     [
+        //         'name' => 'Alat Tulis Kantor (ATK)',
+        //         'description' => 'Perlengkapan untuk kebutuhan operasional kantor.',
+        //         'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
+        //     ],
+        //     [
+        //         'name' => 'Mebel dan Furnitur',
+        //         'description' => 'Produk perabotan rumah tangga dan kantor.',
+        //         'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
+        //     ],
+        //     [
+        //         'name' => 'Kesehatan dan Kecantikan',
+        //         'description' => 'Produk obat-obatan, suplemen, dan kosmetik.',
+        //         'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
+        //     ],
+        //     [
+        //         'name' => 'Suku Cadang Otomotif',
+        //         'description' => 'Komponen dan suku cadang untuk kendaraan bermotor.',
+        //         'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
+        //     ],
 
-            // Kategori Bahan Baku (Raw Materials)
-            [
-                'name' => 'Bahan Baku Makanan',
-                'description' => 'Bahan mentah untuk diolah menjadi produk makanan.',
-                'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
-            ],
-            [
-                'name' => 'Kain dan Tekstil',
-                'description' => 'Bahan mentah untuk produksi garmen.',
-                'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
-            ],
-            [
-                'name' => 'Komponen Elektronik',
-                'description' => 'Bahan mentah untuk perakitan perangkat elektronik.',
-                'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
-            ],
+        //     // Kategori Bahan Baku (Raw Materials)
+        //     [
+        //         'name' => 'Bahan Baku Makanan',
+        //         'description' => 'Bahan mentah untuk diolah menjadi produk makanan.',
+        //         'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
+        //     ],
+        //     [
+        //         'name' => 'Kain dan Tekstil',
+        //         'description' => 'Bahan mentah untuk produksi garmen.',
+        //         'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
+        //     ],
+        //     [
+        //         'name' => 'Komponen Elektronik',
+        //         'description' => 'Bahan mentah untuk perakitan perangkat elektronik.',
+        //         'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
+        //     ],
 
-            // Kategori Jasa (Services)
-            [
-                'name' => 'Jasa Perawatan',
-                'description' => 'Layanan pemeliharaan dan perbaikan aset atau produk.',
-                'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
-            ],
-            [
-                'name' => 'Jasa Konsultasi',
-                'description' => 'Layanan konsultasi profesional.',
-                'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
-            ],
-        ]);
+        //     // Kategori Jasa (Services)
+        //     [
+        //         'name' => 'Jasa Perawatan',
+        //         'description' => 'Layanan pemeliharaan dan perbaikan aset atau produk.',
+        //         'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
+        //     ],
+        //     [
+        //         'name' => 'Jasa Konsultasi',
+        //         'description' => 'Layanan konsultasi profesional.',
+        //         'created_by' => $users['inventory']->id, 'updated_by' => $users['inventory']->id, 'created_at' => $now, 'updated_at' => $now
+        //     ],
+        // ]);
 
 
-        $units = [
-            ['name' => 'Unit', 'short_code' => 'unit'],
-            ['name' => 'Pieces', 'short_code' => 'pcs'],
-            ['name' => 'Pack', 'short_code' => 'pack'],
-            ['name' => 'Rim', 'short_code' => 'rim'],
-            ['name' => 'Layanan', 'short_code' => 'layanan'],
-            ['name' => 'Box', 'short_code' => 'box'],
-            ['name' => 'Kilogram', 'short_code' => 'kg'],
-        ];
+        // $units = [
+        //     ['name' => 'Unit', 'short_code' => 'unit'],
+        //     ['name' => 'Pieces', 'short_code' => 'pcs'],
+        //     ['name' => 'Pack', 'short_code' => 'pack'],
+        //     ['name' => 'Rim', 'short_code' => 'rim'],
+        //     ['name' => 'Layanan', 'short_code' => 'layanan'],
+        //     ['name' => 'Box', 'short_code' => 'box'],
+        //     ['name' => 'Kilogram', 'short_code' => 'kg'],
+        // ];
 
-        // Tambahkan data umum ke setiap baris
-        foreach ($units as &$unit) {
-            $unit['is_active'] = true;
-            $unit['created_by'] = $users['inventory']->id;
-            $unit['updated_by'] = $users['inventory']->id;
-            $unit['created_at'] = $now;
-            $unit['updated_at'] = $now;
-        }
-
-        // Gunakan insertOrIgnore untuk menghindari error jika data sudah ada
-        DB::table('units')->insertOrIgnore($units);
-
-        $brands = [
-            ['name' => 'HP', 'logo_url' => null],
-            ['name' => 'Logitech', 'logo_url' => null],
-            ['name' => 'Sinar Dunia', 'logo_url' => null],
-            ['name' => 'Generic', 'logo_url' => null], // Untuk produk tanpa merek
-        ];
-
-        // Tambahkan data umum ke setiap baris
-        foreach ($brands as &$brand) {
-            $brand['is_active'] = true;
-            $brand['created_by'] = $users['inventory']->id;
-            $brand['updated_by'] = $users['inventory']->id;
-            $brand['created_at'] = $now;
-            $brand['updated_at'] = $now;
-        }
+        // // Tambahkan data umum ke setiap baris
+        // foreach ($units as &$unit) {
+        //     $unit['is_active'] = true;
+        //     $unit['created_by'] = $users['inventory']->id;
+        //     $unit['updated_by'] = $users['inventory']->id;
+        //     $unit['created_at'] = $now;
+        //     $unit['updated_at'] = $now;
+        // }
 
         // Gunakan insertOrIgnore untuk menghindari error jika data sudah ada
-        DB::table('brands')->insertOrIgnore($brands);
+        // DB::table('units')->insertOrIgnore($units);
+
+        // $brands = [
+        //     ['name' => 'HP', 'logo_url' => null],
+        //     ['name' => 'Logitech', 'logo_url' => null],
+        //     ['name' => 'Sinar Dunia', 'logo_url' => null],
+        //     ['name' => 'Generic', 'logo_url' => null], // Untuk produk tanpa merek
+        // ];
+
+        // // Tambahkan data umum ke setiap baris
+        // foreach ($brands as &$brand) {
+        //     $brand['is_active'] = true;
+        //     $brand['created_by'] = $users['inventory']->id;
+        //     $brand['updated_by'] = $users['inventory']->id;
+        //     $brand['created_at'] = $now;
+        //     $brand['updated_at'] = $now;
+        // }
+
+        // Gunakan insertOrIgnore untuk menghindari error jika data sudah ada
+        // DB::table('brands')->insertOrIgnore($brands);
 
 
         // $units = Unit::pluck('id', 'short_code');
@@ -556,33 +567,33 @@ class PondasiAwalSeeder extends Seeder
         // ]);
 
         // Departemen dibuat oleh HR
-        DB::table('departments')->insertOrIgnore([
-            [
-                'name' => 'Keuangan & Akuntansi',
-                'manager_id' => $users['accountant']->id,
-                'created_by' => $users['hr']->id, 'updated_by' => $users['hr']->id, 'created_at' => $now, 'updated_at' => $now
-            ],
-            [
-                'name' => 'Penjualan & Pemasaran',
-                'manager_id' => $users['sales']->id,
-                'created_by' => $users['hr']->id, 'updated_by' => $users['hr']->id, 'created_at' => $now, 'updated_at' => $now
-            ],
-            [
-                'name' => 'Sumber Daya Manusia (HR)',
-                'manager_id' => $users['hr']->id,
-                'created_by' => $users['hr']->id, 'updated_by' => $users['hr']->id, 'created_at' => $now, 'updated_at' => $now
-            ],
-            [
-                'name' => 'Teknologi Informasi (IT)',
-                'manager_id' => $users['super_admin']->id,
-                'created_by' => $users['hr']->id, 'updated_by' => $users['hr']->id, 'created_at' => $now, 'updated_at' => $now
-            ],
-            [
-                'name' => 'Operasional & Gudang',
-                'manager_id' => $users['inventory']->id,
-                'created_by' => $users['hr']->id, 'updated_by' => $users['hr']->id, 'created_at' => $now, 'updated_at' => $now
-            ],
-        ]);
+        // DB::table('departments')->insertOrIgnore([
+        //     [
+        //         'name' => 'Keuangan & Akuntansi',
+        //         'manager_id' => $users['accountant']->id,
+        //         'created_by' => $users['hr']->id, 'updated_by' => $users['hr']->id, 'created_at' => $now, 'updated_at' => $now
+        //     ],
+        //     [
+        //         'name' => 'Penjualan & Pemasaran',
+        //         'manager_id' => $users['sales']->id,
+        //         'created_by' => $users['hr']->id, 'updated_by' => $users['hr']->id, 'created_at' => $now, 'updated_at' => $now
+        //     ],
+        //     [
+        //         'name' => 'Sumber Daya Manusia (HR)',
+        //         'manager_id' => $users['hr']->id,
+        //         'created_by' => $users['hr']->id, 'updated_by' => $users['hr']->id, 'created_at' => $now, 'updated_at' => $now
+        //     ],
+        //     [
+        //         'name' => 'Teknologi Informasi (IT)',
+        //         'manager_id' => $users['super_admin']->id,
+        //         'created_by' => $users['hr']->id, 'updated_by' => $users['hr']->id, 'created_at' => $now, 'updated_at' => $now
+        //     ],
+        //     [
+        //         'name' => 'Operasional & Gudang',
+        //         'manager_id' => $users['inventory']->id,
+        //         'created_by' => $users['hr']->id, 'updated_by' => $users['hr']->id, 'created_at' => $now, 'updated_at' => $now
+        //     ],
+        // ]);
 
        // Proyek dibuat oleh user Project
 

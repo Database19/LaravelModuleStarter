@@ -40,8 +40,7 @@ class SupplierController extends Controller
 
         Supplier::create($validated);
 
-        return redirect()->route('master-data.supplier.index')
-                         ->with('success', 'Supplier baru telah ditambahkan.');
+        return redirect()->route('master-data.supplier.index');
     }
 
     public function edit(Supplier $supplier)
@@ -68,8 +67,7 @@ class SupplierController extends Controller
 
         $supplier->update($validated);
 
-        return redirect()->route('master-data.supplier.index')
-                         ->with('success', 'Data supplier telah diperbarui.');
+        return redirect()->route('master-data.supplier.index');
     }
 
     public function destroy(Supplier $supplier)

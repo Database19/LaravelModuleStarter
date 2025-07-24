@@ -13,6 +13,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/test', function () {
+    return "test";
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::prefix('admin')->name('admin.')->middleware('can:manage-acl')->group(function () {

@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use App\Traits\Alertable;
+use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SalesOrderItem extends Model
 {
-    use HasFactory;
+    use HasFactory, Alertable, Userstamps;
 
     protected $fillable = [
         'sales_order_id', 'product_id', 'quantity', 'unit_price',
-        'discount_amount', 'total_price', 'created_by', 'updated_by'
+        'discount_amount', 'total_price'
     ];
 
     protected $casts = [

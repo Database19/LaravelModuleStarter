@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use App\Traits\Alertable;
+use App\Traits\BelongsToTenant;
+use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class WarehouseStock extends Model
 {
-    use HasFactory;
+    use HasFactory, Alertable, Userstamps, BelongsToTenant;
 
     protected $fillable = [
-        'warehouse_id', 'product_id', 'quantity', 'rack_location',
-        'created_by', 'updated_by'
+        'warehouse_id', 'product_id', 'quantity', 'rack_location'
     ];
 
     public function warehouse()

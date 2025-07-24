@@ -3,13 +3,17 @@
 namespace Modules\Purchasing\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\JournalEntry;
 use App\Models\Product;
 use App\Models\PurchaseOrder;
+use App\Models\StockMovement;
 use App\Models\Supplier;
 use App\Models\Warehouse;
+use App\Models\WarehouseStock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Modules\Purchasing\Events\PurchaseOrderReceived;
+use Modules\Purchasing\Listeners\ProcessPurchaseOrderReceipt;
 
 class PurchaseOrderController extends Controller
 {
@@ -89,21 +93,111 @@ class PurchaseOrderController extends Controller
 
     public function receive(PurchaseOrder $purchaseOrder)
     {
+        // dd($purchaseOrder->items);
+
+        // Gunakan status lowercase agar konsisten dengan database ENUM
         if ($purchaseOrder->status !== 'ordered') {
-             alert()->info('Info', 'PO ini sudah pernah diproses.');
-             return back();
+            // Sebaiknya gunakan redirect dengan flash message standar
+            return back();
         }
-        
-        event(new PurchaseOrderReceived($purchaseOrder));
 
-        $purchaseOrder->update([
-            'status' => 'Received',
-            'received_date' => now(),
-        ]);
+        DB::beginTransaction();
+        try {
+            $this->updateWarehouseStock($purchaseOrder);
 
+            $inventoryAccountId = DB::table('accounting_settings')->where('key', 'default_inventory')->value('value');
+            $apAccountId = DB::table('accounting_settings')->where('key', 'default_accounts_payable')->value('value');
 
-        alert()->success('Berhasil!', 'Status PO diubah menjadi Received.');
-        return redirect()->route('purchasing.purchase-orders.show', $purchaseOrder);
+            if (!$inventoryAccountId || !$apAccountId) {
+                throw new \Exception("Pengaturan Akun Persediaan atau Utang Usaha belum diatur.");
+            }
+
+            // 2. Buat Jurnal
+            $totalAmount = $purchaseOrder->items->sum('total_cost'); // Asumsi total dari item
+
+            $journal = JournalEntry::create([
+                'journal_number' => 'JRN-PO-' . $purchaseOrder->id,
+                'date' => now(),
+                'description' => 'Penerimaan barang dari PO #' . $purchaseOrder->order_number,
+                'total_debit' => $totalAmount,
+                'total_credit' => $totalAmount,
+                'referenceable_type' => get_class($purchaseOrder),
+                'referenceable_id' => $purchaseOrder->id,
+                'user_id' => auth()->id(),
+                'created_by' => auth()->id(),
+                'updated_by' => auth()->id(),
+            ]);
+
+            // Jurnal Sisi DEBIT: Persediaan Bertambah
+            $journal->items()->create([
+                'account_id' => $inventoryAccountId,
+                'description' => 'Persediaan dari ' . $purchaseOrder->supplier->name, // Asumsi ada relasi supplier
+                'debit' => $totalAmount, 'credit' => 0,
+                'created_by' => auth()->id(), 'updated_by' => auth()->id(),
+            ]);
+
+            // Jurnal Sisi KREDIT: Utang Usaha Bertambah
+            $journal->items()->create([
+                'account_id' => $apAccountId,
+                'description' => 'Utang Usaha ke ' . $purchaseOrder->supplier->name,
+                'debit' => 0, 'credit' => $totalAmount,
+                'created_by' => auth()->id(),
+                'updated_by' => auth()->id(),
+            ]);
+
+            $purchaseOrder->update([
+                'status' => 'received',
+                'received_date' => now(),
+            ]);
+
+            DB::commit();
+            return redirect()->route('purchasing.purchase-orders.show', $purchaseOrder);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Gagal memproses PO: ' . $e->getMessage());
+        }
+    }
+
+    private function updateWarehouseStock(PurchaseOrder $purchaseOrder): void
+    {
+        foreach ($purchaseOrder->items as $item) {
+            $stock = WarehouseStock::firstOrNew([
+                'warehouse_id' => $purchaseOrder->warehouse_id,
+                'product_id' => $item->product_id,
+            ]);
+
+            $quantityBefore = $stock->quantity ?? 0;
+
+            // Tambah kuantitasnya
+            $stock->quantity += $item->quantity;
+            $quantityAfter = $stock->quantity;
+
+            // Isi data user jika ini record baru
+            if (!$stock->exists) {
+                $stock->created_by = auth()->id();
+            }
+            $stock->updated_by = auth()->id();
+            $stock->save();
+
+            // Buat catatan pergerakan stok (kode Anda sudah bagus)
+            StockMovement::create([
+                'reference_number' => $purchaseOrder->order_number . '-' . $item->product_id,
+                'product_id' => $item->product_id,
+                'warehouse_id' => $purchaseOrder->warehouse_id,
+                'type' => 'in',
+                'quantity' => $item->quantity,
+                'quantity_before' => $quantityBefore,
+                'quantity_after' => $quantityAfter,
+                'reason' => 'Purchase Receipt from PO #' . $purchaseOrder->order_number,
+                'user_id' => auth()->id(),
+                'reference_type' => get_class($purchaseOrder),
+                'reference_id' => $purchaseOrder->id,
+                'movement_date' => now(),
+                'created_by' => auth()->id(),
+                'updated_by' => auth()->id(),
+            ]);
+        }
     }
 
     public function edit(PurchaseOrder $purchaseOrder)

@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use App\Traits\Alertable;
+use App\Traits\BelongsToTenant;
+use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Brand extends Model
 {
-    use HasFactory;
+    use HasFactory, Alertable, Userstamps, BelongsToTenant;
 
     protected $fillable = [
-        'name', 'logo_url', 'is_active', 'created_by', 'updated_by'
+        'name', 'logo_url', 'is_active'
     ];
 
     protected $casts = [

@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ __('Register') }} - {{ config('app.name', 'Laravel') }}</title>
-    
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="h-full font-sans bg-gray-100">

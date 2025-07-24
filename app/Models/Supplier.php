@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
+use App\Traits\Alertable;
+use App\Traits\BelongsToTenant;
+use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Supplier extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Alertable, Userstamps, BelongsToTenant;
 
     protected $fillable = [
         'name', 'contact_person', 'email', 'phone', 'address',
-        'tax_id', 'bank_name', 'bank_account', 'is_active',
-        'created_by', 'updated_by'
+        'tax_id', 'bank_name', 'bank_account', 'is_active'
     ];
 
     protected $casts = [

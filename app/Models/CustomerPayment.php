@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\Alertable;
+use App\Traits\BelongsToTenant;
+use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CustomerPayment extends Model
 {
-    use HasFactory;
+    use HasFactory, Alertable, Userstamps, BelongsToTenant;
 
     protected $fillable = [
         'customer_id',
@@ -18,8 +21,6 @@ class CustomerPayment extends Model
         'payment_method',
         'reference_number',
         'notes',
-        'created_by',
-        'updated_by',
     ];
 
     /**

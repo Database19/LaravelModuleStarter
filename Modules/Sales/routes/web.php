@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Sales\Http\Controllers\SalesOrderController;
 
-Route::middleware(['auth', 'role:Admin|Sales Executive'])
+Route::middleware(['auth', 'role:Admin|Sales Executive|', 'subscribed:sales'])
     ->prefix('sales')
     ->name('sales.')
     ->group(function () {

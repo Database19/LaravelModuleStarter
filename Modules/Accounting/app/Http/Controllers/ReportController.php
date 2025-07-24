@@ -78,7 +78,7 @@ class ReportController extends Controller
 
             if ($balance != 0) {
                 $reportData[] = [
-                    'code' => $account->code,
+                    'code' => $account->account_code,
                     'name' => $account->name,
                     'debit' => $balance > 0 ? $balance : 0,
                     'credit' => $balance < 0 ? abs($balance) : 0,

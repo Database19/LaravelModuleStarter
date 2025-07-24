@@ -17,7 +17,7 @@ class ProcessPurchaseOrderReceipt implements ShouldQueue
 
         // Gunakan DB Transaction untuk memastikan semua proses berhasil atau dibatalkan
         DB::transaction(function () use ($purchaseOrder) {
-            $this->updateInventoryStock($purchaseOrder);
+            // $this->updateInventoryStock($purchaseOrder);
             $this->createJournalEntry($purchaseOrder);
         });
     }
@@ -25,42 +25,42 @@ class ProcessPurchaseOrderReceipt implements ShouldQueue
     /**
      * Memperbarui stok di modul Inventory.
      */
-    private function updateInventoryStock(object $purchaseOrder): void
-    {
-        foreach ($purchaseOrder->items as $item) {
-            $product = Product::find($item->product_id);
-            if (!$product) continue;
+    // private function updateInventoryStock(object $purchaseOrder): void
+    // {
+    //     foreach ($purchaseOrder->items as $item) {
+    //         $product = Product::find($item->product_id);
+    //         if (!$product) continue;
 
-            // 1. Dapatkan kuantitas saat ini SEBELUM diubah
-            $quantityBefore = $product->quantity;
+    //         // 1. Dapatkan kuantitas saat ini SEBELUM diubah
+    //         $quantityBefore = $product->quantity;
 
-            // 2. Tambah kuantitas di tabel master produk
-            $product->increment('quantity', $item->quantity);
+    //         // 2. Tambah kuantitas di tabel master produk
+    //         $product->increment('quantity', $item->quantity);
 
-            // 3. Hitung kuantitas SETELAH diubah
-            $quantityAfter = $quantityBefore + $item->quantity;
+    //         // 3. Hitung kuantitas SETELAH diubah
+    //         $quantityAfter = $quantityBefore + $item->quantity;
 
-            // 4. Buat catatan pergerakan stok dengan semua data yang dibutuhkan
-            dd($purchaseOrder->warehouse);
-            StockMovement::create([
-                // Buat reference number unik, misal: PO-NUMBER-PRODUCT-ID
-                'reference_number' => $purchaseOrder->order_number . '-' . $item->product_id,
-                'product_id' => $item->product_id,
-                'warehouse_id' => $purchaseOrder->warehouse_id,
-                'type' => 'in',
-                'quantity' => $item->quantity,
-                'quantity_before' => $quantityBefore,
-                'quantity_after' => $quantityAfter,
-                'reason' => 'Purchase Receipt from PO',
-                'user_id' => $purchaseOrder->user_id,
-                'reference_type' => get_class($purchaseOrder),
-                'reference_id' => $purchaseOrder->id,
-                'movement_date' => $purchaseOrder->received_date ?? now(),
-                'created_by' => $purchaseOrder->created_by,
-                'updated_by' => $purchaseOrder->updated_by,
-            ]);
-        }
-    }
+    //         // 4. Buat catatan pergerakan stok dengan semua data yang dibutuhkan
+    //         // dd($purchaseOrder->warehouse);
+    //         StockMovement::create([
+    //             // Buat reference number unik, misal: PO-NUMBER-PRODUCT-ID
+    //             'reference_number' => $purchaseOrder->order_number . '-' . $item->product_id,
+    //             'product_id' => $item->product_id,
+    //             'warehouse_id' => $purchaseOrder->warehouse_id,
+    //             'type' => 'in',
+    //             'quantity' => $item->quantity,
+    //             'quantity_before' => $quantityBefore,
+    //             'quantity_after' => $quantityAfter,
+    //             'reason' => 'Purchase Receipt from PO',
+    //             'user_id' => $purchaseOrder->user_id,
+    //             'reference_type' => get_class($purchaseOrder),
+    //             'reference_id' => $purchaseOrder->id,
+    //             'movement_date' => $purchaseOrder->received_date ?? now(),
+    //             'created_by' => $purchaseOrder->created_by,
+    //             'updated_by' => $purchaseOrder->updated_by,
+    //         ]);
+    //     }
+    // }
 
     /**
      * Membuat entri jurnal di modul Accounting.
@@ -114,7 +114,7 @@ class ProcessPurchaseOrderReceipt implements ShouldQueue
                 'updated_by' => $purchaseOrder->updated_by,
             ],
             [
-                'account_id' => 21,
+                'account_id' => 25,
                 'description' => 'Utang usaha kepada ' . $purchaseOrder->supplier->name,
                 'debit' => 0,
                 'credit' => $totalCredit,

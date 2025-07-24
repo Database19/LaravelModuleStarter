@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use App\Traits\BelongsToTenant;
+use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class JournalEntryItem extends Model
 {
-    use HasFactory;
+    use HasFactory, Userstamps, BelongsToTenant;
 
     protected $fillable = [
         'journal_entry_id', 'description', 'account_id', 'debit',
-        'credit', 'created_by', 'updated_by'
+        'credit'
     ];
 
     protected $casts = [

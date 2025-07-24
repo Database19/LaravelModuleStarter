@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Spatie\Multitenancy\Models\Tenant;
 
 class LoginController extends Controller
 {
@@ -36,5 +38,16 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        if ($user->company_id) {
+            $tenant = Tenant::find($user->company_id);
+            if ($tenant) {
+                $tenant->makeCurrent();
+            }
+        }
+        return redirect()->intended($this->redirectPath());
     }
 }

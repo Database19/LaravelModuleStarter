@@ -2,17 +2,20 @@
 
 namespace App\Models;
 
+use App\Traits\Alertable;
+use App\Traits\BelongsToTenant;
+use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class JournalEntry extends Model
 {
-    use HasFactory;
+    use HasFactory, Alertable, Userstamps, BelongsToTenant;
 
     protected $fillable = [
         'journal_number', 'date', 'description', 'total_debit',
         'total_credit', 'referenceable_type', 'referenceable_id',
-        'user_id', 'is_posted', 'created_by', 'updated_by'
+        'user_id', 'is_posted'
     ];
 
     protected $casts = [

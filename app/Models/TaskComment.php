@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use App\Traits\Alertable;
+use App\Traits\BelongsToTenant;
+use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class TaskComment extends Model
 {
-    use HasFactory;
+    use HasFactory, Alertable, Userstamps, BelongsToTenant;
 
     protected $fillable = [
-        'task_id', 'user_id', 'comment', 'created_by', 'updated_by'
+        'task_id', 'user_id', 'comment'
     ];
 
     public function task()

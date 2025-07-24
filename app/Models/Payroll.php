@@ -5,9 +5,14 @@ namespace App\Models;
 use App\Models\Employee;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Traits\Alertable;
+use App\Traits\BelongsToTenant;
+use App\Traits\Userstamps;
 
 class Payroll extends Model
 {
+    use Alertable, Userstamps, BelongsToTenant;
+
     protected $fillable = [
         'employee_id',
         'pay_period_start_date',
@@ -18,9 +23,7 @@ class Payroll extends Model
         'deductions',
         'tax_amount',
         'net_salary',
-        'status',
-        'created_by',
-        'updated_by',
+        'status'
     ];
 
     protected $casts = [

@@ -22,6 +22,7 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'nullable|email|max:255|unique:customers,email',
@@ -39,8 +40,8 @@ class CustomerController extends Controller
 
         Customer::create($validated);
 
-        return redirect()->route('master-data.customer.index')
-                         ->with('success', 'Customer baru telah ditambahkan.');
+        a('Berhasil', 'Customer Berhasil dibuat', 'success');
+        return redirect()->route('master-data.customer.index');
     }
 
     public function edit(Customer $customer)
@@ -50,6 +51,7 @@ class CustomerController extends Controller
 
     public function update(Request $request, Customer $customer)
     {
+        // dd($request);
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => ['nullable', 'email', 'max:255', Rule::unique('customers')->ignore($customer->id)],
@@ -66,8 +68,8 @@ class CustomerController extends Controller
 
         $customer->update($validated);
 
-        return redirect()->route('master-data.customer.index')
-                         ->with('success', 'Data customer telah diperbarui.');
+        a('Berhasil', 'Customer Berhasil terupdate', 'success');
+        return redirect()->route('master-data.customer.index');
     }
 
     public function destroy(Customer $customer)

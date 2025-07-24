@@ -1,51 +1,68 @@
 <?php
 namespace Modules\Inventory\Http\Controllers;
 
-use App\Models\ProductCategory;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Modules\Inventory\Http\Requests\StoreProductCategoryRequest;
-use Modules\Inventory\Http\Requests\UpdateProductCategoryRequest;
+use App\Models\ProductCategory;
 
 class ProductCategoryController extends Controller
 {
     public function index()
     {
-        $categories = ProductCategory::withCount('products')->latest()->paginate(10);
-        return view('inventory::product-categories.index', compact('categories'));
+        $categories = ProductCategory::with('parent')->latest()->get();
+        // Ambil daftar kategori untuk dropdown parent
+        $parentCategories = ProductCategory::whereNull('parent_id')->orderBy('name')->get();
+        return view('inventory::product-categories.index', compact('categories', 'parentCategories'));
     }
 
-    public function create()
+    public function store(Request $request)
     {
-        return view('inventory::product-categories.create');
-    }
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:product_categories,name',
+            'description' => 'nullable|string',
+            'parent_id' => 'nullable|exists:product_categories,id',
+            'is_active' => 'boolean',
+        ]);
 
-    public function store(StoreProductCategoryRequest $request)
-    {
-        ProductCategory::create($request->validated());
-        alert()->success('Berhasil!', 'Kategori produk baru telah ditambahkan.');
-        return redirect()->route('inventory.product-categories.index');
+        ProductCategory::create($validated + [
+            'created_by' => auth()->id(),
+            'updated_by' => auth()->id(),
+        ]);
+
+        return response()->json(['message' => 'Kategori produk baru telah berhasil ditambahkan.']);
     }
 
     public function edit(ProductCategory $productCategory)
     {
-        return view('inventory::product-categories.edit', compact('productCategory'));
+        return response()->json($productCategory);
     }
 
-    public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory)
+    public function update(Request $request, ProductCategory $productCategory)
     {
-        $productCategory->update($request->validated());
-        alert()->success('Berhasil!', 'Kategori produk telah diperbarui.');
-        return redirect()->route('inventory.product-categories.index');
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:product_categories,name,' . $productCategory->id,
+            'description' => 'nullable|string',
+            'parent_id' => 'nullable|exists:product_categories,id',
+            'is_active' => 'boolean',
+        ]);
+
+        $productCategory->update($validated + ['updated_by' => auth()->id()]);
+        return response()->json(['message' => 'Data kategori produk telah berhasil diperbarui.']);
     }
 
     public function destroy(ProductCategory $productCategory)
     {
+        if ($productCategory->children()->exists()) {
+            alert()->error('Gagal!', 'Hapus submenu terlebih dahulu sebelum menghapus kategori utama.');
+            return back();
+        }
         if ($productCategory->products()->exists()) {
             alert()->error('Gagal!', 'Kategori tidak bisa dihapus karena memiliki produk terkait.');
             return back();
         }
+
         $productCategory->delete();
         alert()->success('Berhasil!', 'Kategori produk telah dihapus.');
-        return redirect()->route('inventory.product-categories.index');
+        return redirect()->route('product-categories.index');
     }
 }

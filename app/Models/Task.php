@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
+use App\Traits\Alertable;
+use App\Traits\BelongsToTenant;
+use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-    use HasFactory;
+    use HasFactory, Alertable, Userstamps, BelongsToTenant;
 
     protected $fillable = [
         'code', 'project_id', 'title', 'description', 'assignee_id',
         'task_status_id', 'start_date', 'due_date', 'completed_date',
         'priority', 'progress', 'estimated_hours', 'actual_hours',
-        'parent_id', 'created_by', 'updated_by'
+        'parent_id'
     ];
 
     protected $casts = [

@@ -1,2 +1,0 @@
-document_root = "/app/public"
-router = "/app/public/index.php"

@@ -15,6 +15,13 @@ return new class extends Migration
         // STEP 1: Create all tables without foreign key constraints
         // =================================================================
 
+        Schema::create('companies', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('domain')->unique()->nullable();
+            $table->timestamps();
+        });
+
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -25,6 +32,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -38,6 +46,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -59,6 +68,7 @@ return new class extends Migration
             $table->unsignedBigInteger('department_id')->nullable();
             $table->unsignedBigInteger('position_id')->nullable();
             $table->unsignedBigInteger('manager_id')->nullable()->comment('Self-referencing key untuk atasan');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 

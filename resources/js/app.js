@@ -43,3 +43,6 @@ import './custom/button';
 import './helper/formatting';
 Alpine.plugin(mask)
 Alpine.start()
+
+
+import './reusable/modal'

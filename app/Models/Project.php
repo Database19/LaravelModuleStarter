@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
+use App\Traits\Alertable;
+use App\Traits\BelongsToTenant;
+use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
-    use HasFactory;
+    use HasFactory, Alertable, Userstamps, BelongsToTenant;
 
     protected $fillable = [
         'code', 'name', 'description', 'customer_id', 'manager_id',
         'project_status_id', 'start_date', 'end_date', 'budget',
-        'actual_cost', 'progress', 'priority', 'created_by', 'updated_by'
+        'actual_cost', 'progress', 'priority'
     ];
 
     protected $casts = [

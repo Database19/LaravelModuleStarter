@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
+use App\Traits\Alertable;
+use App\Traits\BelongsToTenant;
+use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Warehouse extends Model
 {
-    use HasFactory;
+    use HasFactory, Alertable, Userstamps, BelongsToTenant;
 
     protected $fillable = [
         'name', 'code', 'location', 'is_active',
-        'manager_id', 'created_by', 'updated_by'
+        'manager_id'
     ];
 
     protected $casts = [

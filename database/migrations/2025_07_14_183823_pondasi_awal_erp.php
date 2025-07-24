@@ -8,6 +8,8 @@ return new class extends Migration
 {
     public function up(): void
     {
+        
+
         // Tabel untuk Pelanggan (Customers)
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
@@ -21,6 +23,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -39,6 +42,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -55,6 +59,7 @@ return new class extends Migration
             $table->foreignId('manager_id')->nullable()->constrained('users');
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -66,6 +71,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -77,6 +83,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -89,6 +96,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -111,12 +119,13 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
         });
 
         // Tabel untuk melacak stok per gudang (Pivot Table)
-        Schema::create('warehouse_stock', function (Blueprint $table) {
+        Schema::create('warehouse_stocks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('warehouse_id')->constrained()->cascadeOnDelete();
             $table->foreignId('product_id')->constrained()->cascadeOnDelete();
@@ -124,6 +133,7 @@ return new class extends Migration
             $table->string('rack_location')->nullable(); // e.g., A-01-02
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
             $table->unique(['warehouse_id', 'product_id']);
         });
@@ -144,6 +154,7 @@ return new class extends Migration
             $table->timestamp('movement_date');
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -166,6 +177,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -180,6 +192,7 @@ return new class extends Migration
             $table->decimal('total_price', 15, 2);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -203,6 +216,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -218,6 +232,7 @@ return new class extends Migration
             $table->decimal('total_cost', 15, 2);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -234,6 +249,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -250,6 +266,7 @@ return new class extends Migration
             $table->boolean('is_posted')->default(false);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -263,6 +280,7 @@ return new class extends Migration
             $table->decimal('credit', 15, 2)->default(0);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -279,6 +297,7 @@ return new class extends Migration
         //     $table->boolean('is_active')->default(true);
         //     $table->foreignId('created_by')->constrained('users');
         //     $table->foreignId('updated_by')->constrained('users');
+        // $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
         //     $table->timestamps();
         // });
 
@@ -293,6 +312,7 @@ return new class extends Migration
         //     $table->boolean('is_active')->default(true);
         //     $table->foreignId('created_by')->constrained('users');
         //     $table->foreignId('updated_by')->constrained('users');
+        // $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
         //     $table->timestamps();
         // });
 
@@ -322,6 +342,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -342,6 +363,7 @@ return new class extends Migration
             $table->enum('priority', ['low', 'medium', 'high', 'urgent'])->default('medium');
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -356,6 +378,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
             $table->unique(['project_id', 'user_id']);
         });
@@ -369,6 +392,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -391,6 +415,7 @@ return new class extends Migration
             $table->foreignId('parent_id')->nullable()->constrained('tasks');
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -402,6 +427,7 @@ return new class extends Migration
             $table->text('comment');
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
 
@@ -454,7 +480,7 @@ return new class extends Migration
         Schema::dropIfExists('sales_order_items');
         Schema::dropIfExists('sales_orders');
         Schema::dropIfExists('stock_movements');
-        Schema::dropIfExists('warehouse_stock');
+        Schema::dropIfExists('warehouse_stocks');
         Schema::dropIfExists('products');
         Schema::dropIfExists('product_categories');
         Schema::dropIfExists('units');

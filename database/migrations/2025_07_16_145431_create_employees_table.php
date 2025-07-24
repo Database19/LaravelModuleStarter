@@ -35,6 +35,7 @@ return new class extends Migration
 
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('updated_by')->constrained('users');
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
     }

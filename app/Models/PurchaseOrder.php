@@ -2,18 +2,21 @@
 
 namespace App\Models;
 
+use App\Traits\Alertable;
+use App\Traits\BelongsToTenant;
+use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PurchaseOrder extends Model
 {
-    use HasFactory;
+    use HasFactory, Alertable, Userstamps, BelongsToTenant;
 
     protected $fillable = [
         'order_number', 'supplier_id', 'user_id', 'warehouse_id',
         'subtotal', 'tax_amount', 'discount_amount', 'total_amount',
         'status', 'order_date', 'expected_delivery_date', 'received_date',
-        'notes', 'created_by', 'updated_by'
+        'notes'
     ];
 
     protected $casts = [

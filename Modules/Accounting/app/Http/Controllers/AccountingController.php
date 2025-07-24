@@ -12,15 +12,39 @@ class AccountingController extends Controller
     {
         // Daftar semua kunci pengaturan yang dibutuhkan
         $settingKeys = [
-            'default_accounts_receivable' => 'Akun Piutang Usaha',
-            'default_sales_revenue' => 'Akun Pendapatan Penjualan',
-            'default_accounts_payable' => 'Akun Utang Usaha',
-            'default_inventory' => 'Akun Persediaan',
-            'default_cogs' => 'Akun Harga Pokok Penjualan',
-            'default_sales_discount' => 'Akun Diskon Penjualan',
-            'default_vat_out' => 'Akun PPN Keluaran',
-            'default_vat_in' => 'Akun PPN Masukan',
-            'default_cash_payment' => 'Bank BCA (dan Lain Lain)',
+            // --- Grup Penjualan (Sales) ---
+            'Grup Penjualan' => [
+                'default_accounts_receivable' => 'Akun Piutang Usaha (A/R)',
+                'default_sales_revenue' => 'Akun Pendapatan Penjualan',
+                'default_sales_discount' => 'Akun Diskon Penjualan',
+                'default_vat_out' => 'Akun PPN Keluaran',
+            ],
+
+            // --- Grup Pembelian (Purchasing) ---
+            'Grup Pembelian' => [
+                'default_accounts_payable' => 'Akun Utang Usaha (A/P)',
+                'default_vat_in' => 'Akun PPN Masukan',
+            ],
+
+            // --- Grup Inventaris & Gudang ---
+            'Grup Inventaris & Gudang' => [
+                'default_inventory_account' => 'Akun Persediaan Barang',
+                'default_cogs_account' => 'Akun Harga Pokok Penjualan (HPP)',
+                'default_inventory_adjustment_account' => 'Akun Penyesuaian Persediaan (untuk selisih stok)',
+            ],
+
+            // --- Grup Sumber Daya Manusia (HR) ---
+            'Grup Sumber Daya Manusia' => [
+                'default_salary_expense_account' => 'Akun Beban Gaji',
+                'default_salary_payable_account' => 'Akun Utang Gaji',
+                'default_tax_payable_account' => 'Akun Utang PPh 21',
+            ],
+
+            // --- Grup Kas & Bank ---
+            'Grup Kas & Bank' => [
+                'default_bank_account_for_payment' => 'Akun Bank/Kas Default untuk Pembayaran Keluar',
+                'default_bank_account_for_receipt' => 'Akun Bank/Kas Default untuk Penerimaan Masuk',
+            ],
         ];
 
         // Ambil pengaturan yang sudah ada dari database
@@ -48,6 +72,6 @@ class AccountingController extends Controller
             }
         }
 
-        return back()->with('success', 'Pengaturan akuntansi berhasil disimpan.');
+        return back();
     }
 }

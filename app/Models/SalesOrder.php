@@ -2,18 +2,20 @@
 
 namespace App\Models;
 
+use App\Traits\Alertable;
+use App\Traits\BelongsToTenant;
+use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SalesOrder extends Model
 {
-    use HasFactory;
+    use HasFactory, Alertable, Userstamps, BelongsToTenant;
 
     protected $fillable = [
         'order_number', 'customer_id', 'user_id', 'warehouse_id',
         'subtotal', 'tax_amount', 'discount_amount', 'total_amount',
-        'status', 'order_date', 'delivery_date', 'notes',
-        'created_by', 'updated_by'
+        'status', 'order_date', 'delivery_date', 'notes'
     ];
 
     protected $casts = [

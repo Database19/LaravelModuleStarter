@@ -2,16 +2,19 @@
 
 namespace App\Models;
 
+use App\Traits\Alertable;
+use App\Traits\BelongsToTenant;
+use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Account extends Model
 {
-    use HasFactory;
+    use HasFactory, Alertable, Userstamps, BelongsToTenant;
 
     protected $fillable = [
         'account_code', 'name', 'type', 'sub_type', 'parent_id',
-        'is_active', 'created_by', 'updated_by'
+        'is_active'
     ];
 
     protected $casts = [

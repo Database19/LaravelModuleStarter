@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('key')->unique(); // e.g., 'default_sales_revenue_account'
             $table->unsignedBigInteger('value')->comment('References account_id'); // Menyimpan ID akun dari tabel accounts
+            $table->foreignId('company_id')->constrained('companies')->onDelete('cascade');
             $table->timestamps();
         });
     }

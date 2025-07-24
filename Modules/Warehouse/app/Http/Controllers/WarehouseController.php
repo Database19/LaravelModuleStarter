@@ -3,63 +3,62 @@
 namespace Modules\Warehouse\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 
 class WarehouseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('warehouse::index');
+        $warehouses = Warehouse::with('manager')->latest()->paginate(10);
+        return view('warehouse::index', compact('warehouses'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        return view('warehouse::create');
+        $users = User::all(); // Untuk pilihan manager
+        return view('warehouse::create', compact('users'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'code' => 'required|string|max:255|unique:warehouses,code',
+            'location' => 'required|string',
+            'manager_id' => 'nullable|exists:users,id',
+            'is_active' => 'required|boolean',
+        ]);
+
+        Warehouse::create($validated);
+
+        return redirect()->route('warehouse.warehouses.index');
     }
 
-    /**
-     * Show the specified resource.
-     */
-    public function show($id)
+    public function edit(Warehouse $warehouse)
     {
-        return view('warehouse::show');
+        $users = User::all();
+        return view('warehouse::edit', compact('warehouse', 'users'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
+    public function update(Request $request, Warehouse $warehouse)
     {
-        return view('warehouse::edit');
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'code' => 'required|string|max:255|unique:warehouses,code,' . $warehouse->id,
+            'location' => 'required|string',
+            'manager_id' => 'nullable|exists:users,id',
+            'is_active' => 'required|boolean',
+        ]);
+
+        $warehouse->update($validated);
+        return redirect()->route('warehouse.warehouses.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)
+    public function destroy(Warehouse $warehouse)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        //
+        $warehouse->delete();
+        return redirect()->route('warehouse.warehouses.index');
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\CRM\Http\Controllers\CRMController;
+use Modules\CRM\Http\Controllers\LeadController;
+use Modules\CRM\Http\Controllers\OpportunityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,8 +14,12 @@ use Modules\CRM\Http\Controllers\CRMController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::middleware(['auth', 'role:Admin|Sales Executive'])->group(function () {
-    Route::resource('crm', CRMController::class)->names('crm');
+Route::middleware(['auth', 'role:Admin|Sales Executive'])->prefix('crm')->name('crm.')->group(function () {
+    // Route::resource('crm', CRMController::class)->names('crm');
+    Route::resource('leads', LeadController::class);
+    Route::post('leads/{lead}/convert', [LeadController::class, 'convert'])->name('leads.convert');
+
+    Route::resource('opportunities', OpportunityController::class);
 });
 // Route::group([], function () {
 //     Route::resource('crm', CRMController::class)->names('crm');

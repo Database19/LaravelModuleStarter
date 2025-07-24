@@ -11,4 +11,10 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        host: '0.0.0.0', // Membuat server Vite bisa diakses dari luar container
+        hmr: {
+            host: 'localhost', // Memberitahu browser untuk konek ke 'localhost'
+        },
+    },
 });
