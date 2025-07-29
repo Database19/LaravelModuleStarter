@@ -6,12 +6,13 @@ use App\Models\Employee;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Traits\Alertable;
+use App\Traits\BelongsToCompany;
 use App\Traits\BelongsToTenant;
 use App\Traits\Userstamps;
 
 class Payroll extends Model
 {
-    use Alertable, Userstamps, BelongsToTenant;
+    use Alertable, Userstamps, BelongsToTenant, BelongsToCompany;
 
     protected $fillable = [
         'employee_id',

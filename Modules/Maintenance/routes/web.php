@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Maintenance\Http\Controllers\MaintenanceController;
+use Modules\Maintenance\Http\Controllers\EquipmentController;
+use Modules\Maintenance\Http\Controllers\OrderController;
+use Modules\Maintenance\Http\Controllers\ScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +17,15 @@ use Modules\Maintenance\Http\Controllers\MaintenanceController;
 |
 */
 
-Route::middleware(['auth', 'role:Admin|Maintenance Staff'])->group(function () {
+Route::middleware(['auth', 'permission:manage-maintenance|manage-companies|super-admin-access'])->prefix('maintenance')->name('maintenance.')->group(function () {
     Route::resource('maintenance', MaintenanceController::class)->names('maintenance');
+
+    // Equipment Management
+    Route::resource('equipment', EquipmentController::class);
+
+    // Maintenance Orders
+    Route::resource('orders', OrderController::class);
+
+    // Maintenance Schedule
+    Route::resource('schedule', ScheduleController::class);
 });

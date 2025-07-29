@@ -11,7 +11,7 @@
         </div>
 
         <div class="p-6">
-            @include('accounting::reports._filter', ['actionUrl' => route('reports.neraca_saldo')])
+            @include('accounting::reports._filter', ['actionUrl' => route('accounting.reports.neraca_saldo')])
         </div>
 
         <div class="overflow-x-auto">

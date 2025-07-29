@@ -37,7 +37,6 @@ class MenuController extends Controller
     public function edit(MenuItem $menu)
     {
         $permissions = Permission::pluck('name', 'name');
-        // Pastikan menu tidak bisa menjadi parent dari dirinya sendiri
         $parentMenus = MenuItem::whereNull('parent_id')->where('id', '!=', $menu->id)->orderBy('name')->get();
         return view('admin.menu.edit', compact('menu', 'permissions', 'parentMenus'));
     }

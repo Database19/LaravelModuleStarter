@@ -9,7 +9,7 @@
         </div>
         <div class="p-6">
             {{-- Filter Form Khusus --}}
-             <form method="GET" action="{{ route('reports.mutasi_saldo') }}">
+             <form method="GET" action="{{ route('accounting.reports.mutasi_saldo') }}">
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
                     <div>
                         <label for="account_id" class="block text-sm font-medium text-gray-700">Pilih Akun</label>

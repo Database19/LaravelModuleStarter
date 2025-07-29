@@ -1,0 +1,236 @@
+/* DataTables Modern Styling for TailwindCSS */
+
+/* Container styling */
+.dataTables_wrapper {
+    @apply w-full;
+}
+
+/* Length menu styling */
+.dataTables_length {
+    @apply mb-4 sm:mb-0;
+}
+
+.dataTables_length label {
+    @apply flex items-center text-sm text-gray-700 font-medium;
+}
+
+.dataTables_length select {
+    @apply mx-2 appearance-none bg-white border border-gray-300 rounded-lg px-3 py-2 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+}
+
+/* Search box styling */
+.dataTables_filter {
+    @apply mb-4 sm:mb-0;
+}
+
+.dataTables_filter label {
+    @apply flex items-center text-sm text-gray-700 font-medium;
+}
+
+.dataTables_filter input {
+    @apply ml-2 block w-full px-4 py-2 border border-gray-300 rounded-lg text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200;
+}
+
+/* Info text styling */
+.dataTables_info {
+    @apply text-sm text-gray-700 mb-4 sm:mb-0;
+}
+
+/* Pagination styling */
+.dataTables_paginate {
+    @apply flex items-center space-x-1;
+}
+
+.dataTables_paginate .paginate_button {
+    @apply relative inline-flex items-center px-3 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 cursor-pointer transition-colors duration-200;
+}
+
+.dataTables_paginate .paginate_button:first-child {
+    @apply rounded-l-lg;
+}
+
+.dataTables_paginate .paginate_button:last-child {
+    @apply rounded-r-lg;
+}
+
+.dataTables_paginate .paginate_button:hover:not(.disabled) {
+    @apply bg-gray-50 text-gray-700;
+}
+
+.dataTables_paginate .paginate_button.current {
+    @apply z-10 bg-blue-50 border-blue-500 text-blue-600;
+}
+
+.dataTables_paginate .paginate_button.disabled {
+    @apply text-gray-300 cursor-not-allowed;
+}
+
+.dataTables_paginate .paginate_button.disabled:hover {
+    @apply bg-white text-gray-300;
+}
+
+/* Processing indicator */
+.dataTables_processing {
+    @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white bg-opacity-90 p-4 rounded-lg shadow-lg border border-gray-200;
+}
+
+/* Table styling */
+.dataTable {
+    @apply w-full bg-white;
+}
+
+.dataTable thead th {
+    @apply px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200;
+}
+
+.dataTable tbody td {
+    @apply px-6 py-4 whitespace-nowrap border-b border-gray-200;
+}
+
+.dataTable tbody tr:hover {
+    @apply bg-gray-50;
+}
+
+.dataTable tbody tr.odd {
+    @apply bg-white;
+}
+
+.dataTable tbody tr.even {
+    @apply bg-gray-50;
+}
+
+/* Responsive table */
+.dataTables_wrapper .dataTables_scroll {
+    @apply overflow-x-auto;
+}
+
+/* Loading state */
+.dataTables_wrapper .dataTables_scrollBody table.dataTable tbody tr.dt-loading {
+    @apply animate-pulse;
+}
+
+/* Empty state */
+.dataTables_empty {
+    @apply text-center py-12 text-gray-500;
+}
+
+/* Buttons extension styling */
+.dt-buttons {
+    @apply flex items-center space-x-2 mb-4;
+}
+
+.dt-button {
+    @apply inline-flex items-center px-3 py-2 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200 shadow-sm;
+}
+
+.dt-button:hover {
+    @apply bg-gray-50;
+}
+
+.dt-button.active {
+    @apply bg-blue-50 border-blue-500 text-blue-600;
+}
+
+/* Column visibility buttons */
+.dt-button-collection {
+    @apply bg-white border border-gray-200 rounded-lg shadow-lg py-1;
+}
+
+.dt-button-collection .dt-button {
+    @apply w-full text-left border-0 rounded-none hover:bg-gray-50 px-4 py-2;
+}
+
+/* Responsive helpers */
+@media (max-width: 640px) {
+    .dataTables_wrapper .dataTables_length,
+    .dataTables_wrapper .dataTables_filter {
+        @apply text-center;
+    }
+
+    .dataTables_wrapper .dataTables_info,
+    .dataTables_wrapper .dataTables_paginate {
+        @apply text-center;
+    }
+
+    .dt-buttons {
+        @apply flex-wrap justify-center;
+    }
+}
+
+/* Custom animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.dataTable tbody tr {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Modern shadows and borders */
+.dataTables_wrapper {
+    @apply shadow-sm;
+}
+
+.dataTable {
+    @apply border border-gray-200 rounded-lg overflow-hidden;
+}
+
+/* Focus states */
+.dataTables_filter input:focus,
+.dataTables_length select:focus {
+    @apply ring-2 ring-blue-500 ring-opacity-50 border-blue-500;
+}
+
+/* Hover effects for action buttons */
+.dataTable tbody tr:hover .action-buttons {
+    @apply opacity-100;
+}
+
+.action-buttons {
+    @apply opacity-75 transition-opacity duration-200;
+}
+
+/* Status badges */
+.status-badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+}
+
+.status-badge.active {
+    @apply bg-green-100 text-green-800;
+}
+
+.status-badge.inactive {
+    @apply bg-red-100 text-red-800;
+}
+
+.status-badge.pending {
+    @apply bg-yellow-100 text-yellow-800;
+}
+
+/* Price formatting */
+.price-cell {
+    @apply font-semibold text-emerald-600;
+}
+
+/* Loading skeleton */
+.dataTables_processing .skeleton {
+    @apply animate-pulse bg-gray-200 rounded;
+}
+
+/* Modern scrollbar */
+.dataTables_scrollBody::-webkit-scrollbar {
+    @apply h-2;
+}
+
+.dataTables_scrollBody::-webkit-scrollbar-track {
+    @apply bg-gray-100 rounded-full;
+}
+
+.dataTables_scrollBody::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded-full hover:bg-gray-400;
+}

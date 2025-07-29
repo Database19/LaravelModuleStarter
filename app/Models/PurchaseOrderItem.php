@@ -3,13 +3,15 @@
 namespace App\Models;
 
 use App\Traits\Alertable;
+use App\Traits\BelongsToCompany;
+use App\Traits\BelongsToTenant;
 use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PurchaseOrderItem extends Model
 {
-    use HasFactory, Userstamps, Alertable;
+    use HasFactory, Userstamps, Alertable, BelongsToTenant, BelongsToCompany;
 
     protected $fillable = [
         'purchase_order_id', 'product_id', 'quantity', 'received_quantity',

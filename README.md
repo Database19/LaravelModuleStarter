@@ -7,6 +7,32 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## 🚨 WINDOWS USERS EMERGENCY NOTICE
+
+**CRITICAL BUG**: FrankenPHP Octane method dapat menyebabkan sistem hang!
+
+### ✅ SAFE METHODS:
+```bash
+# Method 1: Docker (RECOMMENDED)
+frankenphp.bat docker
+
+# Method 2: FrankenPHP Binary  
+frankenphp.bat binary
+
+# Method 3: Laravel Default
+php artisan serve
+```
+
+### 🚫 DANGEROUS METHODS (Jangan Digunakan):
+- ❌ `frankenphp.bat octane`
+- ❌ `frankenphp.bat watch` 
+- ❌ `php artisan frankenphp:start`
+
+### 🆘 Emergency Stop:
+Jika sistem hang: jalankan `emergency-stop.bat`
+
+**Baca lengkap**: [WINDOWS-TROUBLESHOOTING.md](WINDOWS-TROUBLESHOOTING.md)
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:

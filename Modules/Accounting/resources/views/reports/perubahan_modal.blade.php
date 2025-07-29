@@ -11,7 +11,7 @@
         </div>
 
         <div class="p-6">
-            @include('accounting::reports._filter', ['actionUrl' => route('reports.perubahan_modal')])
+            @include('accounting::reports._filter', ['actionUrl' => route('accounting.reports.perubahan_modal')])
         </div>
 
         <div class="p-6">

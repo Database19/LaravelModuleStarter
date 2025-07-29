@@ -42,6 +42,7 @@
         "jquery": "^3.7.1",
         "jszip": "^3.10.1",
         "pdfmake": "^0.2.20",
-        "sweetalert2": "^11.22.2"
+        "sweetalert2": "^11.22.2",
+        "tom-select": "^2.4.3"
     }
 }

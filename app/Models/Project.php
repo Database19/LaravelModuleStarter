@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Alertable;
+use App\Traits\BelongsToCompany;
 use App\Traits\BelongsToTenant;
 use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
 {
-    use HasFactory, Alertable, Userstamps, BelongsToTenant;
+    use HasFactory, Alertable, Userstamps, BelongsToTenant, BelongsToCompany;
 
     protected $fillable = [
         'code', 'name', 'description', 'customer_id', 'manager_id',

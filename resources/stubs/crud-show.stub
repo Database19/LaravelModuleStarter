@@ -1,0 +1,12 @@
+@php
+    $controller = app('{{controllerNamespace}}');
+    $fields = $controller->getFormFields();
+    $item = $item ?? null;
+@endphp
+
+<x-crud.form
+    method="show"
+    :item="$item"
+    :fields="$fields"
+    form-id="{{formId}}"
+/>

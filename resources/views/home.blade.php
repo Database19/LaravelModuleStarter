@@ -5,7 +5,7 @@
 <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* slate-50 */
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         }
         .stage-arrow {
             content: '';
@@ -17,16 +17,37 @@
             height: 0;
             border-top: 12px solid transparent;
             border-bottom: 12px solid transparent;
-            border-left: 12px solid #cbd5e1; /* slate-300 */
+            border-left: 12px solid #3b82f6; /* blue-500 */
         }
         .stage-column:last-child .stage-arrow {
             display: none;
         }
+        .stage-column h3 {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .module-card {
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
+        }
+        .module-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
         .modal-backdrop {
             transition: opacity 0.3s ease-in-out;
+            backdrop-filter: blur(4px);
         }
         .modal-content {
             transition: transform 0.3s ease-in-out;
+        }
+        .filter-btn {
+            transition: all 0.2s ease;
+        }
+        .filter-btn:hover {
+            transform: translateY(-1px);
         }
     </style>
 @endpush
@@ -34,8 +55,28 @@
 <div class="container mx-auto px-4 py-8 md:py-12">
         <!-- Header -->
         <header class="text-center mb-12">
-            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-800">Diagram Alur Kerja ERP</h1>
-            <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Visualisasi interaktif dari proses bisnis end-to-end, dari setup hingga pelaporan.</p>
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-800">Enterprise Resource Planning (ERP) Flow</h1>
+            <p class="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">Visualisasi lengkap proses bisnis end-to-end dengan 16 modul terintegrasi - dari setup, operasional harian, maintenance, hingga pelaporan strategis.</p>
+
+            <!-- Statistics Overview -->
+            <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <div class="text-2xl font-bold text-blue-600" id="total-modules">16</div>
+                    <div class="text-sm text-slate-600">Modul Terintegrasi</div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <div class="text-2xl font-bold text-green-600" id="total-processes">0</div>
+                    <div class="text-sm text-slate-600">Proses Bisnis</div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <div class="text-2xl font-bold text-purple-600" id="total-roles">0</div>
+                    <div class="text-sm text-slate-600">Peran Pengguna</div>
+                </div>
+                <div class="bg-white rounded-lg shadow-md p-4">
+                    <div class="text-2xl font-bold text-orange-600">6</div>
+                    <div class="text-sm text-slate-600">Tahapan Utama</div>
+                </div>
+            </div>
         </header>
 
         <!-- Filter Section -->
@@ -69,36 +110,73 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const workflowData = [
-                { stage: 'Setup Awal', role: 'Admin', module: 'System Settings', action: 'Login, membuat Roles & Permissions', automation: '-', output: 'Peran pengguna dengan hak akses yang jelas' },
-                { stage: 'Setup Awal', role: 'Admin', module: 'System Settings', action: 'Membuat akun User untuk setiap karyawan', automation: '-', output: 'Karyawan bisa login ke sistem' },
-                { stage: 'Setup Awal', role: 'Admin / Akuntan', module: 'Accounting Settings', action: 'Memetakan proses (Penjualan, Utang, dll) ke Akun COA', automation: '-', output: '"Otak" untuk semua jurnal otomatis' },
-                { stage: 'Setup Awal', role: 'Admin / Staf Terkait', module: 'Master Data', action: 'Input data: Customers, Suppliers, Products, Warehouses, Departments', automation: '-', output: 'Data induk siap digunakan untuk transaksi' },
-                { stage: 'Setup Awal', role: 'Akuntan', module: 'Accounting', action: 'Input Chart of Accounts (COA) & Saldo Awal', automation: '-', output: 'Laporan keuangan awal seimbang' },
+                // === SETUP AWAL ===
+                { stage: 'Setup Awal', role: 'SuperAdmin', module: 'System Settings', action: 'Setup multi-tenancy dan companies', automation: '-', output: 'Sistem multi-tenant siap, perusahaan terdaftar' },
+                { stage: 'Setup Awal', role: 'Admin', module: 'System Settings', action: 'Membuat Roles & Permissions untuk setiap peran', automation: '-', output: 'Kontrol akses berbasis peran terkonfigurasi' },
+                { stage: 'Setup Awal', role: 'Admin', module: 'System Settings', action: 'Membuat User accounts untuk karyawan', automation: 'Assign roles otomatis berdasarkan departemen', output: 'Karyawan dapat login dengan hak akses sesuai peran' },
+                { stage: 'Setup Awal', role: 'Admin', module: 'MasterData', action: 'Setup master data: Customers, Suppliers, Categories', automation: '-', output: 'Data referensi dasar tersedia' },
+                { stage: 'Setup Awal', role: 'Inventory Manager', module: 'MasterData', action: 'Input master Products, Warehouses, dan Units', automation: '-', output: 'Katalog produk dan gudang siap untuk transaksi' },
+                { stage: 'Setup Awal', role: 'Akuntan', module: 'Accounting', action: 'Setup Chart of Accounts (COA) dan saldo awal', automation: '-', output: 'Struktur akuntansi dan neraca awal seimbang' },
+                { stage: 'Setup Awal', role: 'Akuntan', module: 'Accounting', action: 'Konfigurasi pengaturan akuntansi dan mapping akun', automation: '-', output: 'Auto-journal mapping untuk semua transaksi' },
+                { stage: 'Setup Awal', role: 'HR Manager', module: 'HumanResource', action: 'Setup data employees, departments, positions', automation: '-', output: 'Database karyawan lengkap untuk payroll dan attendance' },
 
-                { stage: 'Operasional', role: 'Sales', module: 'CRM', action: 'Membuat Lead baru', automation: '-', output: 'Data calon pelanggan tercatat' },
-                { stage: 'Operasional', role: 'Sales', module: 'CRM', action: 'Mengkonversi Lead menjadi Opportunity', automation: 'Membuat data Customer baru jika belum ada', output: 'Lead menjadi "Qualified", Opportunity baru dibuat' },
-                { stage: 'Operasional', role: 'Sales', module: 'Sales', action: 'Membuat Sales Order dari Opportunity', automation: 'Mengisi data customer secara otomatis', output: 'Dokumen Sales Order (status: Draft)' },
-                { stage: 'Operasional', role: 'Staf Gudang', module: 'Warehouse', action: 'Memproses "Shipment" (Pengiriman) dari SO', automation: 'Mengurangi kuantitas di `warehouse_stock`', output: 'Status SO menjadi "Shipped", Stok fisik berkurang' },
-                { stage: 'Operasional', role: 'Sales / Akuntan', module: 'Sales', action: 'Membuat "Invoice" (Faktur) dari SO', automation: 'Membuat Jurnal: (D) Piutang, (K) Pendapatan; (D) HPP, (K) Persediaan', output: 'Status SO menjadi "Completed", Piutang tercatat' },
-                { stage: 'Operasional', role: 'Akuntan', module: 'Accounting', action: 'Mencatat pembayaran dari pelanggan', automation: 'Membuat Jurnal: (D) Kas/Bank, (K) Piutang', output: 'Piutang lunas' },
+                // === OPERASIONAL HARIAN ===
+                { stage: 'Operasional', role: 'Sales Rep', module: 'CRM', action: 'Membuat Lead baru dari prospek', automation: '-', output: 'Lead tercatat dengan status tracking' },
+                { stage: 'Operasional', role: 'Sales Rep', module: 'CRM', action: 'Qualifikasi Lead menjadi Opportunity', automation: 'Auto-create Customer record jika belum ada', output: 'Opportunity dengan forecast dan timeline' },
+                { stage: 'Operasional', role: 'Sales Rep', module: 'Sales', action: 'Convert Opportunity ke Sales Order', automation: 'Auto-populate customer data dan pricing', output: 'Sales Order (Draft) siap untuk approval' },
+                { stage: 'Operasional', role: 'Sales Manager', module: 'Sales', action: 'Approve Sales Order', automation: 'Validasi stok dan credit limit customer', output: 'Sales Order approved, siap untuk fulfillment' },
+                { stage: 'Operasional', role: 'Warehouse Staff', module: 'Warehouse', action: 'Pick & Pack items untuk SO', automation: 'Reserve stok, generate picking list', output: 'Items ready for shipment' },
+                { stage: 'Operasional', role: 'Warehouse Staff', module: 'Warehouse', action: 'Process Shipment/Delivery', automation: 'Update stok, create delivery note', output: 'SO status: Shipped, stok berkurang' },
+                { stage: 'Operasional', role: 'Billing Staff', module: 'Sales', action: 'Generate Invoice dari SO', automation: 'Auto-journal: (D) Piutang, (K) Pendapatan; (D) HPP, (K) Persediaan', output: 'Invoice terbit, piutang dan revenue tercatat' },
 
-                { stage: 'Operasional', role: 'Staf Purchasing', module: 'Purchasing', action: 'Membuat Purchase Order (PO) ke supplier', automation: '-', output: 'Dokumen Purchase Order (status: Ordered)' },
-                { stage: 'Operasional', role: 'Staf Gudang', module: 'Warehouse', action: 'Memproses "Penerimaan Barang" dari PO', automation: 'Menambah kuantitas di `warehouse_stock` & Membuat Jurnal: (D) Persediaan, (K) Utang Usaha', output: 'Status PO menjadi "Received", Stok bertambah, Utang tercatat' },
-                { stage: 'Operasional', role: 'Akuntan', module: 'Accounting', action: 'Mencatat pembayaran ke supplier', automation: 'Membuat Jurnal: (D) Utang Usaha, (K) Kas/Bank', output: 'Utang lunas' },
+                { stage: 'Operasional', role: 'Purchasing Staff', module: 'Purchasing', action: 'Membuat Purchase Order ke supplier', automation: 'Auto-generate dari reorder point atau MRP', output: 'PO approved, supplier notification sent' },
+                { stage: 'Operasional', role: 'Warehouse Staff', module: 'Warehouse', action: 'Receive goods dari PO', automation: 'Update stok, auto-journal: (D) Inventory, (K) Accounts Payable', output: 'Stok bertambah, utang supplier tercatat' },
+                { stage: 'Operasional', role: 'AP Staff', module: 'Purchasing', action: 'Process supplier payment', automation: 'Auto-journal: (D) Accounts Payable, (K) Cash/Bank', output: 'Utang supplier lunas' },
 
-                { stage: 'Operasional', role: 'Staf Produksi', module: 'Manufacturing', action: 'Membuat Manufacturing Order (MO)', automation: '-', output: 'Dokumen Perintah Kerja (status: Draft)' },
-                { stage: 'Operasional', role: 'Staf Produksi', module: 'Manufacturing', action: 'Memulai Produksi dari MO', automation: 'Mengurangi stok bahan baku dari `warehouse_stock` sesuai BOM', output: 'Status MO menjadi "In Progress"' },
-                { stage: 'Operasional', role: 'Staf Produksi', module: 'Manufacturing', action: 'Menyelesaikan Produksi dari MO', automation: 'Menambah stok produk jadi ke `warehouse_stock`', output: 'Status MO menjadi "Done"' },
+                { stage: 'Operasional', role: 'Production Planner', module: 'Manufacturing', action: 'Create Manufacturing Order (MO)', automation: 'Calculate material requirements dari BOM', output: 'Work order dengan material dan routing plan' },
+                { stage: 'Operasional', role: 'Production Staff', module: 'Manufacturing', action: 'Start Production - consume materials', automation: 'Deduct raw materials dari stok berdasarkan BOM', output: 'MO status: In Progress, WIP tercatat' },
+                { stage: 'Operasional', role: 'Production Staff', module: 'Manufacturing', action: 'Complete Production - finish goods', automation: 'Add finished goods ke stok, calculate production cost', output: 'MO status: Completed, finished goods tersedia' },
 
-                { stage: 'Operasional', role: 'Staf HR', module: 'Human Resource', action: 'Membuat & memproses Payroll untuk satu periode', automation: 'Membuat Jurnal: (D) Beban Gaji, (K) Utang Gaji & Utang Pajak', output: 'Slip gaji dibuat, beban & utang gaji tercatat' },
+                { stage: 'Operasional', role: 'Cashier', module: 'PointOfSales', action: 'Process retail sales transaction', automation: 'Real-time stok check, auto-pricing, tax calculation', output: 'Receipt printed, sales recorded, stok updated' },
+                { stage: 'Operasional', role: 'Cashier', module: 'PointOfSales', action: 'Handle returns dan refunds', automation: 'Reverse stok movement, refund journal entries', output: 'Return processed, stok dan accounting adjusted' },
 
-                { stage: 'Internal', role: 'Staf Gudang', module: 'Warehouse', action: 'Membuat dokumen Stock Transfer', automation: '-', output: 'Dokumen Transfer Stok (status: Draft)' },
-                { stage: 'Internal', role: 'Staf Gudang', module: 'Warehouse', action: 'Memproses hasil Stock Count', automation: 'Menyesuaikan `warehouse_stock` & Membuat Jurnal Penyesuaian Persediaan', output: 'Stok akurat, selisih tercatat di akuntansi' },
-                { stage: 'Internal', role: 'Manajer Proyek', module: 'Project Management', action: 'Membuat Proyek & Tugas (Tasks)', automation: '-', output: 'Proyek dan tugas terdaftar di sistem' },
+                // === OPERASIONAL PERIODIK ===
+                { stage: 'Operasional', role: 'HR Staff', module: 'HumanResource', action: 'Record daily attendance', automation: 'Auto-calculate dari biometric/check-in system', output: 'Attendance data untuk payroll calculation' },
+                { stage: 'Operasional', role: 'HR Staff', module: 'HumanResource', action: 'Process leave requests', automation: 'Validate leave balance, approval workflow', output: 'Leave approved/rejected, balance updated' },
+                { stage: 'Operasional', role: 'HR Staff', module: 'HumanResource', action: 'Conduct performance reviews', automation: 'Template-based evaluation, scoring calculation', output: 'Performance scores untuk appraisal dan development' },
+                { stage: 'Operasional', role: 'HR Staff', module: 'HumanResource', action: 'Process monthly payroll', automation: 'Auto-calculate salary, overtime, deductions; Create journal: (D) Salary Expense, (K) Salary Payable & Tax Payable', output: 'Payslips generated, salary expense recorded' },
 
-                { stage: 'Akhir Periode', role: 'Sistem (Otomatis)', module: 'Fixed Asset', action: 'Menjalankan scheduler bulanan', automation: 'Membuat Jurnal Penyusutan untuk semua aset', output: 'Beban & Akumulasi Penyusutan tercatat' },
-                { stage: 'Akhir Periode', role: 'Akuntan', module: 'Accounting', action: 'Menjalankan proses Tutup Buku Akhir Tahun', automation: 'Membuat Jurnal Penutup & memindahkan laba ke Laba Ditahan', output: 'Akun Laba/Rugi menjadi nol, siap untuk periode baru' },
-                { stage: 'Akhir Periode', role: 'Manajemen', module: 'Reporting', action: 'Mengakses menu Laporan Keuangan', automation: 'Mengambil & mengolah semua data transaksi secara real-time', output: 'Laporan Laba Rugi, Neraca, dll. yang up-to-date' },
+                { stage: 'Operasional', role: 'Project Manager', module: 'ProjectManagement', action: 'Create dan manage projects', automation: 'Template-based project setup, resource allocation', output: 'Project timeline, tasks, dan milestones defined' },
+                { stage: 'Operasional', role: 'Team Member', module: 'ProjectManagement', action: 'Log time dan update task progress', automation: 'Time tracking, progress calculation, budget monitoring', output: 'Real-time project status dan cost tracking' },
+
+                { stage: 'Operasional', role: 'Help Desk Staff', module: 'Helpdesk', action: 'Handle customer support tickets', automation: 'Auto-assignment, escalation rules, SLA tracking', output: 'Customer issues resolved, satisfaction tracked' },
+                { stage: 'Operasional', role: 'Document Controller', module: 'DocumentManagement', action: 'Manage business documents', automation: 'Version control, approval workflow, retention policies', output: 'Documents organized, compliant, easily accessible' },
+
+                // === MAINTENANCE & QUALITY ===
+                { stage: 'Maintenance', role: 'Maintenance Staff', module: 'Maintenance', action: 'Schedule preventive maintenance', automation: 'Auto-schedule berdasarkan usage hours/cycles', output: 'Maintenance calendar, spare parts reserved' },
+                { stage: 'Maintenance', role: 'Maintenance Staff', module: 'Maintenance', action: 'Execute maintenance work orders', automation: 'Record labor hours, parts consumed, costs', output: 'Equipment maintained, costs tracked, history logged' },
+                { stage: 'Maintenance', role: 'QC Inspector', module: 'QualityControl', action: 'Perform quality inspections', automation: 'Template-based checklists, statistical sampling', output: 'Quality records, defect tracking, supplier ratings' },
+                { stage: 'Maintenance', role: 'QC Manager', module: 'QualityControl', action: 'Analyze quality trends dan improvements', automation: 'Statistical analysis, trend charts, alerts', output: 'Quality improvement actions, supplier feedback' },
+
+                // === INTERNAL PROCESSES ===
+                { stage: 'Internal', role: 'Warehouse Staff', module: 'Warehouse', action: 'Perform stock transfers antar gudang', automation: 'Update multiple warehouse locations, tracking number', output: 'Stock relocated, multi-location inventory updated' },
+                { stage: 'Internal', role: 'Warehouse Staff', module: 'Warehouse', action: 'Conduct cycle counting/stock opname', automation: 'Generate count sheets, variance analysis, adjustment journals', output: 'Accurate inventory, discrepancies resolved' },
+                { stage: 'Internal', role: 'Finance Staff', module: 'Accounting', action: 'Process journal entries dan adjustments', automation: 'Template journals, recurring entries, approval workflow', output: 'Accurate accounting records, audit trail maintained' },
+                { stage: 'Internal', role: 'Finance Staff', module: 'Accounting', action: 'Reconcile bank statements', automation: 'Auto-matching transactions, exception reporting', output: 'Bank balances reconciled, cash position accurate' },
+                { stage: 'Internal', role: 'Asset Manager', module: 'Accounting', action: 'Manage fixed assets dan depreciation', automation: 'Monthly depreciation calculation, disposal tracking', output: 'Asset register updated, depreciation expense recorded' },
+
+                // === REPORTING & ANALYSIS ===
+                { stage: 'Reporting', role: 'Management', module: 'Reports', action: 'Access Executive Dashboard', automation: 'Real-time KPI calculation dari all modules', output: 'Executive insights: revenue, profitability, trends' },
+                { stage: 'Reporting', role: 'Sales Manager', module: 'Reports', action: 'Analyze sales performance', automation: 'Sales analytics: by product, customer, region, rep', output: 'Sales insights untuk strategic decisions' },
+                { stage: 'Reporting', role: 'CFO/Controller', module: 'Accounting', action: 'Generate financial statements', automation: 'Real-time P&L, Balance Sheet, Cash Flow dari all transactions', output: 'Accurate financial reports untuk stakeholders' },
+                { stage: 'Reporting', role: 'Operations Manager', module: 'Reports', action: 'Monitor operational metrics', automation: 'Cross-module analytics: inventory turnover, production efficiency', output: 'Operational insights untuk process improvement' },
+                { stage: 'Reporting', role: 'Finance Staff', module: 'Accounting', action: 'Prepare regulatory dan tax reports', automation: 'Tax calculation, compliance templates, submission formats', output: 'Compliance reports submitted on time' },
+
+                // === PERIOD-END CLOSING ===
+                { stage: 'Period Closing', role: 'System', module: 'Accounting', action: 'Auto-run monthly depreciation', automation: 'Calculate dan post depreciation untuk all fixed assets', output: 'Depreciation expense dan accumulated depreciation updated' },
+                { stage: 'Period Closing', role: 'Accountant', module: 'Accounting', action: 'Month-end closing procedures', automation: 'Accrual calculations, prepaid amortization, closing checklists', output: 'Monthly books closed, variance analysis completed' },
+                { stage: 'Period Closing', role: 'Accountant', module: 'Accounting', action: 'Year-end closing dan audit prep', automation: 'Closing entries, retained earnings transfer, audit trails', output: 'Year-end books closed, audit documentation ready' },
+                { stage: 'Period Closing', role: 'Management', module: 'Reports', action: 'Strategic planning dan budgeting', automation: 'Historical analysis, forecasting models, variance reports', output: 'Budget plans, strategic initiatives untuk next period' },
             ];
 
             const diagramContainer = document.getElementById('diagram-container');
@@ -112,7 +190,7 @@
 
             function renderDiagram() {
                 diagramContainer.innerHTML = '';
-                const stages = ['Setup Awal', 'Operasional', 'Internal', 'Akhir Periode'];
+                const stages = ['Setup Awal', 'Operasional', 'Maintenance', 'Internal', 'Reporting', 'Period Closing'];
                 const groupedByStage = stages.reduce((acc, stage) => {
                     acc[stage] = workflowData.filter(item => item.stage === stage);
                     return acc;
@@ -141,20 +219,35 @@
                 const moduleCards = Object.keys(groupedByModule).map(moduleName => {
                     const moduleData = groupedByModule[moduleName];
                     const roles = Array.from(moduleData.roles).join(', ');
+                    const processCount = moduleData.items.length;
                     return `
-                        <div class="module-card bg-white rounded-lg shadow-md p-4 cursor-pointer border-2 border-transparent transition-all duration-300"
+                        <div class="module-card bg-white rounded-lg shadow-md p-4 cursor-pointer border-2 border-transparent transition-all duration-300 hover:border-blue-500"
                              data-module="${moduleName}"
                              data-roles='${JSON.stringify(Array.from(moduleData.roles))}'>
-                            <h4 class="font-bold text-slate-800">${moduleName}</h4>
-                            <p class="text-xs text-slate-500 mt-1">${roles}</p>
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-bold text-slate-800 text-sm">${moduleName}</h4>
+                                <span class="inline-block px-2 py-1 bg-blue-100 text-blue-600 text-xs font-medium rounded">${processCount}</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-2">${roles}</p>
+                            <div class="text-xs text-slate-400">
+                                <i class="fas fa-mouse-pointer"></i> Click untuk detail
+                            </div>
                         </div>
                     `;
                 }).join('');
 
+                const totalProcesses = items.length;
+                const uniqueRoles = [...new Set(items.map(item => item.role))].length;
+
                 return `
                     <div class="stage-column flex-1 relative">
-                        <h3 class="text-xl font-bold text-blue-600 mb-4 text-center">${stageName}</h3>
-                        <div class="space-y-4">
+                        <div class="text-center mb-4">
+                            <h3 class="text-xl font-bold mb-2">${stageName}</h3>
+                            <div class="text-xs text-slate-500">
+                                ${totalProcesses} proses • ${uniqueRoles} peran
+                            </div>
+                        </div>
+                        <div class="space-y-3">
                             ${moduleCards}
                         </div>
                         <div class="stage-arrow hidden md:block"></div>
@@ -186,19 +279,44 @@
 
             function openModal(moduleName) {
                 const items = workflowData.filter(item => item.module === moduleName);
-                modalTitle.textContent = `Detail Proses: ${moduleName}`;
-                modalBody.innerHTML = items.map(item => `
-                    <div class="mb-6 pb-4 border-b last:border-b-0">
-                        <p class="font-bold text-lg text-slate-800">${item.action}</p>
-                        <p class="text-sm text-slate-500 mb-3">Peran: ${item.role}</p>
-                        <div class="text-sm">
-                            <p class="font-semibold text-slate-600">Otomatisasi Sistem:</p>
-                            <p class="text-slate-700 mb-2">${item.automation}</p>
-                            <p class="font-semibold text-slate-600">Hasil Akhir:</p>
-                            <p class="font-medium text-green-600">${item.output}</p>
+                const uniqueStages = [...new Set(items.map(item => item.stage))];
+                const uniqueRoles = [...new Set(items.map(item => item.role))];
+
+                modalTitle.textContent = `${moduleName} - ${items.length} Proses`;
+                modalBody.innerHTML = `
+                    <div class="mb-6 p-4 bg-blue-50 rounded-lg">
+                        <div class="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <span class="font-semibold text-slate-600">Tahapan:</span>
+                                <span class="text-blue-600">${uniqueStages.join(', ')}</span>
+                            </div>
+                            <div>
+                                <span class="font-semibold text-slate-600">Peran Terlibat:</span>
+                                <span class="text-green-600">${uniqueRoles.join(', ')}</span>
+                            </div>
                         </div>
                     </div>
-                `).join('');
+                    ${items.map((item, index) => `
+                        <div class="mb-6 pb-4 border-b last:border-b-0">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="inline-block px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded">${item.stage}</span>
+                                <span class="inline-block px-2 py-1 bg-green-100 text-green-800 text-xs font-medium rounded">${item.role}</span>
+                            </div>
+                            <h4 class="font-bold text-lg text-slate-800 mb-2">${index + 1}. ${item.action}</h4>
+
+                            <div class="text-sm space-y-2">
+                                <div class="p-3 bg-amber-50 rounded">
+                                    <p class="font-semibold text-amber-800 mb-1">🤖 Otomatisasi Sistem:</p>
+                                    <p class="text-amber-700">${item.automation}</p>
+                                </div>
+                                <div class="p-3 bg-green-50 rounded">
+                                    <p class="font-semibold text-green-800 mb-1">✅ Hasil Akhir:</p>
+                                    <p class="font-medium text-green-700">${item.output}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                `;
                 modal.classList.remove('hidden');
                 setTimeout(() => {
                     modal.classList.remove('opacity-0');
@@ -238,6 +356,15 @@
 
             renderFilters();
             renderDiagram();
+            updateStatistics();
+
+            function updateStatistics() {
+                const totalProcesses = workflowData.length;
+                const uniqueRoles = [...new Set(workflowData.map(item => item.role))].length;
+
+                document.getElementById('total-processes').textContent = totalProcesses;
+                document.getElementById('total-roles').textContent = uniqueRoles;
+            }
         });
     </script>
 @endpush

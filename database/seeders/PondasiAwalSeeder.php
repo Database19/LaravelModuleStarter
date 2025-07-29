@@ -33,122 +33,289 @@ class PondasiAwalSeeder extends Seeder
         ];
 
         $now = now();
-        $accounts = [
-            // 100-00-000: ASET
-            // --- 110-00-000: ASET LANCAR ---
-            ['account_code' => '111-01-001', 'name' => 'Kas Kecil (Petty Cash)', 'type' => 'asset'],
-            ['account_code' => '111-01-002', 'name' => 'Kas di Brankas', 'type' => 'asset'],
-            ['account_code' => '112-01-001', 'name' => 'Bank BCA', 'type' => 'asset'],
-            ['account_code' => '112-01-002', 'name' => 'Bank Mandiri', 'type' => 'asset'],
-            ['account_code' => '113-01-001', 'name' => 'Piutang Usaha', 'type' => 'asset'],
-            ['account_code' => '113-02-001', 'name' => 'Penyisihan Piutang Tak Tertagih', 'type' => 'asset'], // Akun Kontra Aset
-            ['account_code' => '114-01-001', 'name' => 'Persediaan Bahan Baku', 'type' => 'asset'],
-            ['account_code' => '114-01-002', 'name' => 'Persediaan Barang Dalam Proses (WIP)', 'type' => 'asset'], // BARU: Untuk modul Manufacturing
-            ['account_code' => '114-01-003', 'name' => 'Persediaan Barang Jadi', 'type' => 'asset'],
-            ['account_code' => '115-01-001', 'name' => 'Sewa Dibayar di Muka', 'type' => 'asset'],
-            ['account_code' => '115-01-002', 'name' => 'Asuransi Dibayar di Muka', 'type' => 'asset'],
-            ['account_code' => '116-01-001', 'name' => 'Perlengkapan Kantor', 'type' => 'asset'],
-            ['account_code' => '117-01-001', 'name' => 'PPN Masukan', 'type' => 'asset'],
 
-            // --- 120-00-000: ASET TETAP ---
-            ['account_code' => '121-01-001', 'name' => 'Tanah', 'type' => 'asset'],
-            ['account_code' => '122-01-001', 'name' => 'Gedung dan Bangunan', 'type' => 'asset'],
-            ['account_code' => '122-02-001', 'name' => 'Akumulasi Penyusutan Gedung', 'type' => 'asset'], // Akun Kontra Aset
-            ['account_code' => '123-01-001', 'name' => 'Kendaraan', 'type' => 'asset'],
-            ['account_code' => '123-02-001', 'name' => 'Akumulasi Penyusutan Kendaraan', 'type' => 'asset'], // Akun Kontra Aset
-            ['account_code' => '124-01-001', 'name' => 'Peralatan Kantor', 'type' => 'asset'],
-            ['account_code' => '124-02-001', 'name' => 'Akumulasi Penyusutan Peralatan Kantor', 'type' => 'asset'], // Akun Kontra Aset
-            ['account_code' => '125-01-001', 'name' => 'Mesin Produksi', 'type' => 'asset'],
-            ['account_code' => '125-02-001', 'name' => 'Akumulasi Penyusutan Mesin Produksi', 'type' => 'asset'], // Akun Kontra Aset
-
-            // --- 130-00-000: ASET TIDAK BERWUJUD ---
-            ['account_code' => '131-01-001', 'name' => 'Goodwill', 'type' => 'asset'],
-            ['account_code' => '132-01-001', 'name' => 'Hak Paten', 'type' => 'asset'],
-            ['account_code' => '132-02-001', 'name' => 'Akumulasi Amortisasi Hak Paten', 'type' => 'asset'], // Akun Kontra Aset
-
-            // 200-00-000: LIABILITAS
-            // --- 210-00-000: LIABILITAS JANGKA PENDEK ---
-            ['account_code' => '211-01-001', 'name' => 'Utang Usaha', 'type' => 'liability'],
-            ['account_code' => '212-01-001', 'name' => 'Utang Gaji', 'type' => 'liability'],
-            ['account_code' => '212-01-002', 'name' => 'Utang BPJS Ketenagakerjaan', 'type' => 'liability'], // BARU: Untuk modul Payroll
-            ['account_code' => '212-01-003', 'name' => 'Utang BPJS Kesehatan', 'type' => 'liability'], // BARU: Untuk modul Payroll
-            ['account_code' => '213-01-001', 'name' => 'Utang Pajak (PPh 21, 23, 25)', 'type' => 'liability'],
-            ['account_code' => '213-01-002', 'name' => 'PPN Keluaran', 'type' => 'liability'],
-            ['account_code' => '214-01-001', 'name' => 'Beban yang Masih Harus Dibayar', 'type' => 'liability'],
-            ['account_code' => '215-01-001', 'name' => 'Pendapatan Diterima di Muka', 'type' => 'liability'],
-            ['account_code' => '216-01-001', 'name' => 'Utang Bank Jangka Pendek', 'type' => 'liability'],
-
-            // --- 220-00-000: LIABILITAS JANGKA PANJANG ---
-            ['account_code' => '221-01-001', 'name' => 'Utang Bank Jangka Panjang', 'type' => 'liability'],
-            ['account_code' => '222-01-001', 'name' => 'Utang Obligasi', 'type' => 'liability'],
-
-            // 300-00-000: EKUITAS
-            ['account_code' => '311-01-001', 'name' => 'Modal Disetor', 'type' => 'equity'],
-            ['account_code' => '312-01-001', 'name' => 'Agio Saham', 'type' => 'equity'],
-            ['account_code' => '321-01-001', 'name' => 'Laba Ditahan', 'type' => 'equity'],
-            ['account_code' => '331-01-001', 'name' => 'Prive / Dividen', 'type' => 'equity'], // Akun Kontra Ekuitas
-            ['account_code' => '399-01-001', 'name' => 'Ikhtisar Laba Rugi', 'type' => 'equity'], // Akun sementara untuk penutupan buku
-
-            // 400-00-000: PENDAPATAN
-            // --- 410-00-000: PENDAPATAN USAHA ---
-            ['account_code' => '411-01-001', 'name' => 'Pendapatan Penjualan Barang', 'type' => 'revenue'],
-            ['account_code' => '412-01-001', 'name' => 'Pendapatan Jasa', 'type' => 'revenue'],
-            ['account_code' => '413-01-001', 'name' => 'Retur Penjualan dan Pengurangan Harga', 'type' => 'revenue'], // Akun Kontra Pendapatan
-            ['account_code' => '414-01-001', 'name' => 'Diskon Penjualan', 'type' => 'revenue'], // Akun Kontra Pendapatan
-            ['account_code' => '415-01-001', 'name' => 'Pendapatan Pengiriman', 'type' => 'revenue'], // BARU: Jika ongkir dibebankan ke pelanggan
-
-            // --- 420-00-000: PENDAPATAN DI LUAR USAHA ---
-            ['account_code' => '421-01-001', 'name' => 'Pendapatan Bunga', 'type' => 'revenue'],
-            ['account_code' => '422-01-001', 'name' => 'Pendapatan Sewa', 'type' => 'revenue'],
-            ['account_code' => '423-01-001', 'name' => 'Keuntungan Penjualan Aset', 'type' => 'revenue'],
-            ['account_code' => '424-01-001', 'name' => 'Pendapatan Lain-lain', 'type' => 'revenue'], // BARU: Akun penampung
-
-            // 500-00-000: HARGA POKOK PENJUALAN (HPP) & BIAYA PRODUKSI
-            ['account_code' => '511-01-001', 'name' => 'Harga Pokok Penjualan (COGS)', 'type' => 'expense'],
-            ['account_code' => '512-01-001', 'name' => 'Biaya Angkut Pembelian', 'type' => 'expense'],
-            ['account_code' => '513-01-001', 'name' => 'Diskon Pembelian', 'type' => 'expense'], // BARU: Sebagai kontra-akun HPP
-            ['account_code' => '521-01-001', 'name' => 'Biaya Tenaga Kerja Langsung', 'type' => 'expense'], // BARU: Untuk modul Manufacturing
-            ['account_code' => '522-01-001', 'name' => 'Biaya Overhead Pabrik (FOH)', 'type' => 'expense'], // BARU: Untuk modul Manufacturing
-            ['account_code' => '531-01-001', 'name' => 'Penyesuaian Persediaan', 'type' => 'expense'], // BARU: Untuk selisih Stock Opname
-
-            // 600-00-000: BEBAN OPERASIONAL
-            // --- 610-00-000: BEBAN UMUM & ADMINISTRASI ---
-            ['account_code' => '611-01-001', 'name' => 'Beban Gaji dan Upah (Kantor)', 'type' => 'expense'],
-            ['account_code' => '611-01-002', 'name' => 'Beban Tunjangan (Kantor)', 'type' => 'expense'], // BARU: Untuk Payroll
-            ['account_code' => '612-01-001', 'name' => 'Beban Listrik, Air, dan Internet', 'type' => 'expense'],
-            ['account_code' => '613-01-001', 'name' => 'Beban Sewa Kantor', 'type' => 'expense'],
-            ['account_code' => '614-01-001', 'name' => 'Beban Asuransi', 'type' => 'expense'],
-            ['account_code' => '615-01-001', 'name' => 'Beban Perlengkapan Kantor', 'type' => 'expense'],
-            ['account_code' => '616-01-001', 'name' => 'Beban Penyusutan Aset Tetap', 'type' => 'expense'],
-            ['account_code' => '617-01-001', 'name' => 'Beban Amortisasi Aset Tak Berwujud', 'type' => 'expense'],
-            ['account_code' => '618-01-001', 'name' => 'Beban Kerugian Piutang', 'type' => 'expense'],
-
-            // --- 620-00-000: BEBAN PENJUALAN & PEMASARAN ---
-            ['account_code' => '621-01-001', 'name' => 'Beban Iklan dan Promosi', 'type' => 'expense'],
-            ['account_code' => '622-01-001', 'name' => 'Beban Komisi Penjualan', 'type' => 'expense'],
-            ['account_code' => '623-01-001', 'name' => 'Beban Pengiriman Penjualan', 'type' => 'expense'],
-            ['account_code' => '624-01-001', 'name' => 'Beban Perjalanan Dinas Penjualan', 'type' => 'expense'],
-
-            // 700-00-000: BEBAN DI LUAR USAHA
-            ['account_code' => '711-01-001', 'name' => 'Beban Bunga', 'type' => 'expense'],
-            ['account_code' => '712-01-001', 'name' => 'Beban Administrasi Bank', 'type' => 'expense'],
-            ['account_code' => '713-01-001', 'name' => 'Kerugian Penjualan Aset', 'type' => 'expense'],
-            ['account_code' => '714-01-001', 'name' => 'Beban Lain-lain', 'type' => 'expense'], // BARU: Akun penampung
-
-            // 800-00-000: PAJAK
-            ['account_code' => '811-01-001', 'name' => 'Beban Pajak Penghasilan', 'type' => 'expense'],
+        // Define business types
+        $businessTypes = [
+            'all' => 'Semua Bidang Usaha',
+            'trading' => 'Perusahaan Dagang',
+            'service' => 'Perusahaan Jasa',
+            'manufacturing' => 'Perusahaan Manufaktur',
+            'retail' => 'Retail/Toko',
+            'restaurant' => 'Restoran/F&B',
+            'construction' => 'Konstruksi/Kontraktor',
+            'healthcare' => 'Kesehatan/Klinik',
+            'education' => 'Pendidikan/Sekolah',
+            'transportation' => 'Transportasi/Logistik',
+            'technology' => 'Teknologi/IT',
+            'agriculture' => 'Pertanian/Perkebunan',
+            'real_estate' => 'Properti/Real Estate',
+            'financial' => 'Keuangan/Asuransi',
+            'hospitality' => 'Hotel/Pariwisata'
         ];
 
-        // Akun dibuat oleh Accountant
+        $accounts = [
+            // ===== ASET LANCAR (100-110-XXX) =====
+
+            // KAS & SETARA KAS
+            ['account_code' => '101-01-001', 'name' => 'Kas Kecil (Petty Cash)', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '101-01-002', 'name' => 'Kas di Brankas', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '101-01-003', 'name' => 'Kas Register/Kasir', 'type' => 'asset', 'business_type' => 'retail,restaurant'],
+            ['account_code' => '101-02-001', 'name' => 'Bank BCA', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '101-02-002', 'name' => 'Bank Mandiri', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '101-02-003', 'name' => 'Bank BNI', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '101-02-004', 'name' => 'Bank BRI', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '101-03-001', 'name' => 'Deposito Berjangka', 'type' => 'asset', 'business_type' => 'all'],
+
+            // PIUTANG
+            ['account_code' => '102-01-001', 'name' => 'Piutang Usaha', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '102-01-002', 'name' => 'Piutang Karyawan', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '102-01-003', 'name' => 'Piutang Pasien', 'type' => 'asset', 'business_type' => 'healthcare'],
+            ['account_code' => '102-01-004', 'name' => 'Piutang Siswa/Mahasiswa', 'type' => 'asset', 'business_type' => 'education'],
+            ['account_code' => '102-01-005', 'name' => 'Piutang Tamu Hotel', 'type' => 'asset', 'business_type' => 'hospitality'],
+            ['account_code' => '102-02-001', 'name' => 'Penyisihan Piutang Tak Tertagih', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '102-03-001', 'name' => 'Piutang Lain-lain', 'type' => 'asset', 'business_type' => 'all'],
+
+            // PERSEDIAAN
+            ['account_code' => '103-01-001', 'name' => 'Persediaan Barang Dagang', 'type' => 'asset', 'business_type' => 'trading,retail'],
+            ['account_code' => '103-01-002', 'name' => 'Persediaan Bahan Baku', 'type' => 'asset', 'business_type' => 'manufacturing,restaurant,construction'],
+            ['account_code' => '103-01-003', 'name' => 'Persediaan Barang Dalam Proses (WIP)', 'type' => 'asset', 'business_type' => 'manufacturing,construction'],
+            ['account_code' => '103-01-004', 'name' => 'Persediaan Barang Jadi', 'type' => 'asset', 'business_type' => 'manufacturing'],
+            ['account_code' => '103-02-001', 'name' => 'Persediaan Alat Tulis Kantor', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '103-02-002', 'name' => 'Persediaan Obat-obatan', 'type' => 'asset', 'business_type' => 'healthcare'],
+            ['account_code' => '103-02-003', 'name' => 'Persediaan Makanan & Minuman', 'type' => 'asset', 'business_type' => 'restaurant,hospitality'],
+            ['account_code' => '103-02-004', 'name' => 'Persediaan Spare Parts', 'type' => 'asset', 'business_type' => 'transportation,manufacturing'],
+            ['account_code' => '103-02-005', 'name' => 'Persediaan Bahan Bakar', 'type' => 'asset', 'business_type' => 'transportation,construction'],
+            ['account_code' => '103-03-001', 'name' => 'Persediaan Bahan Kimia', 'type' => 'asset', 'business_type' => 'agriculture,manufacturing'],
+            ['account_code' => '103-03-002', 'name' => 'Persediaan Pupuk & Pestisida', 'type' => 'asset', 'business_type' => 'agriculture'],
+
+            // BIAYA DIBAYAR DI MUKA
+            ['account_code' => '104-01-001', 'name' => 'Sewa Dibayar di Muka', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '104-01-002', 'name' => 'Asuransi Dibayar di Muka', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '104-01-003', 'name' => 'Iklan Dibayar di Muka', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '104-01-004', 'name' => 'Uang Muka Pembelian', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '104-01-005', 'name' => 'Biaya Kontrak Dibayar di Muka', 'type' => 'asset', 'business_type' => 'construction,technology'],
+
+            // PAJAK & PPN
+            ['account_code' => '105-01-001', 'name' => 'PPN Masukan', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '105-01-002', 'name' => 'PPh 22 Dibayar di Muka', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '105-01-003', 'name' => 'PPh 23 Dibayar di Muka', 'type' => 'asset', 'business_type' => 'all'],
+
+            // ===== ASET TETAP (120-150-XXX) =====
+
+            // TANAH & BANGUNAN
+            ['account_code' => '121-01-001', 'name' => 'Tanah', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '121-02-001', 'name' => 'Gedung dan Bangunan', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '121-02-002', 'name' => 'Akumulasi Penyusutan Gedung', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '121-03-001', 'name' => 'Bangunan Pabrik', 'type' => 'asset', 'business_type' => 'manufacturing'],
+            ['account_code' => '121-03-002', 'name' => 'Akumulasi Penyusutan Bangunan Pabrik', 'type' => 'asset', 'business_type' => 'manufacturing'],
+
+            // KENDARAAN
+            ['account_code' => '122-01-001', 'name' => 'Kendaraan Operasional', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '122-01-002', 'name' => 'Akumulasi Penyusutan Kendaraan', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '122-02-001', 'name' => 'Truk & Kendaraan Angkut', 'type' => 'asset', 'business_type' => 'transportation,construction'],
+            ['account_code' => '122-02-002', 'name' => 'Akumulasi Penyusutan Truk', 'type' => 'asset', 'business_type' => 'transportation,construction'],
+            ['account_code' => '122-03-001', 'name' => 'Alat Berat', 'type' => 'asset', 'business_type' => 'construction,agriculture'],
+            ['account_code' => '122-03-002', 'name' => 'Akumulasi Penyusutan Alat Berat', 'type' => 'asset', 'business_type' => 'construction,agriculture'],
+
+            // PERALATAN & MESIN
+            ['account_code' => '123-01-001', 'name' => 'Peralatan Kantor', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '123-01-002', 'name' => 'Akumulasi Penyusutan Peralatan Kantor', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '123-02-001', 'name' => 'Komputer & Perangkat IT', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '123-02-002', 'name' => 'Akumulasi Penyusutan Komputer', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '123-03-001', 'name' => 'Mesin Produksi', 'type' => 'asset', 'business_type' => 'manufacturing'],
+            ['account_code' => '123-03-002', 'name' => 'Akumulasi Penyusutan Mesin Produksi', 'type' => 'asset', 'business_type' => 'manufacturing'],
+            ['account_code' => '123-04-001', 'name' => 'Peralatan Medis', 'type' => 'asset', 'business_type' => 'healthcare'],
+            ['account_code' => '123-04-002', 'name' => 'Akumulasi Penyusutan Peralatan Medis', 'type' => 'asset', 'business_type' => 'healthcare'],
+            ['account_code' => '123-05-001', 'name' => 'Peralatan Dapur & Restoran', 'type' => 'asset', 'business_type' => 'restaurant,hospitality'],
+            ['account_code' => '123-05-002', 'name' => 'Akumulasi Penyusutan Peralatan Dapur', 'type' => 'asset', 'business_type' => 'restaurant,hospitality'],
+            ['account_code' => '123-06-001', 'name' => 'Peralatan Pertanian', 'type' => 'asset', 'business_type' => 'agriculture'],
+            ['account_code' => '123-06-002', 'name' => 'Akumulasi Penyusutan Peralatan Pertanian', 'type' => 'asset', 'business_type' => 'agriculture'],
+
+            // ASET TIDAK BERWUJUD
+            ['account_code' => '131-01-001', 'name' => 'Goodwill', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '131-02-001', 'name' => 'Hak Paten', 'type' => 'asset', 'business_type' => 'manufacturing,technology'],
+            ['account_code' => '131-02-002', 'name' => 'Akumulasi Amortisasi Hak Paten', 'type' => 'asset', 'business_type' => 'manufacturing,technology'],
+            ['account_code' => '131-03-001', 'name' => 'Software & Lisensi', 'type' => 'asset', 'business_type' => 'all'],
+            ['account_code' => '131-03-002', 'name' => 'Akumulasi Amortisasi Software', 'type' => 'asset', 'business_type' => 'all'],
+
+            // ===== LIABILITAS JANGKA PENDEK (200-210-XXX) =====
+
+            // UTANG USAHA
+            ['account_code' => '201-01-001', 'name' => 'Utang Usaha', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '201-01-002', 'name' => 'Utang Supplier', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '201-01-003', 'name' => 'Utang Kontraktor', 'type' => 'liability', 'business_type' => 'construction'],
+            ['account_code' => '201-02-001', 'name' => 'Utang Wesel', 'type' => 'liability', 'business_type' => 'all'],
+
+            // UTANG GAJI & KARYAWAN
+            ['account_code' => '202-01-001', 'name' => 'Utang Gaji', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '202-01-002', 'name' => 'Utang Bonus & Insentif', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '202-01-003', 'name' => 'Utang THR', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '202-02-001', 'name' => 'Utang BPJS Ketenagakerjaan', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '202-02-002', 'name' => 'Utang BPJS Kesehatan', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '202-03-001', 'name' => 'Utang Komisi Sales', 'type' => 'liability', 'business_type' => 'trading,retail,service'],
+
+            // UTANG PAJAK
+            ['account_code' => '203-01-001', 'name' => 'Utang PPh 21', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '203-01-002', 'name' => 'Utang PPh 23', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '203-01-003', 'name' => 'Utang PPh 25', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '203-01-004', 'name' => 'Utang PPh Badan', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '203-02-001', 'name' => 'PPN Keluaran', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '203-02-002', 'name' => 'PPN yang Harus Dibayar', 'type' => 'liability', 'business_type' => 'all'],
+
+            // UTANG LAIN-LAIN
+            ['account_code' => '204-01-001', 'name' => 'Beban yang Masih Harus Dibayar', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '204-01-002', 'name' => 'Pendapatan Diterima di Muka', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '204-01-003', 'name' => 'Uang Muka Penjualan', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '204-02-001', 'name' => 'Utang Bank Jangka Pendek', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '204-02-002', 'name' => 'Utang Leasing', 'type' => 'liability', 'business_type' => 'all'],
+
+            // ===== LIABILITAS JANGKA PANJANG (220-230-XXX) =====
+
+            ['account_code' => '221-01-001', 'name' => 'Utang Bank Jangka Panjang', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '221-01-002', 'name' => 'Utang Hipotik', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '221-02-001', 'name' => 'Utang Obligasi', 'type' => 'liability', 'business_type' => 'all'],
+            ['account_code' => '221-03-001', 'name' => 'Utang Pembiayaan Jangka Panjang', 'type' => 'liability', 'business_type' => 'all'],
+
+            // ===== EKUITAS (300-310-XXX) =====
+
+            ['account_code' => '301-01-001', 'name' => 'Modal Disetor', 'type' => 'equity', 'business_type' => 'all'],
+            ['account_code' => '301-01-002', 'name' => 'Modal Tambahan Disetor', 'type' => 'equity', 'business_type' => 'all'],
+            ['account_code' => '301-02-001', 'name' => 'Agio Saham', 'type' => 'equity', 'business_type' => 'all'],
+            ['account_code' => '301-03-001', 'name' => 'Laba Ditahan', 'type' => 'equity', 'business_type' => 'all'],
+            ['account_code' => '301-03-002', 'name' => 'Laba Tahun Berjalan', 'type' => 'equity', 'business_type' => 'all'],
+            ['account_code' => '301-04-001', 'name' => 'Prive / Dividen', 'type' => 'equity', 'business_type' => 'all'],
+            ['account_code' => '399-01-001', 'name' => 'Ikhtisar Laba Rugi', 'type' => 'equity', 'business_type' => 'all'],
+
+            // ===== PENDAPATAN (400-450-XXX) =====
+
+            // PENDAPATAN UTAMA
+            ['account_code' => '401-01-001', 'name' => 'Pendapatan Penjualan Barang', 'type' => 'revenue', 'business_type' => 'trading,retail,manufacturing'],
+            ['account_code' => '401-01-002', 'name' => 'Pendapatan Jasa', 'type' => 'revenue', 'business_type' => 'service,technology,healthcare'],
+            ['account_code' => '401-01-003', 'name' => 'Pendapatan Konsultasi', 'type' => 'revenue', 'business_type' => 'service,technology,financial'],
+            ['account_code' => '401-02-001', 'name' => 'Pendapatan Proyek', 'type' => 'revenue', 'business_type' => 'construction,technology'],
+            ['account_code' => '401-02-002', 'name' => 'Pendapatan Kontrak', 'type' => 'revenue', 'business_type' => 'construction,service'],
+            ['account_code' => '401-03-001', 'name' => 'Pendapatan Makanan & Minuman', 'type' => 'revenue', 'business_type' => 'restaurant,hospitality'],
+            ['account_code' => '401-03-002', 'name' => 'Pendapatan Kamar Hotel', 'type' => 'revenue', 'business_type' => 'hospitality'],
+            ['account_code' => '401-04-001', 'name' => 'Pendapatan Pengobatan', 'type' => 'revenue', 'business_type' => 'healthcare'],
+            ['account_code' => '401-04-002', 'name' => 'Pendapatan Laboratorium', 'type' => 'revenue', 'business_type' => 'healthcare'],
+            ['account_code' => '401-05-001', 'name' => 'Pendapatan SPP/Uang Kuliah', 'type' => 'revenue', 'business_type' => 'education'],
+            ['account_code' => '401-05-002', 'name' => 'Pendapatan Kursus/Pelatihan', 'type' => 'revenue', 'business_type' => 'education'],
+            ['account_code' => '401-06-001', 'name' => 'Pendapatan Transportasi', 'type' => 'revenue', 'business_type' => 'transportation'],
+            ['account_code' => '401-06-002', 'name' => 'Pendapatan Logistik', 'type' => 'revenue', 'business_type' => 'transportation'],
+            ['account_code' => '401-07-001', 'name' => 'Pendapatan Hasil Panen', 'type' => 'revenue', 'business_type' => 'agriculture'],
+            ['account_code' => '401-07-002', 'name' => 'Pendapatan Ternak', 'type' => 'revenue', 'business_type' => 'agriculture'],
+            ['account_code' => '401-08-001', 'name' => 'Pendapatan Penjualan Properti', 'type' => 'revenue', 'business_type' => 'real_estate'],
+            ['account_code' => '401-08-002', 'name' => 'Pendapatan Sewa Properti', 'type' => 'revenue', 'business_type' => 'real_estate'],
+
+            // PENDAPATAN LAIN
+            ['account_code' => '402-01-001', 'name' => 'Retur Penjualan dan Pengurangan Harga', 'type' => 'revenue', 'business_type' => 'all'],
+            ['account_code' => '402-01-002', 'name' => 'Diskon Penjualan', 'type' => 'revenue', 'business_type' => 'all'],
+            ['account_code' => '402-02-001', 'name' => 'Pendapatan Pengiriman', 'type' => 'revenue', 'business_type' => 'trading,retail'],
+            ['account_code' => '402-02-002', 'name' => 'Pendapatan Bunga', 'type' => 'revenue', 'business_type' => 'all'],
+            ['account_code' => '402-02-003', 'name' => 'Pendapatan Sewa', 'type' => 'revenue', 'business_type' => 'all'],
+            ['account_code' => '402-03-001', 'name' => 'Keuntungan Penjualan Aset', 'type' => 'revenue', 'business_type' => 'all'],
+            ['account_code' => '402-03-002', 'name' => 'Pendapatan Lain-lain', 'type' => 'revenue', 'business_type' => 'all'],
+
+            // ===== HARGA POKOK PENJUALAN (500-550-XXX) =====
+
+            ['account_code' => '501-01-001', 'name' => 'Harga Pokok Penjualan (COGS)', 'type' => 'expense', 'business_type' => 'trading,retail,manufacturing'],
+            ['account_code' => '501-01-002', 'name' => 'Biaya Angkut Pembelian', 'type' => 'expense', 'business_type' => 'trading,retail,manufacturing'],
+            ['account_code' => '501-01-003', 'name' => 'Diskon Pembelian', 'type' => 'expense', 'business_type' => 'trading,retail,manufacturing'],
+            ['account_code' => '501-02-001', 'name' => 'Biaya Tenaga Kerja Langsung', 'type' => 'expense', 'business_type' => 'manufacturing,construction'],
+            ['account_code' => '501-02-002', 'name' => 'Biaya Overhead Pabrik (FOH)', 'type' => 'expense', 'business_type' => 'manufacturing'],
+            ['account_code' => '501-03-001', 'name' => 'Biaya Bahan Makanan', 'type' => 'expense', 'business_type' => 'restaurant,hospitality'],
+            ['account_code' => '501-03-002', 'name' => 'Biaya Bahan Baku Konstruksi', 'type' => 'expense', 'business_type' => 'construction'],
+            ['account_code' => '501-04-001', 'name' => 'Penyesuaian Persediaan', 'type' => 'expense', 'business_type' => 'all'],
+
+            // ===== BEBAN OPERASIONAL (600-650-XXX) =====
+
+            // BEBAN GAJI & KARYAWAN
+            ['account_code' => '601-01-001', 'name' => 'Beban Gaji dan Upah', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '601-01-002', 'name' => 'Beban Tunjangan Karyawan', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '601-01-003', 'name' => 'Beban THR', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '601-01-004', 'name' => 'Beban BPJS Ketenagakerjaan', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '601-01-005', 'name' => 'Beban BPJS Kesehatan', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '601-02-001', 'name' => 'Beban Pelatihan & Pengembangan', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '601-02-002', 'name' => 'Beban Kesehatan & Keselamatan Kerja', 'type' => 'expense', 'business_type' => 'all'],
+
+            // BEBAN OPERASIONAL UMUM
+            ['account_code' => '602-01-001', 'name' => 'Beban Listrik, Air, dan Internet', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '602-01-002', 'name' => 'Beban Telepon & Komunikasi', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '602-01-003', 'name' => 'Beban Sewa Kantor', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '602-01-004', 'name' => 'Beban Sewa Kendaraan', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '602-02-001', 'name' => 'Beban Asuransi', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '602-02-002', 'name' => 'Beban Pajak & Retribusi', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '602-03-001', 'name' => 'Beban Perlengkapan Kantor', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '602-03-002', 'name' => 'Beban Alat Tulis Kantor', 'type' => 'expense', 'business_type' => 'all'],
+
+            // BEBAN PENYUSUTAN & AMORTISASI
+            ['account_code' => '603-01-001', 'name' => 'Beban Penyusutan Gedung', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '603-01-002', 'name' => 'Beban Penyusutan Kendaraan', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '603-01-003', 'name' => 'Beban Penyusutan Peralatan', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '603-01-004', 'name' => 'Beban Penyusutan Mesin', 'type' => 'expense', 'business_type' => 'manufacturing'],
+            ['account_code' => '603-02-001', 'name' => 'Beban Amortisasi Software', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '603-02-002', 'name' => 'Beban Amortisasi Hak Paten', 'type' => 'expense', 'business_type' => 'manufacturing,technology'],
+
+            // BEBAN PENJUALAN & PEMASARAN
+            ['account_code' => '604-01-001', 'name' => 'Beban Iklan dan Promosi', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '604-01-002', 'name' => 'Beban Komisi Penjualan', 'type' => 'expense', 'business_type' => 'trading,retail,service'],
+            ['account_code' => '604-01-003', 'name' => 'Beban Pengiriman Penjualan', 'type' => 'expense', 'business_type' => 'trading,retail'],
+            ['account_code' => '604-01-004', 'name' => 'Beban Perjalanan Dinas', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '604-02-001', 'name' => 'Beban Pameran & Event', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '604-02-002', 'name' => 'Beban Sampling & Demo', 'type' => 'expense', 'business_type' => 'trading,retail'],
+
+            // BEBAN KHUSUS PER INDUSTRI
+            ['account_code' => '605-01-001', 'name' => 'Beban Maintenance Mesin', 'type' => 'expense', 'business_type' => 'manufacturing'],
+            ['account_code' => '605-01-002', 'name' => 'Beban Bahan Bakar Kendaraan', 'type' => 'expense', 'business_type' => 'transportation,construction'],
+            ['account_code' => '605-02-001', 'name' => 'Beban Lisensi & Perizinan', 'type' => 'expense', 'business_type' => 'healthcare,education,construction'],
+            ['account_code' => '605-02-002', 'name' => 'Beban Sertifikasi', 'type' => 'expense', 'business_type' => 'healthcare,education,technology'],
+            ['account_code' => '605-03-001', 'name' => 'Beban Kebersihan & Sanitasi', 'type' => 'expense', 'business_type' => 'restaurant,hospitality,healthcare'],
+            ['account_code' => '605-03-002', 'name' => 'Beban Laundry & Housekeeping', 'type' => 'expense', 'business_type' => 'hospitality,healthcare'],
+
+            // BEBAN LAIN-LAIN
+            ['account_code' => '606-01-001', 'name' => 'Beban Kerugian Piutang', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '606-01-002', 'name' => 'Beban Denda & Sanksi', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '606-02-001', 'name' => 'Beban Sumbangan & Donasi', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '606-02-002', 'name' => 'Beban Lain-lain', 'type' => 'expense', 'business_type' => 'all'],
+
+            // ===== BEBAN NON-OPERASIONAL (700-750-XXX) =====
+
+            ['account_code' => '701-01-001', 'name' => 'Beban Bunga', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '701-01-002', 'name' => 'Beban Administrasi Bank', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '701-01-003', 'name' => 'Beban Provisi & Komisi Bank', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '701-02-001', 'name' => 'Kerugian Penjualan Aset', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '701-02-002', 'name' => 'Kerugian Selisih Kurs', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '701-03-001', 'name' => 'Beban Non-Operasional Lainnya', 'type' => 'expense', 'business_type' => 'all'],
+
+            // ===== PAJAK PENGHASILAN (800-810-XXX) =====
+
+            ['account_code' => '801-01-001', 'name' => 'Beban Pajak Penghasilan', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '801-01-002', 'name' => 'Pajak Penghasilan Final', 'type' => 'expense', 'business_type' => 'all'],
+            ['account_code' => '801-01-003', 'name' => 'Pajak Penghasilan Ditangguhkan', 'type' => 'expense', 'business_type' => 'all'],
+        ];
+
+        // Insert accounts untuk semua bidang usaha
         foreach ($accounts as $account) {
             DB::table('accounts')->insertOrIgnore([
                 'account_code' => $account['account_code'],
                 'name' => $account['name'],
                 'type' => $account['type'],
+                'business_type' => $account['business_type'],
                 'is_active' => true,
-                'created_by' => 1,
-                'updated_by' => 1,
-                'company_id' => 1,
+                'created_by' => 10,
+                'updated_by' => 10,
+                'company_id' => 2,
+                'created_at' => $now,
+                'updated_at' => $now,
+            ]);
+        }
+
+        // Insert business types untuk dropdown di accounting settings
+        foreach ($businessTypes as $key => $name) {
+            DB::table('business_types')->insertOrIgnore([
+                'key' => $key,
+                'name' => $name,
+                'is_active' => true,
                 'created_at' => $now,
                 'updated_at' => $now,
             ]);

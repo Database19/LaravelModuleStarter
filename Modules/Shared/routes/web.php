@@ -14,6 +14,6 @@ use Modules\Shared\Http\Controllers\SharedController;
 |
 */
 
-Route::group([], function () {
+Route::middleware(['auth', 'role:superadmin|admin'])->prefix('shared')->name('shared.')->group(function () {
     Route::resource('shared', SharedController::class)->names('shared');
 });

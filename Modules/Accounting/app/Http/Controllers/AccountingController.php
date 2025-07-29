@@ -45,6 +45,72 @@ class AccountingController extends Controller
                 'default_bank_account_for_payment' => 'Akun Bank/Kas Default untuk Pembayaran Keluar',
                 'default_bank_account_for_receipt' => 'Akun Bank/Kas Default untuk Penerimaan Masuk',
             ],
+            // --- Grup Aset Tetap ---
+            'Grup Aset Tetap' => [
+                'default_fixed_assets_account' => 'Akun Aset Tetap',
+                'default_depreciation_expense_account' => 'Akun Beban Depresiasi',
+                'default_accumulated_depreciation_account' => 'Akun Akumulasi Depresiasi',
+                'default_gain_loss_on_disposal' => 'Akun Keuntungan/Kerugian Pelepasan Aset', // Saat jual aset
+            ],
+
+            // --- Grup Utang Jangka Panjang ---
+            'Grup Utang Jangka Panjang' => [
+                'default_long_term_debt_account' => 'Akun Utang Jangka Panjang',
+                'default_interest_expense_account' => 'Akun Beban Bunga', // Beban bunga pinjaman
+            ],
+
+            // --- Grup Ekuitas ---
+            'Grup Ekuitas' => [
+                'default_retained_earnings_account' => 'Akun Laba Ditahan',
+                'default_dividends_payable_account' => 'Akun Utang Dividen', // Jika ada dividen
+            ],
+
+            // --- Grup Pendapatan Lain-lain ---
+            'Grup Pendapatan Lain-lain' => [
+                'default_interest_income_account' => 'Akun Pendapatan Bunga',
+                'default_rental_income_account' => 'Akun Pendapatan Sewa',
+                'default_other_income_account' => 'Akun Pendapatan Lain-lain',
+            ],
+
+            // --- Grup Beban Lain-lain ---
+            'Grup Beban Lain-lain' => [
+                'default_late_payment_fees_expense' => 'Akun Beban Keterlambatan Pembayaran',
+                'default_other_expense_account' => 'Akun Beban Lain-lain',
+            ],
+
+            // --- Grup Manufaktur (Jika ada modul Manufaktur) ---
+            'Grup Manufaktur' => [
+                'default_raw_materials_inventory' => 'Akun Persediaan Bahan Baku',
+                'default_work_in_process_inventory' => 'Akun Persediaan Barang Dalam Proses',
+                'default_direct_labor_expense' => 'Akun Beban Tenaga Kerja Langsung',
+                'default_factory_overhead_expense' => 'Akun Beban Overhead Pabrik',
+            ],
+
+            // --- Grup Pembelian (Purchasing) ---
+            'Grup Pembelian' => [
+                'default_accounts_payable' => 'Akun Utang Usaha (A/P)',
+                'default_vat_in' => 'Akun PPN Masukan',
+                'default_purchase_discount' => 'Akun Diskon Pembelian', // Jika ada diskon pembelian
+                'default_freight_in' => 'Akun Biaya Pengiriman Pembelian', // Biaya angkut pembelian
+            ],
+
+            // --- Grup Penjualan (Sales) ---
+            'Grup Penjualan' => [
+                'default_accounts_receivable' => 'Akun Piutang Usaha (A/R)',
+                'default_sales_revenue' => 'Akun Pendapatan Penjualan',
+                'default_sales_discount' => 'Akun Diskon Penjualan',
+                'default_vat_out' => 'Akun PPN Keluaran',
+                'default_freight_revenue' => 'Akun Pendapatan Pengiriman', // Jika ada biaya pengiriman
+                'default_sales_returns' => 'Akun Retur Penjualan', // Jika ada retur
+            ],
+
+            // --- Grup Inventaris & Gudang ---
+            'Grup Inventaris & Gudang' => [
+                'default_inventory_account' => 'Akun Persediaan Barang',
+                'default_cogs_account' => 'Akun Harga Pokok Penjualan (HPP)',
+                'default_inventory_adjustment_account' => 'Akun Penyesuaian Persediaan (untuk selisih stok)',
+                'default_write_off_account' => 'Akun Penghapusan Persediaan', // Untuk barang rusak/usang
+            ],
         ];
 
         // Ambil pengaturan yang sudah ada dari database

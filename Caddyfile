@@ -1,0 +1,45 @@
+{
+    # Enable FrankenPHP
+    frankenphp {
+        # Number of workers (adjust based on your CPU cores)
+        worker ./public/frankenphp-worker.php 4
+    }
+}
+
+# Development server
+localhost:8000 {
+    # Set the root directory
+    root * public
+
+    # Enable PHP with FrankenPHP
+    php_server {
+        # Resolve .php files
+        resolve_root_symlink
+    }
+
+    # Enable gzip compression
+    encode gzip
+
+    # Handle Laravel routes
+    try_files {path} {path}/ /index.php?{query}
+
+    # Security headers for development
+    header {
+        # Prevent MIME type sniffing
+        X-Content-Type-Options nosniff
+        # Hide server information
+        -Server
+    }
+
+    # Logging
+    log {
+        output stdout
+        format console
+        level INFO
+    }
+
+    # Error handling
+    handle_errors {
+        respond "An error occurred: {http.error.status_code}" {http.error.status_code}
+    }
+}

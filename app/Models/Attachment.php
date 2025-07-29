@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Traits\Alertable;
+use App\Traits\BelongsToCompany;
 use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Attachment extends Model
 {
-    use HasFactory, Alertable, BelongsToTenant;
+    use HasFactory, Alertable, BelongsToTenant, BelongsToCompany;
 
     protected $fillable = [
         'filename', 'original_filename', 'mime_type', 'size', 'path',

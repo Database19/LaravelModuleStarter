@@ -14,7 +14,7 @@
 
         {{-- Filter Section --}}
         <div class="p-6">
-            @include('accounting::reports._filter', ['actionUrl' => route('reports.laba_rugi')])
+            @include('accounting::reports._filter', ['actionUrl' => route('accounting.reports.laba_rugi')])
         </div>
 
         {{-- Table --}}

@@ -1,0 +1,174 @@
+<x-crud.index
+    title="{{title}}"
+    table-id="{{modelNamePlural}}-table"
+    :ajax-url="route('{{routePrefix}}.index')"
+    :create-url="route('{{routePrefix}}.create')"
+    :export-url="route('{{routePrefix}}.index', ['export' => 'excel'])"
+    :columns="{{columns}}"
+    :show-add="true"
+    :show-export="true"
+    add-button-text="Add {{modalTitle}}"
+    export-button-text="Export Excel"
+    modal-title="{{modalTitle}}"
+    :breadcrumbs="[
+        ['title' => 'Dashboard', 'url' => route('home')],
+        ['title' => '{{modalTitle}}']
+    ]"
+>
+    @push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof $ !== 'undefined' && $.fn.DataTable) {
+                const table = $('#{{modelNamePlural}}-table').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    responsive: true,
+                    ajax: {
+                        url: '{{ route("{{routePrefix}}.index") }}',
+                        type: 'GET'
+                    },
+                    columns: [
+                        {
+                            data: 'DT_RowIndex',
+                            name: 'DT_RowIndex',
+                            orderable: false,
+                            searchable: false,
+                            className: 'text-center',
+                            width: '5%'
+                        },
+                        // Add your custom columns here
+                        {
+                            data: 'action',
+                            name: 'action',
+                            orderable: false,
+                            searchable: false,
+                            className: 'text-center',
+                            width: '15%',
+                            render: function(data, type, row) {
+                                return `
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-sm btn-info me-1 view-btn" data-id="${row.id}" title="View">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-warning me-1 edit-btn" data-id="${row.id}" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger delete-btn" data-id="${row.id}" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                `;
+                            }
+                        }
+                    ],
+                    language: {
+                        url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/id.json'
+                    },
+                    pageLength: 25,
+                    order: [[1, 'asc']]
+                });
+
+                // Store table instance globally for refresh function
+                window.dataTablesInstances = window.dataTablesInstances || {};
+                window.dataTablesInstances['{{modelNamePlural}}-table'] = table;
+
+                // Get Alpine component instance
+                const getAlpineComponent = () => {
+                    return Alpine.$data(document.querySelector('[x-data*="tableManager"]'));
+                };
+
+                // Handle view button
+                $(document).on('click', '.view-btn', function() {
+                    const id = $(this).data('id');
+                    const alpine = getAlpineComponent();
+                    if (alpine) {
+                        alpine.openViewModal(id);
+                    }
+                });
+
+                // Handle edit button
+                $(document).on('click', '.edit-btn', function() {
+                    const id = $(this).data('id');
+                    const alpine = getAlpineComponent();
+                    if (alpine) {
+                        alpine.openEditModal(id);
+                    }
+                });
+
+                // Handle delete button with SweetAlert2 if available
+                $(document).on('click', '.delete-btn', function() {
+                    const id = $(this).data('id');
+                    const itemName = $(this).closest('tr').find('td:eq(1)').text();
+
+                    const deleteConfirm = function() {
+                        $.ajax({
+                            url: '{{ route("{{routePrefix}}.index") }}/' + id,
+                            type: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                                'Accept': 'application/json'
+                            },
+                            success: function(response) {
+                                if (response.success) {
+                                    table.ajax.reload(null, false);
+
+                                    // Show success message
+                                    if (typeof Swal !== 'undefined') {
+                                        Swal.fire({
+                                            title: 'Deleted!',
+                                            text: response.message,
+                                            icon: 'success',
+                                            timer: 2000,
+                                            showConfirmButton: false
+                                        });
+                                    } else {
+                                        alert(response.message);
+                                    }
+                                }
+                            },
+                            error: function(xhr) {
+                                const response = xhr.responseJSON;
+                                const message = response ? response.message : 'Error deleting item';
+
+                                if (typeof Swal !== 'undefined') {
+                                    Swal.fire({
+                                        title: 'Error!',
+                                        text: message,
+                                        icon: 'error'
+                                    });
+                                } else {
+                                    alert(message);
+                                }
+                            }
+                        });
+                    };
+
+                    // Use SweetAlert2 if available, otherwise use confirm
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: `Delete item "${itemName}"? This action cannot be undone!`,
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#d33',
+                            cancelButtonColor: '#3085d6',
+                            confirmButtonText: 'Yes, delete it!',
+                            cancelButtonText: 'Cancel'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                deleteConfirm();
+                            }
+                        });
+                    } else {
+                        if (confirm(`Are you sure you want to delete "${itemName}"?`)) {
+                            deleteConfirm();
+                        }
+                    }
+                });
+            } else {
+                console.error('jQuery or DataTables not loaded');
+            }
+        });
+    </script>
+    @endpush
+</x-crud.index>

@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Traits\Alertable;
+use App\Traits\BelongsToCompany;
 use App\Traits\BelongsToTenant;
 
 class Customer extends Model
 {
-    use HasFactory, SoftDeletes, Alertable, BelongsToTenant;
+    use HasFactory, SoftDeletes, Alertable, BelongsToTenant, BelongsToCompany;
 
     protected $fillable = [
         'name', 'email', 'phone', 'address', 'company_name',

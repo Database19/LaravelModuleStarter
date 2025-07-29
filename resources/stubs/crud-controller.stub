@@ -1,0 +1,48 @@
+<?php
+
+namespace {{namespace}};
+
+use App\Http\Controllers\CrudController;
+use {{modelNamespace}};
+use Illuminate\Http\Request;
+
+class {{controllerName}} extends CrudController
+{
+    /**
+     * Initialize CRUD configuration
+     */
+    protected function initializeCrudConfig()
+    {
+        $this->setModel({{modelName}}::class)
+             ->setViewPath('{{viewPath}}')
+             ->setRoutePrefix('{{routePrefix}}')
+             ->setRelationships({{relationships}})
+             ->setValidationRules({{validationRules}});
+    }
+
+    /**
+     * Get additional view data
+     */
+    protected function getAdditionalViewData()
+    {
+        return {{additionalViewData}};
+    }
+
+    /**
+     * Get form fields configuration
+     */
+    public function getFormFields()
+    {
+        $data = $this->getAdditionalViewData();
+
+        return {{formFields}};
+    }
+
+    /**
+     * Customize DataTables response
+     */
+    protected function customizeDataTablesResponse($datatables)
+    {
+        return $datatables{{customDataTablesColumns}};
+    }
+}

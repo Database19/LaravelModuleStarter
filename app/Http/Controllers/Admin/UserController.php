@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\Facades\DataTables;
@@ -91,6 +92,53 @@ class UserController extends Controller
         $roles = Role::pluck('name', 'name')->all();
         $userRoles = $user->roles->pluck('name', 'name')->all();
         return view('admin.users.edit', compact('user', 'roles', 'userRoles'));
+    }
+
+    public function editModal()
+    {
+        $user = auth()->user();
+
+        // Mengembalikan data sebagai JSON
+        return response()->json([
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+        ]);
+    }
+
+    /**
+     * Memperbarui data profil dari modal.
+     */
+    public function updateModal(Request $request)
+    {
+        $user = auth()->user();
+
+       // SESUDAH
+        $rules = [
+            'name' => 'required|string|max:255',
+            'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
+        ];
+
+        // Hanya tambahkan aturan validasi password JIKA kolomnya diisi
+        if ($request->filled('password')) {
+            $rules['password'] = ['required', 'string', 'min:8', 'confirmed'];
+        }
+
+        $validated = $request->validate($rules);
+
+        // Update nama dan email
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+
+        // Jika user mengisi password baru, update passwordnya
+        if ($request->filled('password')) {
+            $user->password = Hash::make($validated['password']);
+        }
+
+        $user->save();
+
+        // Mengembalikan respon JSON
+        return response()->json(['message' => 'Profil Anda telah berhasil diperbarui.']);
     }
 
     public function update(Request $request, User $user)

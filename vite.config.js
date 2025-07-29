@@ -5,16 +5,17 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/sass/app.scss',
+                'resources/css/app.css',
                 'resources/js/app.js',
+                'resources/js/datatable-config.js',
             ],
             refresh: true,
         }),
     ],
     server: {
-        host: '0.0.0.0', // Membuat server Vite bisa diakses dari luar container
+        host: '0.0.0.0',
         hmr: {
-            host: 'localhost', // Memberitahu browser untuk konek ke 'localhost'
+            host: 'localhost',
         },
     },
 });

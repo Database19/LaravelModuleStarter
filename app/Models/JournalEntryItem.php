@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\BelongsToCompany;
 use App\Traits\BelongsToTenant;
 use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class JournalEntryItem extends Model
 {
-    use HasFactory, Userstamps, BelongsToTenant;
+    use HasFactory, Userstamps, BelongsToTenant, BelongsToCompany;
 
     protected $fillable = [
         'journal_entry_id', 'description', 'account_id', 'debit',

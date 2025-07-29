@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\DocumentManagement\Http\Controllers\DocumentManagementController;
+use Modules\DocumentManagement\Http\Controllers\LibraryController;
+use Modules\DocumentManagement\Http\Controllers\CategoryController;
+use Modules\DocumentManagement\Http\Controllers\TemplateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +17,15 @@ use Modules\DocumentManagement\Http\Controllers\DocumentManagementController;
 |
 */
 
-Route::middleware(['auth', 'role:Admin|Project Manager'])->group(function () {
+Route::middleware(['auth', 'permission:manage-documents|manage-companies|super-admin-access'])->prefix('documents')->name('documents.')->group(function () {
     Route::resource('documentmanagement', DocumentManagementController::class)->names('documentmanagement');
+
+    // Document Library
+    Route::resource('library', LibraryController::class);
+
+    // Document Categories
+    Route::resource('categories', CategoryController::class);
+
+    // Document Templates
+    Route::resource('templates', TemplateController::class);
 });
-// Route::group([], function () {
-//     Route::resource('documentmanagement', DocumentManagementController::class)->names('documentmanagement');
-// });

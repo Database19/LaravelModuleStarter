@@ -10,7 +10,7 @@
             </p>
         </div>
         <div class="p-6">
-            @include('accounting::reports._filter', ['actionUrl' => route('reports.buku_besar')])
+            @include('accounting::reports._filter', ['actionUrl' => route('accounting.reports.buku_besar')])
         </div>
     </div>
 

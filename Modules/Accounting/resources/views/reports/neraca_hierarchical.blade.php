@@ -8,7 +8,7 @@
             Per Tanggal: {{ \Carbon\Carbon::parse($endDate)->isoFormat('D MMMM YYYY') }}
         </p>
         <div class="mt-6">
-             @include('accounting::reports._filter', ['actionUrl' => route('reports.neraca')])
+             @include('accounting::reports._filter', ['actionUrl' => route('accounting.reports.neraca')])
         </div>
     </div>
 

@@ -15,5 +15,6 @@
     "Helpdesk": true,
     "Shared": true,
     "MasterData": true,
-    "CustomerController": false
+    "CustomerController": false,
+    "Helper": true
 }

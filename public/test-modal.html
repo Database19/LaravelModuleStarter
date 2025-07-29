@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Modal Test</title>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <div x-data="{ showModal: false, content: 'Loading...' }">
+        <button @click="showModal = true; testModal()" class="bg-blue-500 text-white px-4 py-2 rounded">
+            Test Modal
+        </button>
+
+        <div x-show="showModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white p-6 rounded-lg max-w-2xl w-full max-h-96 overflow-y-auto">
+                <div class="flex justify-between mb-4">
+                    <h3 class="text-lg font-bold">Test Modal</h3>
+                    <button @click="showModal = false" class="text-gray-500">&times;</button>
+                </div>
+                <div x-html="content"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function testModal() {
+            try {
+                console.log('Testing AJAX request...');
+                const response = await fetch('http://localhost:8000/test-form', {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                console.log('Response status:', response.status);
+                console.log('Response headers:', [...response.headers]);
+
+                const text = await response.text();
+                console.log('Response text length:', text.length);
+
+                document.querySelector('[x-data]').__x.$data.content = text;
+            } catch (error) {
+                console.error('Error:', error);
+                document.querySelector('[x-data]').__x.$data.content = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

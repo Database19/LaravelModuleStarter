@@ -13,6 +13,7 @@ function format_currency($value): string
     return 'Rp ' . number_format($amount, 2, ',', '.');
 }
 
-function a($a,$b,$c){
-    return alert($a, $b, $c)->background('#F6F6F6')->toToast();
+function a($message, $type = 'info', $title = null)
+{
+    return alert($title, $message, $type)->background('#F6F6F6')->toToast();
 }

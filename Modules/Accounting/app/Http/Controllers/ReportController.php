@@ -17,37 +17,37 @@ class ReportController extends Controller
             [
                 'name' => 'Laporan Laba Rugi',
                 'description' => 'Melihat performa pendapatan dan beban perusahaan dalam satu periode.',
-                'url' => route('reports.laba_rugi'),
+                'url' => route('accounting.reports.laba_rugi'),
                 'icon' => 'fas fa-chart-line' // Contoh menggunakan Font Awesome
             ],
             [
                 'name' => 'Laporan Neraca',
                 'description' => 'Menampilkan posisi keuangan (Aset, Liabilitas, Ekuitas) pada titik waktu tertentu.',
-                'url' => route('reports.neraca'),
+                'url' => route('accounting.reports.neraca'),
                 'icon' => 'fas fa-balance-scale'
             ],
             [
                 'name' => 'Laporan Perubahan Modal',
                 'description' => 'Merangkum perubahan pada ekuitas perusahaan selama satu periode.',
-                'url' => route('reports.perubahan_modal'),
+                'url' => route('accounting.reports.perubahan_modal'),
                 'icon' => 'fas fa-chart-pie'
             ],
             [
                 'name' => 'Buku Besar',
                 'description' => 'Menampilkan rincian semua transaksi untuk setiap akun akuntansi.',
-                'url' => route('reports.buku_besar'),
+                'url' => route('accounting.reports.buku_besar'),
                 'icon' => 'fas fa-book'
             ],
             [
                 'name' => 'Neraca Saldo',
                 'description' => 'Daftar semua akun beserta saldo debit dan kredit akhirnya untuk verifikasi.',
-                'url' => route('reports.neraca_saldo'),
+                'url' => route('accounting.reports.neraca_saldo'),
                 'icon' => 'fas fa-check-double'
             ],
             [
                 'name' => 'Mutasi Saldo Akun',
                 'description' => 'Melihat riwayat transaksi mendetail untuk satu akun spesifik.',
-                'url' => route('reports.mutasi_saldo'),
+                'url' => route('accounting.reports.mutasi_saldo'),
                 'icon' => 'fas fa-history'
             ]
         ];

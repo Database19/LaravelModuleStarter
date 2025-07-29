@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Traits\Alertable;
+use App\Traits\BelongsToCompany;
 use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class FixedAsset extends Model
 {
-    use HasFactory, Alertable, Userstamps;
+    use HasFactory, Alertable, Userstamps, BelongsToCompany;
 
     protected $fillable = [
         'asset_name', 'asset_code', 'description', 'purchase_date', 'purchase_cost',

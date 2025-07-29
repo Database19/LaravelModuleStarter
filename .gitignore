@@ -21,10 +21,10 @@ yarn-error.log
 /.vscode
 /.zed
 
+# FrankenPHP
 **/caddy
 frankenphp
+frankenphp.exe
 frankenphp-worker.php
 
-**/caddy
-frankenphp
-frankenphp-worker.php
+*.md

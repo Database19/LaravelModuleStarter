@@ -138,4 +138,12 @@ class BomController extends Controller
 
         return redirect()->route('manufacturing.boms.index')->with('success', 'Bill of Materials berhasil dihapus.');
     }
+
+    public function getBomDetails(Bom $bom)
+    {
+        // Eager load relasi item beserta produk komponennya
+        $bom->load('items.component');
+
+        return response()->json($bom->items);
+    }
 }

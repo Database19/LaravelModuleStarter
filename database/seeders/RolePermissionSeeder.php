@@ -27,6 +27,7 @@ class RolePermissionSeeder extends Seeder
         }
 
         $roles = [
+            'Super Admin' => Permission::all()->pluck('name')->toArray(),
             'Admin' => Permission::all()->pluck('name')->toArray(),
             'Sales Manager' => ['manage-sales', 'manage-crm'],
             'Sales Staff' => ['manage-sales', 'manage-crm'],
@@ -46,19 +47,7 @@ class RolePermissionSeeder extends Seeder
             $role->syncPermissions($rolePermissions);
         }
 
-        // --- Bagian 2: Buat Super Admin Global (Tidak terikat pada Company) ---
-        // $superAdmin = User::firstOrCreate(
-        //     ['email' => 'superadmin@erp.test'],
-        //     [
-        //         'name' => 'Super Administrator',
-        //         'password' => Hash::make('password'),
-        //         'company_id' => 1,
-        //     ]
-        // );
-        // $superAdmin->syncRoles(['Admin']);
-
-
-
+        // --- Bagian 2: Buat Company terlebih dahulu ---
         Company::query()->delete();
         $companies = [
             [
@@ -83,12 +72,18 @@ class RolePermissionSeeder extends Seeder
             ],
         ];
 
+        $firstCompany = null;
         foreach ($companies as $companyData) {
             // Buat perusahaan (tenant) baru
             $company = Company::create([
                 'name' => $companyData['name'],
                 'domain' => $companyData['domain'],
             ]);
+
+            // Set first company untuk super admin
+            if (!$firstCompany) {
+                $firstCompany = $company;
+            }
 
             // Buat pengguna untuk perusahaan ini
             foreach ($companyData['users'] as $userData) {
@@ -102,5 +97,21 @@ class RolePermissionSeeder extends Seeder
                 $user->syncRoles([$userData['role']]);
             }
         }
+
+        // --- Bagian 3: Buat Super Admin Global (Terikat ke company pertama sebagai default) ---
+        $superAdmin = User::firstOrCreate(
+            ['email' => 'superadmin@erp.test'],
+            [
+                'name' => 'Super Administrator',
+                'password' => Hash::make('password'),
+                'company_id' => $firstCompany->id, // Assign ke company pertama sebagai default
+                'is_super_admin' => true, // Flag super admin
+            ]
+        );
+        $superAdmin->syncRoles(['Super Admin']);
+
+        // Buat role Super Admin jika belum ada
+        $superAdminRole = Role::firstOrCreate(['name' => 'Super Admin']);
+        $superAdminRole->syncPermissions(Permission::all());
     }
 }

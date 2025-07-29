@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto py-10 sm:px-6 lg:px-8" x-data="journalForm()">
-    <form action="{{ route('journals.store') }}" method="POST">
+    <form action="{{ route('accounting.journals.store') }}" method="POST">
         @csrf
         {{-- Konten form sama seperti jawaban sebelumnya --}}
         @include('accounting::journals._form', ['accounts' => $accounts])

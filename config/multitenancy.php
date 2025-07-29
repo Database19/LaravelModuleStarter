@@ -19,7 +19,7 @@ return [
      * This class should extend `Spatie\Multitenancy\TenantFinder\TenantFinder`
      *
      */
-    'tenant_finder' => null,
+    'tenant_finder' => \App\Multitenancy\TenantFinder::class,
 
     /*
      * These fields are used by tenant:artisan command to match one or more tenant.
@@ -34,8 +34,8 @@ return [
      * A valid task is any class that implements Spatie\Multitenancy\Tasks\SwitchTenantTask
      */
     'switch_tenant_tasks' => [
-        // \Spatie\Multitenancy\Tasks\PrefixCacheTask::class,
-        // \Spatie\Multitenancy\Tasks\SwitchTenantDatabaseTask::class,
+        \Spatie\Multitenancy\Tasks\PrefixCacheTask::class,
+        // \Spatie\Multitenancy\Tasks\SwitchTenantDatabaseTask::class, // Uncomment jika menggunakan multi-database
         // \Spatie\Multitenancy\Tasks\SwitchRouteCacheTask::class,
     ],
 

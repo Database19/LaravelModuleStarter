@@ -66,7 +66,7 @@
 </div>
 @endsection
 
-@push('js')
+@push('scripts')
 <script>
 function categoryManager() {
   return {

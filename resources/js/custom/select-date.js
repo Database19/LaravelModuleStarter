@@ -9,3 +9,16 @@ flatpickr("#accounting_report_end_date", {
 flatpickr("#date_picker", {
     dateFormat: "Y-m-d",
 });
+
+
+flatpickr("#start_date", {
+    dateFormat: "Y-m-d",
+});
+
+flatpickr("#end_date", {
+    dateFormat: "Y-m-d",
+});
+
+flatpickr("#date", {
+    dateFormat: "Y-m-d",
+});

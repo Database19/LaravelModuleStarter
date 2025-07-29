@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  # FrankenPHP Laravel Application
+  app:
+    image: dunglas/frankenphp:php8.3-alpine
+    container_name: laravel-erp-frankenphp
+    restart: unless-stopped
+    working_dir: /app
+    volumes:
+      - .:/app
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    ports:
+      - "8000:80"
+      - "8443:443"
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - OCTANE_SERVER=frankenphp
+      - FRANKENPHP_CONFIG=worker ./public/frankenphp-worker.php 8
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - laravel-erp
+
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: laravel-erp-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: laravel_erp
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - laravel-erp
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: laravel-erp-redis
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - laravel-erp
+
+  # phpMyAdmin (optional)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: laravel-erp-phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: laravel
+      PMA_PASSWORD: password
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    networks:
+      - laravel-erp
+
+volumes:
+  mysql_data:
+  redis_data:
+  caddy_data:
+  caddy_config:
+
+networks:
+  laravel-erp:
+    driver: bridge

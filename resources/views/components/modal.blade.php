@@ -1,4 +1,4 @@
-@props(['name', 'title' => '', 'maxWidth' => '2xl'])
+@props(['name', 'title' => '', 'maxWidth' => 'lg'])
 
 @php
     $maxWidthClasses = [
@@ -72,7 +72,7 @@
         </div>
 
         <!-- Body -->
-        <div class="p-6">
+        <div class="p-2">
             {{ $slot }}
         </div>
     </div>

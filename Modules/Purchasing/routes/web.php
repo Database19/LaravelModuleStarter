@@ -13,7 +13,7 @@ use Modules\Purchasing\Http\Controllers\PurchaseOrderController;
 |
 */
 
-Route::middleware(['auth', 'role:Admin|Purchasing'])->prefix('purchasing')->name('purchasing.')->group(function () {
+Route::middleware(['auth', 'permission:manage-purchasing|manage-companies|super-admin-access'])->prefix('purchasing')->name('purchasing.')->group(function () {
     // Route::resource('/', PurchasingController::class);
     Route::post('purchase-orders/{purchaseOrder}/receive', [PurchaseOrderController::class, 'receive'])->name('purchase-orders.receive');
     Route::resource('purchase-orders', PurchaseOrderController::class);

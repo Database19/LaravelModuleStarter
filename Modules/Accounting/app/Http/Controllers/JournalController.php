@@ -5,15 +5,90 @@ use App\Models\Account;
 use App\Models\JournalEntry;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use Yajra\DataTables\Facades\DataTables;
 
 class JournalController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $journals = JournalEntry::withSum('items as total_debit', 'debit')->latest()->paginate(15);
-        return view('accounting::journals.index', compact('journals'));
+        if ($request->ajax()) {
+            $journals = JournalEntry::with(['items'])
+                ->withSum('items as total_debit', 'debit')
+                ->withSum('items as total_credit', 'credit')
+                ->select('journal_entries.*');
+
+            return DataTables::eloquent($journals)
+                ->addIndexColumn()
+                ->addColumn('status', function($journal) {
+                    return $journal->is_posted ? 'posted' : 'draft';
+                })
+                ->editColumn('date', function($journal) {
+                    return $journal->date;
+                })
+                ->editColumn('total_debit', function($journal) {
+                    return $journal->total_debit ?: 0;
+                })
+                ->editColumn('total_credit', function($journal) {
+                    return $journal->total_credit ?: 0;
+                })
+                ->addColumn('entries', function($journal) {
+                    return $journal->items->map(function($item) {
+                        return [
+                            'account_id' => $item->account_id,
+                            'description' => $item->description,
+                            'debit' => $item->debit,
+                            'credit' => $item->credit
+                        ];
+                    });
+                })
+                ->addColumn('action', function($journal) {
+                    return $journal->id;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+        // Handle export
+        if ($request->has('export') && $request->export === 'excel') {
+            return $this->exportToExcel();
+        }
+
+        return view('accounting::journals.index');
+    }
+
+    /**
+     * Export data to Excel/CSV
+     */
+    public function exportToExcel()
+    {
+        $journals = JournalEntry::with(['items'])
+            ->withSum('items as total_debit', 'debit')
+            ->withSum('items as total_credit', 'credit')
+            ->orderBy('date', 'desc')
+            ->get();
+
+        $csvData = "Tanggal,Deskripsi,Total Debit,Total Kredit,Status\n";
+
+        foreach ($journals as $journal) {
+            $csvData .= sprintf(
+                '"%s","%s","%s","%s","%s"' . "\n",
+                $journal->date,
+                $journal->description,
+                number_format($journal->total_debit ?: 0, 2),
+                number_format($journal->total_credit ?: 0, 2),
+                $journal->is_posted ? 'Posted' : 'Draft'
+            );
+        }
+
+        $filename = 'journals_' . date('Y-m-d_H-i-s') . '.csv';
+
+        return response($csvData, 200, [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ]);
     }
 
     public function create()
@@ -30,20 +105,18 @@ class JournalController extends Controller
             $journal = JournalEntry::create([
                 'date' => $validated['date'],
                 'description' => $validated['description'],
-                'user_id' => auth()->id(),
+                'user_id' => Auth::id(),
             ]);
             $journal->items()->createMany($validated['items']);
         });
 
         alert()->success('Berhasil!', 'Jurnal baru telah berhasil dibuat.');
-        return redirect()->route('journals.index');
+        return redirect()->route('accounting.journals.index');
     }
 
     public function show(JournalEntry $journal)
     {
         $journal->load('items.account');
-
-        // dd($journal);
         return view('accounting::journals.show', compact('journal'));
     }
 
@@ -67,15 +140,15 @@ class JournalController extends Controller
             $journal->items()->createMany($validated['items']);
         });
 
-        alert()->success('Berhasil!', 'Jurnal telah berhasil diperbarui.');
-        return redirect()->route('journals.index');
+        alert()->success('Berhasil!', 'Jurnal berhasil diperbarui.');
+        return redirect()->route('accounting.journals.index');
     }
 
     public function destroy(JournalEntry $journal)
     {
         $journal->delete();
         alert()->success('Berhasil!', 'Jurnal telah dihapus.');
-        return redirect()->route('journals.index');
+        return redirect()->route('accounting.journals.index');
     }
 
     private function validateJournal(Request $request)

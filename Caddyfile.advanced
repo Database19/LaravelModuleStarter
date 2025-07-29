@@ -1,0 +1,215 @@
+# FrankenPHP Configuration for Laravel ERP
+# This file contains optimized settings for running Laravel with FrankenPHP
+
+{
+    # Global FrankenPHP configuration
+    frankenphp {
+        # Number of workers (adjust based on your server capacity)
+        # Recommended: CPU cores * 2
+        worker ./public/frankenphp-worker.php 8
+
+        # Maximum number of requests per worker before restart
+        max_requests 1000
+
+        # Enable debug mode in development
+        {$APP_DEBUG}
+    }
+
+    # Enable admin API for monitoring (optional)
+    admin :2019
+}
+
+# Development server
+:8000 {
+    # Set the root directory to Laravel's public folder
+    root * public
+
+    # Enable compression
+    encode {
+        gzip
+        match {
+            header Content-Type text/*
+            header Content-Type application/json*
+            header Content-Type application/javascript*
+            header Content-Type application/xhtml+xml*
+            header Content-Type application/atom+xml*
+            header Content-Type application/rss+xml*
+            header Content-Type image/svg+xml*
+        }
+    }
+
+    # Security headers
+    header {
+        # Prevent MIME sniffing
+        X-Content-Type-Options nosniff
+
+        # Clickjacking protection
+        X-Frame-Options DENY
+
+        # XSS protection
+        X-XSS-Protection "1; mode=block"
+
+        # Referrer policy
+        Referrer-Policy strict-origin-when-cross-origin
+
+        # Hide server information
+        -Server
+
+        # Content Security Policy (adjust as needed)
+        Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://code.jquery.com https://stackpath.bootstrapcdn.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self';"
+    }
+
+    # Handle Laravel routes
+    try_files {path} {path}/ /index.php?{query}
+
+    # PHP configuration
+    php_server {
+        # Trust forwarded headers
+        resolve_root_symlink
+
+        # Set environment variables
+        env APP_ENV {$APP_ENV}
+        env APP_DEBUG {$APP_DEBUG}
+        env DB_CONNECTION {$DB_CONNECTION}
+        env DB_HOST {$DB_HOST}
+        env DB_PORT {$DB_PORT}
+        env DB_DATABASE {$DB_DATABASE}
+        env DB_USERNAME {$DB_USERNAME}
+        env DB_PASSWORD {$DB_PASSWORD}
+    }
+
+    # Static file caching
+    @static {
+        file
+        path *.css *.js *.ico *.png *.jpg *.jpeg *.gif *.svg *.woff *.woff2 *.ttf *.eot
+    }
+    handle @static {
+        header Cache-Control "public, max-age=31536000, immutable"
+    }
+
+    # Logging for development
+    log {
+        output stdout
+        format console {
+            time_format "2006-01-02 15:04:05"
+            message_format "{time} [{level}] {message}"
+        }
+        level INFO
+    }
+
+    # Error handling
+    handle_errors {
+        @5xx expression {http.error.status_code} >= 500
+        handle @5xx {
+            respond "Internal Server Error - Please check the logs" 500
+        }
+
+        @4xx expression {http.error.status_code} >= 400
+        handle @4xx {
+            respond "Page not found" 404
+        }
+    }
+}
+
+# Production configuration (laravel-erp.local)
+laravel-erp.local {
+    # Automatic HTTPS
+    # tls internal
+
+    root * public
+
+    # Enhanced compression for production
+    encode {
+        gzip 6
+        minimum_length 1024
+        match {
+            header Content-Type text/*
+            header Content-Type application/json*
+            header Content-Type application/javascript*
+            header Content-Type application/xhtml+xml*
+            header Content-Type application/atom+xml*
+            header Content-Type application/rss+xml*
+            header Content-Type image/svg+xml*
+        }
+    }
+
+    # Production security headers
+    header {
+        # HSTS
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+        # MIME sniffing protection
+        X-Content-Type-Options nosniff
+
+        # Clickjacking protection
+        X-Frame-Options DENY
+
+        # XSS protection
+        X-XSS-Protection "1; mode=block"
+
+        # Referrer policy
+        Referrer-Policy strict-origin-when-cross-origin
+
+        # Hide server information
+        -Server
+        -X-Powered-By
+
+        # Permissions policy
+        Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    }
+
+    # Handle Laravel routes
+    try_files {path} {path}/ /index.php?{query}
+
+    # PHP with enhanced settings
+    php_server {
+        resolve_root_symlink
+
+        # Production environment variables
+        env APP_ENV production
+        env APP_DEBUG false
+    }
+
+    # Enhanced static file caching
+    @static {
+        file
+        path *.css *.js *.ico *.png *.jpg *.jpeg *.gif *.svg *.woff *.woff2 *.ttf *.eot *.webp *.avif
+    }
+    handle @static {
+        header Cache-Control "public, max-age=31536000, immutable"
+        header Vary "Accept-Encoding"
+    }
+
+    # Deny access to sensitive files
+    @forbidden {
+        path /.env* /composer.json /composer.lock /artisan /.git* /storage/logs/* /bootstrap/cache/*
+    }
+    handle @forbidden {
+        respond "Forbidden" 403
+    }
+
+    # Production logging
+    log {
+        output file ./storage/logs/frankenphp-access.log {
+            roll_size 100mb
+            roll_keep 10
+            roll_keep_for 720h
+        }
+        format json {
+            time_format "2006-01-02T15:04:05Z07:00"
+            message_key "message"
+            level_key "level"
+            time_key "timestamp"
+        }
+        level WARN
+    }
+
+    # Rate limiting (optional)
+    rate_limit {
+        zone dynamic {
+            key {remote_host}
+            window 1m
+            events 60
+        }
+    }
+}

@@ -17,7 +17,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password', 'employee_id', 'department_id',
         'position_id', 'phone_number', 'hire_date', 'birth_date',
-        'gender', 'address', 'employment_status', 'salary', 'manager_id'
+        'gender', 'address', 'employment_status', 'salary', 'manager_id',
+        'company_id', 'is_super_admin' // Tambah field untuk super admin
     ];
 
     protected $hidden = [
@@ -28,7 +29,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'hire_date' => 'date',
         'birth_date' => 'date',
-        'salary' => 'decimal:2'
+        'salary' => 'decimal:2',
+        'is_super_admin' => 'boolean'
     ];
 
     public function department()
@@ -130,5 +132,47 @@ class User extends Authenticatable
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    /**
+     * Check if user is super admin (can access all companies)
+     */
+    public function isSuperAdmin(): bool
+    {
+        return $this->is_super_admin ?? false;
+    }
+
+    /**
+     * Check if user can access specific company
+     */
+    public function canAccessCompany($companyId): bool
+    {
+        // Super admin bisa akses semua company
+        if ($this->isSuperAdmin()) {
+            return true;
+        }
+
+        // Regular user hanya bisa akses company-nya sendiri
+        return $this->company_id == $companyId;
+    }
+
+    /**
+     * Get all companies that user can access
+     */
+    public function accessibleCompanies()
+    {
+        if ($this->isSuperAdmin()) {
+            return Company::all();
+        }
+
+        return collect([$this->company]);
+    }
+
+    /**
+     * Scope untuk super admin
+     */
+    public function scopeSuperAdmin($query)
+    {
+        return $query->where('is_super_admin', true);
     }
 }

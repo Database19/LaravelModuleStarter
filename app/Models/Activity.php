@@ -3,13 +3,14 @@
 
 namespace App\Models;
 
+use App\Traits\BelongsToCompany;
 use App\Traits\BelongsToTenant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Activity extends Model
 {
-    use HasFactory, BelongsToTenant;
+    use HasFactory, BelongsToTenant, BelongsToCompany;
 
     protected $fillable = [
         'type',

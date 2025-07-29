@@ -79,7 +79,7 @@
 </nav>
 
 {{-- User Profile di Bawah --}}
-<div class="flex-shrink-0 flex border-t border-slate-700 p-4 mt-auto">
+{{-- <div class="flex-shrink-0 flex border-t border-slate-700 p-4 mt-auto">
     <div class="flex-shrink-0 group block w-full">
         <div class="flex items-center">
             <div>
@@ -91,4 +91,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
